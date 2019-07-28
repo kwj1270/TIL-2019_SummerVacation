@@ -1,8 +1,8 @@
 객체 모델
 =======================
-> Window
-> DOM
-> BOM
+> Window  
+> DOM  
+> BOM  
 
 # 1. Window 객체
 ## 1.1 의미
