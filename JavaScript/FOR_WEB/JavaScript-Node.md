@@ -491,20 +491,22 @@ insertAdjacentHTML()        // 좀 더 정교한 문자열을 이용해서 노�
 <script>
     function beforebegin(){
         var target = document.getElementById('target');
-        target.insertAdjacentHTML('beforebegin','<h1>Client Side</h1>');
+        target.insertAdjacentHTML('beforebegin','<h1>Client Side</h1>');            // <ul>시작 전에
     }
     function afterbegin(){
         var target = document.getElementById('target');
-        target.insertAdjacentHTML('afterbegin','<li>HTML</li>');
+        target.insertAdjacentHTML('afterbegin','<li>HTML</li>');                    // <ul>시작 후에
     }
     function beforeend(){
         var target = document.getElementById('target');
-        target.insertAdjacentHTML('beforeend','<li>JavaScript</li>');
+        target.insertAdjacentHTML('beforeend','<li>JavaScript</li>');               // <ul>끝에서 전에
     }
     function afterend(){
         var target = document.getElementById('target');
-        target.insertAdjacentHTML('afterend','<h1>Server Side</h1>');
+        target.insertAdjacentHTML('afterend','<h1>Server Side</h1>');               // <ul>끝에서 후에
     }
 </script>
 ```
-
+위 예제 같은 경우는 뒤로 해석하는 것이 좋다.  
+```beforeend``` 가정시 ```end```의 ```before```이므로 끝나기 전에
+객체를 사용하는 경우 '객체가 끝나기 전에' 로 해석하는 것이 좋다.
