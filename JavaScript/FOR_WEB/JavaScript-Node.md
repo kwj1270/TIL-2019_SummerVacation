@@ -158,17 +158,18 @@ ELEMENT_NODE: 1 인 것들만 실행시키겠다.
 ***
 # 3. Node 변경 API
 > 노드를 추가, 제거, 변경 할 수 있다.
-## 3.1. 엘리멘트 생성 메소드
+## 3.1. 추가
+### 3.1.1 엘리멘트 생성 메소드
 ```
 1.  document.createElement(tagname);        // 엘리멘트 생성(태그)
 2.  document.createTextNode(data);          // text 생성
 ```
-## 3.2. 노드에 새로운 노드 추가 메소드
+### 3.1.2 추가 메소드
 ```
-1. appendChild(child)                               // 노드의 마지막 자식으로 주어진 엘리먼트 추가
+1. .appendChild(node)                               // 노드의 마지막 자식으로 주어진 엘리먼트 추가
 2. insertBefore(new Element , referenceElement)     // 두번째 인자 엘리먼트 앞쪽에 엘리먼트 추가
 ```
-## 3.3. 예제
+### 3.1.3. 예제
 ```
 <ul id="target">
     <li>HTML</li>
@@ -197,6 +198,58 @@ ELEMENT_NODE: 1 인 것들만 실행시키겠다.
     // <li>Jquey</li>를 <ul>의 첫번째 자식 앞으로 놓겠다. 즉 첫번째로 놓겠다.
 </script>
 ```
+1. <li>JavaScript</li>를 <ul>의 마지막 자식으로 놓겠다. 
+2. <li>Jquey</li>를 <ul>의 첫번째 자식 앞으로 놓겠다. 즉 첫번째로 놓겠다.
+
+## 3.2. 삭제 
+### 3.2.1. 삭제 메소드
+```
+.removeChild(childNode);        //특정 자식 노드를 삭제한다.
+```
+### 3.2.2. 예제
+```
+<ul>
+    <li>HTML</li>
+    <li>CSS</li>
+    <li id="target">JavaScript</li>
+</ul>
+<input type="button" onclick="callRemoveChild();" value="removeChild()" />
+<script>
+    function callRemoveChild(){
+        var target = document.getElementById('target');
+        target.parentNode.removeChild(target);
+    }
+</script>
+```
+target이 자기 자신을 삭제하기 위해 부모노드로 이동 후 자기 자신을 삭제하는 메소드 호출
+## 3.3. 변경 
+### 3.3.1. 변경 메소드
+```
+.reaplaceChild(newChild , oldChild)     // 2번째 자식노드를 1번째 자식노드로 변경한다.
+```
+### 3.3.2. 예제
+```
+<ul>
+    <li>HTML</li>
+    <li>CSS</li>
+    <li id="target">JavaScript</li>
+</ul>
+<input type="button" onclick="callReplaceChild();" value="replaceChild()" />
+<script>
+    function callReplaceChild(){
+        var a = document.createElement('a');
+        a.setAttribute('href', 'https://github.com/kwj1270');
+        a.appendChild(document.createTextNode('Web browser JavaScript'));
+ 
+        var target = document.getElementById('target');
+        target.replaceChild(a,target.firstChild);
+    }
+</script>
+```
+```<li id="target">JavaScript</li>```의 첫번째 자식노드는 JavaScript이다.  
+이것을 ```<a href='https://github.com/kwj1270'>Web browser JavaScript</a>```로 바꾼다는 뜻이다. 
+
+
 ***
 # 4. JQuery 노드변경 API
 > 인용
