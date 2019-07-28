@@ -125,6 +125,35 @@ scrollLeft;         //  x 값 -> 수정해서 사용가능
 scrollTop;          //  y 값 -> 수정해서 사용가능
 
 ```
+### 3.1.1 예제
+```
+<style>
+    body{
+        padding:0;
+        margin:0;
+    }
+    div{
+        border:50px solid #1065e6;
+        padding:50px;
+        margin:50px;
+    }
+    #target{
+        width:100px;
+        height:2000px;
+    }
+</style>
+<input type="button" id="scrollBtn" value="scroll(0, 1000)" />
+<script>
+    document.getElementById('scrollBtn').addEventListener('click', function(){
+        window.scrollTo(0, 1000);
+    })
+</script>
+<div>
+    <div id="target">
+        Coding
+    </div>
+</div>
+```
 
 ***
 # 4. 스크린의 크기
