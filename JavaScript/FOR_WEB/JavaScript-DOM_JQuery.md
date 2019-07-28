@@ -146,6 +146,8 @@ $('#t1').prop('className', 'important');
 $('#t2').prop('class', 'current');            -> 프로퍼티는 원래 className 이다
 </script>
 ```
+
+***
 # 4. JQuery 조회범위 제한
 ## 4.1. Selector context(선택자)
 조회범위를 제한하는 것, 그 제한된 범위를 Selector Context라고 한다. (선택자)
@@ -168,4 +170,13 @@ $('#t2').prop('class', 'current');            -> 프로퍼티는 원래 classNam
     $( "#active .marked").css( "background-color", "red" );
 </script>
 ```
-## 4.1. Selector context(선택자)
+## 4.2. .find()
+ .find()는 JQuery 객체 하위객체 내에서 조회하는 기능을 제공한다.
+ ```
+ $( "#active").find('.marked').css( "background-color", "red" );
+ 하위 객체 중에서 .marked를 찾는다.
+ 
+ $('#active').css('color','blue').find('.marked').css( "background-color", "red" );
+ 물론 이렇게 사용도 가능하다.
+ ```
+ 단 find를 너무 복잡하게 사용할 경우 유지보수하기가 어려워진다.
