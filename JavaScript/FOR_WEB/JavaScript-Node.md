@@ -253,11 +253,133 @@ target이 자기 자신을 삭제하기 위해 부모노드로 이동 후 자기
 ***
 # 4. JQuery 노드변경 API
 > JQuery에서 노드를 제어하는 기능은 manipulation 카테고리에 속해있다.
-## 3.1. 추가
-### 3.1.1. 추가 메소드
+## 4.1. 추가
+### 4.1.1. 추가 메소드
 ```
-.befroe(node)
-.prepend(node)
-.append(node)
-.after(node)
+.before(node)           //맨 앞 prepend보다 우선 순위로 앞이다.
+.prepend(node)          //맨 앞 
+.append(node)           //맨 뒤
+.after(node)            //맨 뒤 prepend보다 우선 순위로 앞이다.
 ```
+![JQuery addMethod](https://user-images.githubusercontent.com/50267433/62006525-734d0800-b17c-11e9-81c2-feab57c9f3c5.png)
+간단한 예제
+```
+<div class="target">
+    content1
+</div>
+ 
+<div class="target">
+    content2
+</div>
+ 
+<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+<script>
+    $('.target').before('<div>before</div>');
+    $('.target').after('<div>after</div>');
+    $('.target').prepend('<div>prepend</div>');
+    $('.target').append('<div>append</div>');
+</script>
+```
+## 4.2. 제거
+### 4.2.1. 제거 메소드
+```
+.remove()           // 자기 자신을 삭제 -> 하위 노드들은 상위 노드랑 연결이 끊겨지므로 삭제됨
+.empty()            // 하위 노드들을 삭제 
+```
+간단한 예제
+```
+<div class="target" id="target1">
+    target 1
+</div>
+ 
+<div class="target" id="target2">
+    target 2
+</div>
+ 
+<input type="button" value="remove target 1" id="btn1" />
+<input type="button" value="empty target 2" id="btn2" />
+<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+<script>
+    $('#btn1').click(function(){
+        $('#target1').remove();
+    })
+    $('#btn2').click(function(){
+        $('#target2').empty();
+    })
+</script>
+```
+## 4.3. 바꾸기
+### 4.3.1. 바꾸기 메소드
+```
+$(바뀌는대상).replaceWith(새로운 내용)
+$(새로운 내용).replaceAll(바뀌는 대상)
+```
+간단한 예제
+```
+<div class="target" id="target1">
+    target 1
+</div>
+ 
+<div class="target" id="target2">
+    target 2
+</div>
+ 
+<input type="button" value="replaceAll target 1" id="btn1" />
+<input type="button" value="replaceWith target 2" id="btn2" />
+<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+<script>
+    $('#btn1').click(function(){
+        $('<div>replaceAll</div>').replaceAll('#target1');
+    })
+    $('#btn2').click(function(){
+        $('#target2').replaceWith('<div>replaceWith</div>');
+    })
+</script>
+```
+**복사**  
+.clone()메소드를 이용한다.  
+```
+<div class="target" id="target1">
+    target 1
+</div>
+ 
+<div class="target" id="target2">
+    target 2
+</div>
+ 
+<div id="source">source</div>
+ 
+<input type="button" value="clone replaceAll target 1" id="btn1" />
+<input type="button" value="clone replaceWith target 2" id="btn2" />
+<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+<script>
+    $('#btn1').click(function(){
+        $('#source').clone().replaceAll('#target1');
+    })
+    $('#btn2').click(function(){
+        $('#target2').replaceWith($('#source').clone());
+    })
+</script>
+```
+**이동**
+append()같은 추가 메소드를 이용해서 기존에 존재하던 요소를   
+특정 요소의 자식요소로 이동 시키는 것 같은 효과를 줄 수 있다.
+```
+<div class="target" id="target1">
+    target 1
+</div>
+ 
+<div id="source">source</div>
+ 
+<input type="button" value="append source to target 1" id="btn1" />
+<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+<script>
+    $('#btn1').click(function(){
+        $('#target1').append($('#source'));
+    })
+</script>
+```
+
+***
+# 5. 문자열로 노드 제어
+> 노드변경 API를 사용하는 방식은 복잡하고 장황하다.
