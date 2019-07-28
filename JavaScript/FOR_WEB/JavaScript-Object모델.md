@@ -4,6 +4,17 @@
 > DOM  
 > BOM  
 
+웹브라우저의 구성요소들은 하나하나 객체화 되어 있다.  
+이러한 객체들은 서로 계층적인 관계로 구조화 되어 있으며  
+**BOM** 과 **DOM** 은 이 구조로 구성하고 있는 가장 큰 틀의 분류이다.  
+
+이 관계를 그림으로 나타내면 아래와 같다. (출처 : http://learn.javascript.ru/browser-environment)
+![ObjectModel](/path/to/img.jpg)
+
+웹브라우저는 HTML 문서를 쉽게 읽어 웹페이지를 만드는 동시에  
+HTML의 각 태그들을 개체로 만들어 놓는다.  
+JavaScript는 이러한 객체들을 통해 웹 페이지를 조작,제어할 수 있다.
+
 # 1. Window 객체
 ## 1.1 의미
 ```
