@@ -147,3 +147,25 @@ $('#t2').prop('class', 'current');            -> 프로퍼티는 원래 classNam
 </script>
 ```
 # 4. JQuery 조회범위 제한
+## 4.1. Selector context(선택자)
+조회범위를 제한하는 것, 그 제한된 범위를 Selector Context라고 한다. (선택자)
+```
+<ul>
+    <li class="marked">html</li>
+    <li>css</li>
+    <li id="active">JavaScript
+        <ul>
+            <li>JavaScript Core</li>
+            <li class="marked">DOM</li>
+            <li class="marked">BOM</li>
+        </ul>
+    </li>
+</ul>
+<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+<script>
+    $( ".marked", "#active").css( "background-color", "red" );
+    //또는
+    $( "#active .marked").css( "background-color", "red" );
+</script>
+```
+## 4.1. Selector context(선택자)
