@@ -74,7 +74,8 @@ onkeypress이벤트 발생시 새창에 text가 입력된다.
 </body>
 </html>
 ```
-
+### 1.3.3. 실행 결과
+![newWindowComunication](https://user-images.githubusercontent.com/50267433/62002459-770e6980-b13f-11e9-867e-5930128cbcae.gif)
 
 
 
