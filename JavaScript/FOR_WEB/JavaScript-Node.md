@@ -145,14 +145,13 @@ traverse(document.getElementById('start'), function(elem){
 ```
 traverse(document.getElementById('start'), function(elem){
     console.log(elem);
-    
-                                            function(elem){
-    console.log(elem); 을 의미
-    
-즉 callback(target);은 
-    console.log(target);
-});
 ```
+에서 ``` 두번째 인자 function(elem){console.log(target);});```을 의미한다.  
+즉 
+```
+console.log(target); 으로 해석하면 된다.
+```
+
 ```
 var c = target.childNodes;
 ```
