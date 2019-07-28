@@ -34,16 +34,46 @@ window.open("URL", "target 값");       // '_blank','_self','_parent','_top'
 window.open("URL", "ot");              // 없으면 새창 , 있으면 reload 
 window.open("URL", "target 값" , "브라우저 창 속성 값");           
 ```
-
 ### 1.2.2. close()메소드
 ```
 let win = window.open('demo.html' , 'ot' , 'width = 300px , height = 500px');
 win.close(); 
 ```
 
-
-
-
+## 1.3 새로운 window와 커뮤니케이션
+새창에 대한 객체 win을 통하여  
+onkeypress이벤트 발생시 새창에 text가 입력된다.
+### 1.3.1. demo1.html
+```
+<!DOCTYPE html>
+<html>
+<body>
+    <input type="button" value="open" onclick="winopen();" />
+    <input type="text" onkeypress="winmessage(this.value)" />
+    <input type="button" value="close" onclick="winclose()" />
+    <script>
+    function winopen(){
+        win = window.open('demo2.html', 'ot', 'width=300px, height=500px');
+    }
+    function winmessage(msg){
+        win.document.getElementById('message').innerText=msg;
+    }
+    function winclose(){
+        win.close();
+    }
+    </script>
+</body>
+</html>
+```
+### 1.3.2. demo2.html
+```
+<!DOCTYPE html>
+<html>
+<body>
+<p id = "message"></p>
+</body>
+</html>
+```
 
 
 
