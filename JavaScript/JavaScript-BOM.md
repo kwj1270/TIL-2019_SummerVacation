@@ -75,18 +75,29 @@ onkeypress이벤트 발생시 새창에 text가 입력된다.
 </html>
 ```
 ### 1.3.3. 실행 결과
-![newWindowComunication](https://user-images.githubusercontent.com/50267433/62002459-770e6980-b13f-11e9-867e-5930128cbcae.gif)
+![newWindowComunication](https://user-images.githubusercontent.com/50267433/62002459-770e6980-b13f-11e9-867e-5930128cbcae.gif)  
 
+## 1.4 팝업차단
+### 1.4.1. demo3.html
+```
+<!DOCTYPE html>
+<html>
+<body>
+    <script>
+    window.open('demo2.html');
+    </script>
+</body>
+</html>
+```
 
-
-
-
-
-
-
-
-
-
+사용자의 인터렉션 없이 창을 열려고 하면 팝업이 차단 된다.  
+즉, 사용자의 고의적 접근이 아니면 팝업을 띄워서 접속 여부를 묻고   
+이는 사용자에게 문제발생시에 대한 책임을 이전시킨다.  
+  
+브라우저 설치시 브라우저는 사용자의 컴퓨터에 접근을 할 수 있는 권한을 가진다.  
+하지만 만약 어느 특정 페이지에서 브라우저를 조작하여 사용자의 데이터를 가져갈 수 있기에  
+같은 도메인을 사용하는 사이트끼리만 JS로 제어 할 수 있다.  
+팝업은 이러한 보안 책임을 사용자에게 이전하는 것 이다.  
 
 
 ***
