@@ -3,7 +3,7 @@ BOM(Browser Object Model)
 > 웹 브라우저의 창 또는 프레임을 추상화해서 프로그래밍적으로 제어할 수 있도록 제공하는 수단
 
 # 1. Window
-> 인용
+> window객체는 모든 객체의 상위 객체이다
 ## 1.1 전역객체 Window
 ### 1.1.1. 메소드
 ```
@@ -26,16 +26,42 @@ alert(window.b.id);
 alert(b.id);
 ```
 
-## 1.2. 
-### 1.1.1. 내용1
+## 1.2. 창/프레임 window
+### 1.2.1. open()메소드
 ```
-내용1
+window.open("URL");
+window.open("URL", "target 값");       // '_blank','_self','_parent','_top' 
+window.open("URL", "ot");              // 없으면 새창 , 있으면 reload 
+window.open("URL", "target 값" , "브라우저 창 속성 값");           
 ```
 
+### 1.2.2. close()메소드
+```
+let win = window.open('demo.html' , 'ot' , 'width = 300px , height = 500px');
+win.close(); 
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ***
-# 2. 새 창과 커뮤니케이션
+# 2. 사용자와 커뮤니케이션
 > 인용
-## 2.1. 소 주제
+## 2.1. 
 ### 2.1.1. 내용1
 ```
 내용1
