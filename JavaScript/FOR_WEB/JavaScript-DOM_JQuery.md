@@ -42,16 +42,37 @@ $function(){
 ```
 코드에서 느껴지 듯이 JQuery가 단순 JS보다 더 간략하다.
 ***
-# 2. 대주제
-> 인용
-## 2.1. 소 주제
-### 2.1.1. 내용1
+# 2. JQuery 객체
+> JQuery 함수의 리턴값으로 JQuery 함수를 이용해서  
+> 선택한 엘리먼트들에 대해서 처리할 작업을 프로퍼티로 가지고 있는 객체 
+## 2.1. 암시적 반복
+jQuery 객체의 가장 큰 특징은 암시적인 반복을 수행한다는 점이다.
+DOM과 다르게 선택된 엘리먼트 전체에 대해서 동시에 작업이 처리된다.
 ```
-내용1
-```   
+var list = $('li').css("color", "red").css("background-color" , "blue");
+
+모든 <li>의 color가 red가 되었다.
+```
+JQuery가 아닌 일반 JS 경우 반복문을 사용해야 된다.
+
+## 2.2. 체이닝
+JQuery 함수의 반환값이 JQuery객체이기 때문에 연속으로 메소드를 작성 할 수 있다.
+```
+$('li').css("color", "red").css("background-color" , "blue");
+```
+체이닝 대신에 객체로 표현하면 한번에 선언 할 수 있다.
+```
+$('li').css(
+            {"color" : "red",
+            {"background-color" , "blue"},
+            );
+```
+
+## 2.3. 유사배열
+## 2.4. Map
 
 ***
-# 3. 대주제
+# 3. JQuery API
 > 인용
 ## 3.1. 소 주제
 ### 3.1.1. 내용1
@@ -66,4 +87,4 @@ jQuery( document ).ready(function( $ ) {
   $('body').prepend('<h1>Hello world</h1>');
 });
 ```
-
+# 4. JQuery 조회범위 제한
