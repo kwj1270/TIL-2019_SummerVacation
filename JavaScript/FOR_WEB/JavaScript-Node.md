@@ -382,4 +382,129 @@ append()같은 추가 메소드를 이용해서 기존에 존재하던 요소를
 
 ***
 # 5. 문자열로 노드 제어
+## 5.1 프로퍼티와 메소드
 > 노드변경 API를 사용하는 방식은 복잡하고 장황하다.
+```
+프로퍼티
+innerHTML;                  // 자식 노드에 있는 하위 노드들을 문자열 형태로 반환 한다.
+innerHTML = "새로운 값";     // 문자열로 자식 노드를 만든다 . 즉 "<p>text<p>"를 입력하면 해당 문자열처럼 노드가 생성된다.
+
+outerHTML;                  // innerHTML()과 동작은 같으나 자기 자신도 같이 반환 한다.
+outerHTML = "새로운 값";     // innerHTML("값")과 동작은 같으나 자식 노드가 아닌 자기 자신을 만드므로 기존 자기 자신도 사라진다.
+
+innerText;                  // 문자열로 자식 노드의 Text객체의 값들을 가져온다.
+innerText= "새로운 값";      // 문자열로 자식 노드의 Text객체의 값들을 바꾼다.  
+
+outerText;                  // innerText()와 동작은 같지만 내부적으로 해당 태그도 포함한다(영향 x).
+outerText = "새로운 값";     // innerText("값")와 동작은 같지만 해당 태그의 요소도 함께 삭제된다.
+
+메소드
+insertAdjacentHTML()        // 좀 더 정교한 문자열을 이용해서 노드를 변경하고 싶을 때 사용 
+```
+## 5.1.1 innerHTML예제
+```
+<ul id="target">
+    <li>HTML</li>
+    <li>CSS</li>
+</ul>
+<input type="button" onclick="get();" value="get" />
+<input type="button" onclick="set();" value="set" />
+<script>
+    function get(){
+        var target = document.getElementById('target');
+        alert(target.innerHTML);
+    }
+    function set(){
+        var target = document.getElementById('target');
+        target.innerHTML = "<li>JavaScript Core</li><li>BOM</li><li>DOM</li>";
+    }
+</script>
+
+```
+## 5.1.2 outerHTML예제
+```
+<ul id="target">
+    <li>HTML</li>
+    <li>CSS</li>
+</ul>
+<input type="button" onclick="get();" value="get" />
+<input type="button" onclick="set();" value="set" />
+<script>
+    function get(){
+        var target = document.getElementById('target');
+        alert(target.outerHTML);
+    }
+    function set(){
+        var target = document.getElementById('target');
+        target.outerHTML = "<ol><li>JavaScript Core</li><li>BOM</li><li>DOM</li></ol>";
+    }
+</script>
+```
+
+## 5.1.3 innerText, outerText 예제
+```
+<ul id="target">
+    <li>HTML</li>
+    <li>CSS</li>
+</ul>
+<input type="button" onclick="get();" value="get" />
+<input type="button" onclick="set();" value="set" />
+<script>
+    function get(){
+        var target = document.getElementById('target');
+        alert(target.outerHTML);
+    }
+    function set(){
+        var target = document.getElementById('target');
+        target.outerHTML = "<ol><li>JavaScript Core</li><li>BOM</li><li>DOM</li></ol>";
+    }
+</script>
+```
+## 5.1.3 innerText, outerText 예제
+```
+<ul id="target">
+    <li>HTML</li>
+    <li>CSS</li>
+</ul>
+<input type="button" onclick="get();" value="get" />
+<input type="button" onclick="set();" value="set" />
+<script>
+    function get(){
+        var target = document.getElementById('target');
+        alert(target.innerText);
+    }
+    function set(){
+        var target = document.getElementById('target');
+        target.innerText = "<li>JavaScript Core</li><li>BOM</li><li>DOM</li>";
+    }
+</script>
+```
+## 5.1.4. insertAdjacentHTML() 예제
+```
+<ul id="target">
+    <li>CSS</li>
+</ul>
+<input type="button" onclick="beforebegin();" value="beforebegin" />
+<input type="button" onclick="afterbegin();" value="afterbegin" />
+<input type="button" onclick="beforeend();" value="beforeend" />
+<input type="button" onclick="afterend();" value="afterend" />
+<script>
+    function beforebegin(){
+        var target = document.getElementById('target');
+        target.insertAdjacentHTML('beforebegin','<h1>Client Side</h1>');
+    }
+    function afterbegin(){
+        var target = document.getElementById('target');
+        target.insertAdjacentHTML('afterbegin','<li>HTML</li>');
+    }
+    function beforeend(){
+        var target = document.getElementById('target');
+        target.insertAdjacentHTML('beforeend','<li>JavaScript</li>');
+    }
+    function afterend(){
+        var target = document.getElementById('target');
+        target.insertAdjacentHTML('afterend','<h1>Server Side</h1>');
+    }
+</script>
+```
+
