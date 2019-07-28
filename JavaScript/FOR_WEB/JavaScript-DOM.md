@@ -320,9 +320,34 @@ console.log('target.href', target.href);                                  //절�
 속성 방식 : 상대경로를 출력한다.  
 프로퍼티 방식 : 절대 경로를 출력한다.  
 
+# 5. 제이쿼리 JQuery
+> JQuery는 DOM을 내부에 감추고 보다 쉽게 웹페이지를 조작 할 수 있도록 돕는 도구 (라이브러리)
 
-## 3.1. 소 주제
-### 3.1.1. 내용1
+```
+예시)
+jQuery( document ).ready(function( $ ) {
+  $('body').prepend('<h1>Hello world</h1>');
+});
+```
+  
+**사용법**  
+기본
+```
+    JQuery(document).ready(function($){
+      $('선택자').메소드();
+})
+```
+요약(간략)   
+```
+    JQuery(document).ready(function($){
+      $('선택자').메소드();
+})
+```
+기본 버전은 이벤트를 이용한 방법으로 HTML 문서의 준비가 끝나면 실행된다.
+
+## 5.1. 제어대상 찾기
+
+### 5.1.1. 
 ```
 내용1
 ```
