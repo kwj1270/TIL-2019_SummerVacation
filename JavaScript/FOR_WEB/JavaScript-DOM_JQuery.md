@@ -56,19 +56,19 @@ var list = $('li').css("color", "red").css("background-color" , "blue");
 JQuery가 아닌 일반 JS 경우 반복문을 사용해야 된다.
 
 ## 2.2. 체이닝
-JQuery 함수의 반환값이 JQuery객체이기 때문에 연속으로 메소드를 작성 할 수 있다.
 ```
 $('li').css("color", "red").css("background-color" , "blue");
 ```
-체이닝 대신에 객체로 표현하면 한번에 선언 할 수 있다.
+JQuery 함수의 반환값이 JQuery객체이기 때문에 연속으로 메소드를 작성 할 수 있다.
 ```
 $('li').css(
             {"color" : "red",
             {"background-color" , "blue"},
             );
 ```
-
+체이닝 대신에 객체로 표현하면 한번에 선언 할 수 있다.
 ## 2.3. 유사배열
+
 ## 2.4. Map
 
 ***
