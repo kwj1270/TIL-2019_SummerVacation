@@ -9,12 +9,16 @@ Node 객체
 > Node 객체는 Node 간의 관계 정보를 담고있는 일련의 API를 가지고 있다.
 ## 1.1 관계 프로퍼티
 ```
-1.  .chidNodes
-2.  .firstChild
-3.  .lastChild
-4.  .nextChild
-5.  .previousChild
-6.  .parentNode
+노드는 Node객체에 속한 요소를 뜻하며 
+자주 사용하는 요소 객체들도 있지만 
+text이런것도 node로 취급한다 . 즉 개행도 노드로 취급한다.
+
+1.  .chidNodes              // 모든 자식 노드들
+2.  .firstChild             // 첫번째 자식 노드만
+3.  .lastChild              // 마지막 자식 노드만
+4.  .nextChild              // 다음 형제 노드
+5.  .previousChild          // 이전 형제 노드
+6.  .parentNode             // 부모 노드
 ```
 **예시**  
 ```
@@ -43,6 +47,14 @@ console.log(7, ul.parentNode);              // body
 </script>
 </body>
 ```
+Node는 Node 객체내에 속하는 객체를 말한다 했다.
+```console.log(3, ul.nextSibling);```를 보면           
+```
+<ul>
+            <li><a href="./535">JavaScript Core</a></li>
+```
+이 코드를 가리키는 것인데 ```<ul>``` 과 ```<li>```사이 빈공간에 개행이 있기에 ```#text```가 나오는 것이다.
+
 
 ***
 # 2. Node 종류 API
