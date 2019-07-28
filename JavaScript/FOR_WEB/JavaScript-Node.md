@@ -1,7 +1,7 @@
 Node 객체
 =======================
 > Node 객체는 DOM에서 시조와 같은 역할을 한다.  
-> 다시 말해서 모든 DOM 객체는 Node 객체를 상속 받는다.
+> 다시 말해서 모든 DOM 객체는 Node 객체를 상속 받는다.  
 ![Node](https://user-images.githubusercontent.com/50267433/62005180-4db70300-b16a-11e9-8450-4ac7ebb0460e.png)
 
 # 1. Node관계 API
