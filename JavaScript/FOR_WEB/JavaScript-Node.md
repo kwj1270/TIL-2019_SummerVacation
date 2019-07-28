@@ -252,9 +252,12 @@ target이 자기 자신을 삭제하기 위해 부모노드로 이동 후 자기
 
 ***
 # 4. JQuery 노드변경 API
-> 인용
-## 3.1. 소 주제
-### 3.1.1. 내용1
+> JQuery에서 노드를 제어하는 기능은 manipulation 카테고리에 속해있다.
+## 3.1. 추가
+### 3.1.1. 추가 메소드
 ```
-내용1
+.befroe(node)
+.prepend(node)
+.append(node)
+.after(node)
 ```
