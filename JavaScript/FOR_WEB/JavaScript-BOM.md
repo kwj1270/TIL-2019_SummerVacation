@@ -126,10 +126,77 @@ prompt("number","0");
 사용자로부터 값을 입력 받을수 있다.
 
 ***
-# 3. 대주제
-> 인용
-## 3.1. 소 주제
-### 3.1.1. 내용1
+# 3. Location 객체
+> 문서의 주소와 관련된 객체로   
+> window(창)의 문서 URL 변경 및 정보를 얻을 수 있다.
+## 3.1. 현재 URL
 ```
-내용1
+console.log(location.toString());
+console.log(location.href);
+alert(location);                    // alert은 문자열만 사용 가능하기에 location 객체를 문자열로 자동 치환
 ```
+## 3.2. URL Parsing
+```
+console.log(    lacation.protocol       // http
+                        .host           // 도메인
+                        .port           // port 번호
+                        .pathname       // 경로
+                        .search         // ? 파라미터 (queryString)
+                        .hash           // # 앵커
+
+);
+
+http://opentutorials.org :80 /module/1?id=1#hash ->생활코딩 CSS 강의
+프로토콜        도메인    포트    경로 파라미터 앵커  
+
+```
+## 3.3. URL 변경
+```
+location.href = "새로운 경로";      // 권장
+location = "새로운 경로";           
+```
+
+## 3.4. 웹 페이지 reload
+```
+location.reload;                    // 권장
+location.href = location.href;      
+```
+# 4. Navigator 객체
+> 브라우저 정보를 제공하는 객체, 주로 호환성 문제등을 위해서 사용된다.  
+> 현재 실행되는 브라우저의 제품명, 버전등을 알 수 있는 객체
+
+## 4.1. CrossBrowsing
+```
+W3C, ECMA 국제 표준에 따라 각 브라우저 공급 업체들은 브라우저를 만들지만
+각 브라우저마다 세밀한 부분까지는 다르다.
+그래서 같은 코드를 사용하더라도 다른 결과를 초래할수 있고 이를 CrossBrowsing issue 라 한다.
+
+고로 우리는 브라우저의 특성에 맞춰 코드를 작성해야 한다.
+```
+## 4.2. Navigator 객체와 프로퍼티
+### 4.2.1. navigator 객체 조회
+```
+console.dir(navigator);
+```
+Navigator 객체의 프로퍼티 열람 (list 형식)
+### 4.2.2. .appName
+```
+console.dir(navigator.appName);
+```
+웹 브라우저의 이름 출력 (일부 브라우저는 Netscape로 정의) 
+### 4.2.3. .appVersion
+```
+console.dir(navigator.appVersion);
+```
+웹 브라우저 정보 출력 (이름, 버전 등)
+### 4.2.4. .userAgent
+```
+console.dir(navigator.userAgent);
+```
+웹 브라우저가 웹 서버에 요청시 보내는 웹 브라우저에 대한 정보(헤더)  
+USER-AGENT HTTP 헤더의 내용
+### 4.2.5. .platform
+```
+console.dir(navigator.platform);
+```
+운영 체제 정보
