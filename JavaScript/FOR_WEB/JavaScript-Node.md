@@ -53,21 +53,109 @@ Node는 Node 객체내에 속하는 객체를 말한다 했다.
 <ul>
             <li><a href="./535">JavaScript Core</a></li>
 ```
-이 코드를 가리키는 것인데 ```<ul>``` 과 ```<li>```사이 빈공간에 개행이 있기에 ```#text```가 나오는 것이다.
-
+이 코드를 가리키는 것인데 ```<ul>``` 과 ```<li>```사이 빈공간에 개행이 있기에 ```#text```가 나오는 것이다.  
+  
+그리고 만약 개행 없이 코드가 이루어 져있을 경우 
+```
+<ul><li><a href="./535">JavaScript Core</a></li>
+```
+결과는 ``` li ```가 나온다.  
+Node 관계 API를 사용한다면 주의하자.  
 
 ***
 # 2. Node 종류 API
-> 인용
-## 2.1. 프로퍼티
+> Node 종류 API는 현재 선택된 노드가 어떤 타입인지 판단할 때 사용한다.
+## 2.1. 종류 프로퍼티
 ```
-내용1
+1.  .nodeType               // node의 type을 의미 (상수로 이루어진 타입들)
+2.  .nodeName               // node의 이름을 의미 (태그이름 , text 등의 이름)
 ```   
+nodeType
+```
+console.dir(Node); 입력하면 나온다.
+
+ATTRIBUTE_NODE: 2
+CDATA_SECTION_NODE: 4
+COMMENT_NODE: 8
+DOCUMENT_FRAGMENT_NODE: 11
+DOCUMENT_NODE: 9
+DOCUMENT_POSITION_CONTAINED_BY: 16
+DOCUMENT_POSITION_CONTAINS: 8
+DOCUMENT_POSITION_DISCONNECTED: 1
+DOCUMENT_POSITION_FOLLOWING: 4
+DOCUMENT_POSITION_IMPLEMENTATION_SPECIFIC: 32
+DOCUMENT_POSITION_PRECEDING: 2
+DOCUMENT_TYPE_NODE: 10
+ELEMENT_NODE: 1
+ENTITY_NODE: 6
+ENTITY_REFERENCE_NODE: 5
+NOTATION_NODE: 12
+PROCESSING_INSTRUCTION_NODE: 7
+TEXT_NODE: 3
+```
+예시
+```
+document.body.nodeType      ->      1 (ELEMENT_NODE: 1)
+document.body.nodeName      ->      'BODY'      
+```
+
 ## 2.2. 재귀함수를 이용한 nodeType , nodeName
 ```
-내용1
+<!DOCTYPE html>
+<html>
+<body id="start">
+<ul>
+    <li><a href="./532">html</a></li> 
+    <li><a href="./533">css</a></li>
+    <li><a href="./534">JavaScript</a>
+        <ul>
+            <li><a href="./535">JavaScript Core</a></li>
+            <li><a href="./536">DOM</a></li>
+            <li><a href="./537">BOM</a></li>
+        </ul>
+    </li>
+</ul>
+<script>
+function traverse(target, callback){
+/*★*/  if(target.nodeType === 1){
+        //if(target.nodeName === 'A')
+        callback(target);
+/*★*/  var c = target.childNodes;
+        for(var i=0; i<c.length; i++){
+            traverse(c[i], callback);       
+        }   
+    }
+}
+traverse(document.getElementById('start'), function(elem){
+    console.log(elem);
+});
+</script>
+</body>
+</html>
 ```   
-
+**해석**
+```
+   if(target.nodeType === 1){ 
+```
+는 빈공백 즉, Text는 무시하겠다.
+```
+ callback(target); 
+```
+여기서 callback 함수는
+```
+traverse(document.getElementById('start'), function(elem){
+    console.log(elem);
+    
+                                            function(elem){
+    console.log(elem); 을 의미
+    
+즉 callback(target);은 
+    console.log(target);
+});
+```
+```
+var c = target.childNodes;
+```
 
 ***
 # 3. Node 변경 API
