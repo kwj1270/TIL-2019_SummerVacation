@@ -76,7 +76,7 @@ li.style.color = "blue";
 # 2. HTML Element
 > 유사 배열이 아닌 하나의 요소가 담긴 객체
 ## 2.1. HTMLLIElement
-<li>로부터 얻는 객체
+```<li>```로부터 얻는 객체
 
 ```
 <li id = 'list'>~ </li>
@@ -86,7 +86,7 @@ console.log(target.constructor.name);
 
 ```
 ## 2.2. HTMLAnchorElement
-<a>로부터 얻는 객체
+```<a>```로부터 얻는 객체
 
 ```
 <a id = 'anchor'>~ </a>
@@ -96,7 +96,7 @@ console.log(target.constructor.name);
 ```
 
 ## 2.3. HTMLInputElement
-<input>로부터 얻는 객체
+```<input>```로부터 얻는 객체
 
 ```
 <input type="button" id = 'btn' />
