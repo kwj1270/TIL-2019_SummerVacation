@@ -184,7 +184,8 @@ ELEMENT_NODE: 1 인 것들만 실행시키겠다.
         li.appendChild(text);
         target.appendChild(li);
     }
- 
+    // <li>JavaScript</li>를 <ul>의 마지막 자식으로 놓겠다. 
+    
     function callInsertBefore(){
         var target = document.getElementById('target');
         var li = document.createElement('li');
@@ -192,9 +193,10 @@ ELEMENT_NODE: 1 인 것들만 실행시키겠다.
         li.appendChild(text);
         target.insertBefore(li, target.firstChild);
     }
+    
+    // <li>Jquey</li>를 <ul>의 첫번째 자식 앞으로 놓겠다. 즉 첫번째로 놓겠다.
 </script>
 ```
-
 ***
 # 4. JQuery 노드변경 API
 > 인용
