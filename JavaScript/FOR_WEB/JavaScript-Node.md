@@ -1,20 +1,20 @@
 Node 객체
 =======================
 > Node 객체는 DOM에서 시조와 같은 역할을 한다.  
-> 다시 말해서 모든 DOM 객체는 Node 객체를 상속 받는다.  
+> 다시 말해서 모든 DOM 객체는 Node 객체를 상속받는다.  
 
 ![Node](https://user-images.githubusercontent.com/50267433/62005180-4db70300-b16a-11e9-8450-4ac7ebb0460e.png)
 
-# 1. Node관계 API
-> Node 객체는 Node 간의 관계 정보를 담고있는 일련의 API를 가지고 있다.
+# 1. Node 관계 API
+> Node 객체는 Node 간의 관계 정보를 담고 있는 일련의 API를 가지고 있다.
 ## 1.1 관계 프로퍼티
 ```
-노드는 Node객체에 속한 요소를 뜻하며 
+노드는 Node 객체에 속한 요소를 뜻하며 
 자주 사용하는 요소 객체들도 있지만 
-text이런것도 node로 취급한다 . 즉 개행도 노드로 취급한다.
+text 이런 것도 node로 취급한다. 즉 개행도 노드로 취급한다.
 
 1.  .chidNodes              // 모든 자식 노드들
-2.  .firstChild             // 첫번째 자식 노드만
+2.  .firstChild             // 첫 번째 자식 노드만
 3.  .lastChild              // 마지막 자식 노드만
 4.  .nextChild              // 다음 형제 노드
 5.  .previousChild          // 이전 형제 노드
@@ -47,15 +47,15 @@ console.log(7, ul.parentNode);              // body
 </script>
 </body>
 ```
-Node는 Node 객체내에 속하는 객체를 말한다 했다.
+Node는 Node 객체 내에 속하는 객체를 말한다 했다.
 ```console.log(3, ul.nextSibling);```를 보면           
 ```
 <ul>
             <li><a href="./535">JavaScript Core</a></li>
 ```
-이 코드를 가리키는 것인데 ```<ul>``` 과 ```<li>```사이 빈공간에 개행이 있기에 ```#text```가 나오는 것이다.  
+이 코드를 가리키는 것인데 ```<ul>``` 과 ```<li>```사이 빈 공간에 개행이 있기에 ```#text```가 나오는 것이다.  
   
-그리고 만약 개행 없이 코드가 이루어 져있을 경우 
+그리고 만약 개행 없이 코드가 이루어져 있을 경우 
 ```
 <ul><li><a href="./535">JavaScript Core</a></li>
 ```
@@ -137,31 +137,62 @@ traverse(document.getElementById('start'), function(elem){
 ```
     if(target.nodeType === 1){ 
 ```
-ELEMENT_NODE: 1 인 것들만 실행 시키겠다.
-즉 태그요소 이외에 것 들은 무시하겠다.
+ELEMENT_NODE: 1 인 것들만 실행시키겠다.
+즉 태그 요소 이외에 것 들은 무시하겠다.
 ```
     var c = target.childNodes;   
 ```
-는 모든 자식노드들을 c에 담겠다. (위에서 Text는 걸러진다.즉, 태그들)
+는 모든 자식 노드들을 c에 담겠다. (태그들만 존재)
 ```
     for(var i=0; i<c.length; i++){
         traverse(c[i], callback);       
     }
 ```
-자식 노드들의 갯수만큼 반복하는데 자기자신인 traverse메소드를 통해 재귀를 한다  
-이유는 자식 노드안에 하위 노드가 존재 할 수 있고 또 그 하위 노드에 하위 노드가 있을 수 있으니  
-재귀함수를 넣어서 각 노드마다 자신의 하위 노드를 처리하게끔 한다.  
+자식 노드들의 개수만큼 반복하는데 자기 자신인 traverse 메소드를 통해 재귀를 한다  
+이유는 자식 노드 안에 하위 노드가 존재할 수 있고 또 그 하위 노드에 하위 노드가 있을 수 있으니  
+재귀 함수를 넣어서 각 노드마다 자신의 하위 노드를 처리하게끔 한다.  
   
 이제 각 태그들만 출력이 될 것이다.  
-재귀함수는 넓은 관점에서 보도록하고 추적은 되도록 하지 말자  
+재귀 함수는 넓은 관점에서 보도록 하고 추적은 되도록 하지 말자  
 
 ***
 # 3. Node 변경 API
-> 인용
-## 3.1. 소 주제
-### 3.1.1. 내용1
+> 노드를 추가, 제거, 변경 할 수 있다.
+## 3.1. 엘리멘트 생성 메소드
 ```
-내용1
+1.  document.createElement(tagname);        // 엘리멘트 생성(태그)
+2.  document.createTextNode(data);          // text 생성
+```
+## 3.2. 노드에 새로운 노드 추가 메소드
+```
+1. appendChild(child)                               // 노드의 마지막 자식으로 주어진 엘리먼트 추가
+2. insertBefore(new Element , referenceElement)     // 두번째 인자 엘리먼트 앞쪽에 엘리먼트 추가
+```
+## 3.3. 예제
+```
+<ul id="target">
+    <li>HTML</li>
+    <li>CSS</li>
+</ul>
+<input type="button" onclick="callAppendChild();" value="appendChild()" />
+<input type="button" onclick="callInsertBefore();" value="insertBefore()" />
+<script>
+    function callAppendChild(){
+        var target = document.getElementById('target');
+        var li = document.createElement('li');
+        var text = document.createTextNode('JavaScript');
+        li.appendChild(text);
+        target.appendChild(li);
+    }
+ 
+    function callInsertBefore(){
+        var target = document.getElementById('target');
+        var li = document.createElement('li');
+        var text = document.createTextNode('jQuery');
+        li.appendChild(text);
+        target.insertBefore(li, target.firstChild);
+    }
+</script>
 ```
 
 ***
