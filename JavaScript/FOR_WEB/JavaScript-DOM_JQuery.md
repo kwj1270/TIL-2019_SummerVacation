@@ -85,16 +85,16 @@ $()는 제이쿼리 객체를 반환 해주는 메소드이다.
 li[0].css('color':'red');     -> 일반 객체 -> 제이쿼리 객체가 아니다 ->  X
 $(li[0]).css('color':'red');  -> 일반 객체를 제이쿼리화             -> O
 ```
-즉 제이쿼리 객체만 제이쿼리 메소드를 이용 할 수 있는 것 이다.
-this 와 $(this)도 마찬가지이다.
-제이쿼리에서 this를 제어하기 위해서는 $(this)로 사용하는 것이다.
+즉 제이쿼리 객체만 제이쿼리 메소드를 이용 할 수 있는 것 이다.  
+this 와 $(this)도 마찬가지이다.  
+제이쿼리에서 this를 제어하기 위해서는 $(this)로 사용하는 것이다.  
 
 ## 2.5. Map
-map은 JQuery 객체의 엘리먼트를 하나씩 순회한다.
-이 때 첫번째 인자로 전달된 함수가 호출되는데
-처번째 인자로 엘리먼트의 인덱스(현재요소의 Index)
-두번째 인자로 엘리먼트 객체(DOM)가 전달된다.
-(주의점은 웬만한 배열관련 function들은 (요소 , 인덱스 , 배열)이런식으로 인자가 들어온다.)
+map은 JQuery 객체의 엘리먼트를 하나씩 순회한다.  
+이 때 첫번째 인자로 전달된 함수가 호출되는데  
+처번째 인자로 엘리먼트의 인덱스(현재요소의 Index)  
+두번째 인자로 엘리먼트 객체(DOM)가 전달된다.  
+(주의점은 웬만한 배열관련 function들은 (요소 , 인덱스 , 배열)이런식으로 인자가 들어온다.)  
 ```
 var li = $('li');
 li.map(function(index , elem){
@@ -103,29 +103,47 @@ li.map(function(index , elem){
 });
 ```
 
-
-
-
-
-
-
-
-
-
 ***
-# 3. JQuery API
-> 인용
-## 3.1. 소 주제
-### 3.1.1. 내용1
+# 3. JQuery API (속성)
+## 3.1. 속성 메소드
+JQuery를 이용해서 속성을 제어할 수 있다.
 ```
-내용1
+.attr('속성');               // 속성 값 얻기
+.attr('속성', '변경값');     // 속성 값 변경
+.removeAttr('속성');        // 속성 삭제하기 
+  
+var t = $('#target');                               // 선택자를 통한 id가 target인 요소를 제이쿼리 객체로 얻는다.
+t.attr("href");                                     // 대상의 href 속성 값 얻기
+t.attr("title", "https://github.com/kwj1270");      // 대상의 title 속성 값을 변경한다.
+t.removeAttr("title");                              // 대상의 title 속성을 없앤다.
 ```
+## 3.2. 속성과 프로퍼티
+DOM과 마찬가지로 JQuey도 속성과 프로퍼티를 구분한다.
+```
+속성      : .attr()
+프로퍼티   : .prop()   
 
-
+<a id="t1" href="./demo.html">opentutorials</a>
+<input id="t2" type="checkbox" checked="checked" />
+<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+<script>
+var t1 = $('#t1');
+console.log(t1.attr('href'));       // 상대 경로 
+console.log(t1.prop('href'));       // 절대 경로
+ 
+var t2 = $('#t2');
+console.log(t2.attr('checked'));    // checked / unchecked
+console.log(t2.prop('checked'));    // true / false
+</script>
 ```
-예시)
-jQuery( document ).ready(function( $ ) {
-  $('body').prepend('<h1>Hello world</h1>');
-});
+또한 JQuery를 이용하면 프로퍼티의 이름으로 어떤 것을 사용하건 올바른 것으로 교정해준다
+```
+<div id="t1">opentutorials</div>
+<div id="t2">opentutorials</div>
+<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+<script>
+$('#t1').prop('className', 'important'); 
+$('#t2').prop('class', 'current');            -> 프로퍼티는 원래 className 이다
+</script>
 ```
 # 4. JQuery 조회범위 제한
