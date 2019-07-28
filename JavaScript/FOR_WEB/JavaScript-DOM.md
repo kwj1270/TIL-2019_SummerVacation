@@ -6,7 +6,6 @@ DOM(Document OBject Model)
 # 1. 제어대상 찾기
 > 문서를 제어하기 위한 필수 행위이다.
 ## 1.1 getElementByTagName()
-### 1.1.1. 코드
 ```
 getElementByTagName('태그');
 getElementByTagName('body');
@@ -22,7 +21,6 @@ var lis = ul.getElementsByTagName('li');
 이렇게 사용한다.
 
 ## 1.2. getElementByClassName()
-### 1.2.1. 코드
 ```
 getElementByClassName('클래스명');
 getElementByClassName('glass');
@@ -32,7 +30,6 @@ getElementByClassName('glass');
 선택자가 아니므로 .을 붙이지는 않는다.
 
 ## 1.3. getElementById()
-### 1.3.1. 코드
 ```
 getElementById('아이디명');
 getElementById('yd');
