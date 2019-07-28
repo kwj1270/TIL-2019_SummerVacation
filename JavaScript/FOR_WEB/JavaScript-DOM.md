@@ -330,7 +330,13 @@ jQuery( document ).ready(function( $ ) {
 });
 ```
   
-**사용법**  
+**사용법**
+구조
+```
+$('선택자').메소드('속성', '값');
+$('선택자').메소드({'속성' : '값'});
+
+```
 기본
 ```
     JQuery(document).ready(function($){
