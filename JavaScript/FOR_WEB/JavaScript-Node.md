@@ -121,8 +121,8 @@ function traverse(target, callback){
         //if(target.nodeName === 'A')
         callback(target);
 /*★*/  var c = target.childNodes;
-        for(var i=0; i<c.length; i++){
-            traverse(c[i], callback);       
+/*★*/  for(var i=0; i<c.length; i++){
+/*★*/       traverse(c[i], callback);       
         }   
     }
 }
@@ -135,26 +135,25 @@ traverse(document.getElementById('start'), function(elem){
 ```   
 **해석**
 ```
-   if(target.nodeType === 1){ 
+    if(target.nodeType === 1){ 
 ```
-는 빈공백 즉, Text는 무시하겠다.
+ELEMENT_NODE: 1 인 것들만 실행 시키겠다.
+즉 태그요소 이외에 것 들은 무시하겠다.
 ```
- callback(target); 
+    var c = target.childNodes;   
 ```
-여기서 callback 함수는
+는 모든 자식노드들을 c에 담겠다. (위에서 Text는 걸러진다.즉, 태그들)
 ```
-traverse(document.getElementById('start'), function(elem){
-    console.log(elem);
+    for(var i=0; i<c.length; i++){
+        traverse(c[i], callback);       
+    }
 ```
-에서 ``` 두번째 인자 function(elem){console.log(target);});```을 의미한다.  
-즉 
-```
-console.log(target); 으로 해석하면 된다.
-```
-
-```
-var c = target.childNodes;
-```
+자식 노드들의 갯수만큼 반복하는데 자기자신인 traverse메소드를 통해 재귀를 한다  
+이유는 자식 노드안에 하위 노드가 존재 할 수 있고 또 그 하위 노드에 하위 노드가 있을 수 있으니  
+재귀함수를 넣어서 각 노드마다 자신의 하위 노드를 처리하게끔 한다.  
+  
+이제 각 태그들만 출력이 될 것이다.  
+재귀함수는 넓은 관점에서 보도록하고 추적은 되도록 하지 말자  
 
 ***
 # 3. Node 변경 API
