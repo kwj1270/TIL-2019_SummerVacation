@@ -24,17 +24,17 @@ EVENT
   
 즉 button이 click 되면  alert('hello world')을 발생시켜라 라는 의미가 된다.
 ### 1.1.2. 자기 자신 이벤트 등록
-불편한 방법 
+**불편한 방법** 
 ```
 <input type="button" id="target" onclick="alert('Hello world, '+document.getElementById('target').value);" value="button" />
 ```
-this를 활용한 방법
+**this를 활용한 방법**
 ```
 <input type="button" onclick="alert('Hello world, '+this.value);" value="button" />
 ```
-this 객체는 원래는 window 객체이거나 자기자신을 호출한 대상을 의미하는데(객체 안이면 객체가 this)  
+this 객체는 원래는 자기 자신을 호출한 대상을 의미하는데(일반적으로 window 객체안에서는 객체 의미)  
 이벤트에서는 이 this를 event target 즉 이벤트 대상으로 변경시켰다.   
-그래서 이벤트 대상을 가리키는 this 객체를 이용하면 조금더 간편하게 코드를 작성 할 수 있다.
+그래서 이벤트 대상을 의미하는 this 객체를 이용하면 조금더 간편하게 코드를 작성 할 수 있다.  
 ## 1.2. 소 주제
 ### 1.1.1. 내용1
 ```
