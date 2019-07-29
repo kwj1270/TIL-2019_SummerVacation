@@ -192,23 +192,23 @@ W3C, ECMA 국제 표준에 따라 각 브라우저 공급 업체들은 브라우
 console.dir(navigator);
 ```
 Navigator 객체의 프로퍼티 열람 (list 형식)
-### 4.2.2. .appName
+### 4.2.2. appName
 ```
 console.dir(navigator.appName);
 ```
 웹 브라우저의 이름 출력 (일부 브라우저는 Netscape로 정의) 
-### 4.2.3. .appVersion
+### 4.2.3. appVersion
 ```
 console.dir(navigator.appVersion);
 ```
 웹 브라우저 정보 출력 (이름, 버전 등)
-### 4.2.4. .userAgent
+### 4.2.4. userAgent
 ```
 console.dir(navigator.userAgent);
 ```
 웹 브라우저가 웹 서버에 요청시 보내는 웹 브라우저에 대한 정보(헤더)  
 USER-AGENT HTTP 헤더의 내용
-### 4.2.5. .platform
+### 4.2.5. platform
 ```
 console.dir(navigator.platform);
 ```
