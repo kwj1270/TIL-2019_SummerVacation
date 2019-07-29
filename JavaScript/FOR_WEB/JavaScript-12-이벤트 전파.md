@@ -4,9 +4,6 @@
 > 이는 이벤트가 발생시 중첩된 태그들도 대상이 될 수 있다.  
   
 ![버블링과 캡처링 구조](https://user-images.githubusercontent.com/50267433/62018189-9b784d80-b1f4-11e9-9763-b9be95ce3670.PNG)
-
-1. 캡처링 : 부모요소부터 자식요소 순으로 이벤트가 발생하는 것
-2. 버블링 : 자식요소부터 부모요소 순으로 이벤트가 발생하는 것  
   
 **HTML 코드**
 ```
@@ -31,7 +28,7 @@
 # 1. 캡처링
 > 부모요소부터 자식 요소 순으로 이벤트가 발생하는 것
 
-## 1.1 코드
+## 1.1. 코드
  ```
  <script>
         function handler(event){
@@ -59,22 +56,26 @@ Event.AT_TARGET(타겟)	2
 Event.BUBBLING_PHASE(버블링)	3
 ```
 이는 인덱스 값 0-2 까지 1 만큼 차이가 나므로 -1을 사용한 것이다.
-
-event.stopPropagation() : 버블링, 캡쳐링 중단.
-### 1.1.1. 내용1
+## 1.2. 결과
 ```
-내용1
+INPUT HTML capturing
+INPUT BODY capturing
+INPUT FIELDSET capturing
+INPUT INPUT target
 ```
-## 1.2. 소 주제
-### 1.1.1. 내용1
-```
-내용1
-```
-
 ***
-# 2. 대주제
-> 인용
-## 2.1. 소 주제
+# 2. 버블링
+> 자식요소부터 부모요소 순으로 이벤트가 발생하는 것  
+## 2.1. 코드
+```
+document.getElementById('target').addEventListener('click', handler, false);
+document.querySelector('fieldset').addEventListener('click', handler, false);
+document.querySelector('body').addEventListener('click', handler, false);
+document.querySelector('html').addEventListener('click', handler, false);
+
+addEventListener의 3번째 인자가 true 에서 false로 바뀌었다.
+3번째 인자는 생략하면 fasle 가 된다.
+```
 ### 2.1.1. 내용1
 ```
 내용1
@@ -88,3 +89,5 @@ event.stopPropagation() : 버블링, 캡쳐링 중단.
 ```
 내용1
 ```
+event.stopPropagation() : 버블링, 캡쳐링 중단.
+
