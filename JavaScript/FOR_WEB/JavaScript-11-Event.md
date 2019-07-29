@@ -144,3 +144,28 @@ if(t.addEventListener){
 IE8이하 버전에서는 addEventListener 가 호환되지 않으니   
 attachEvent메소드를 사용해야 한다.
 
+### 2.1. 부록
+addEventListener 는 function을 따로 정의해서 사용 할 수 있다.
+```
+<input type="button" id="target1" value="button1" />
+<input type="button" id="target2" value="button2" />
+<script>
+    var t1 = document.getElementById('target1');
+    var t2 = document.getElementById('target2');
+    function btn_listener(event){
+        switch(event.target.id){
+            case 'target1':
+                alert(1);
+                break;
+            case 'target2':
+                alert(2);
+                break;
+        }
+    }
+    t1.addEventListener('click', btn_listener);
+    t2.addEventListener('click', btn_listener);
+</script>
+```
+위 예제를 보면 이벤트 객체를 이용하여 복수의 엘리먼트에 하나의 리스너를 등록해서 재사용하고 있다. 
+프로퍼티 리스너 방식은 ``` 대상.타입 = 핸들러(동작) ``` 이기에 사용 할 수가 없다.
+이렇듯 addEventListener는 다른 방식에 비해 사용하기가 편하다.
