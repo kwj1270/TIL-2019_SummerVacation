@@ -34,6 +34,14 @@ window.open("URL", "target 값");       // '_blank','_self','_parent','_top'
 window.open("URL", "ot");              // 없으면 새창 , 있으면 reload 
 window.open("URL", "target 값" , "브라우저 창 속성 값");           
 ```
+target 값은 HTML의 target 속성의 값을 의미한다.  
+```
+* ```'_blank'```  : 새 프레임에서 열기  
+* ```'_self'```   : 현재 프레임에서 열기  
+* ```'_parent'``` : 부모 프레임에서 열기  
+* ```'_top'```    : 최상위 프레임에서 열기 즉 가장 선조프레임 에서 연다  
+```
+브라우저 창 속성 값은 가로 , 세로 등을 나타낸다  
 ### 1.2.2. close()메소드
 ```
 let win = window.open('demo.html' , 'ot' , 'width = 300px , height = 500px');
