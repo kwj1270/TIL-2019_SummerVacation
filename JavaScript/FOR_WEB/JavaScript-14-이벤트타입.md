@@ -5,8 +5,7 @@ Event Type
 ## 1.1 submit
 > 'submit'은 폼의 정보를 서버로 전송하는 명령인 submit 동작시에 일어난다.
 
-### 1.1.1 코드
-
+### 1.1.1 예제
 ```
 <form id="target" action="result.html">
     <label for="name">name</label> <input id="name" type="name" />
@@ -31,9 +30,7 @@ submit 명령이 실행 되면 function을 실행한다.
 > input(text,radio,checkbox), textarea, select 태그에 적용된다.  
 > 즉 form의 하위요소인 특정 input과 textarea, select 태그에 적용된다.  
 
-### 1.2.1 코드
-
-
+### 1.2.1 예제
 ```
 <p id="result"></p>
 <input id="target" type="name" />
@@ -53,7 +50,7 @@ name 즉 텍스트 필드의 값이 바뀌면 ```<p id="result"></p>```에 값�
 ```<base>, <bdo>, <br>, <head>, <html>, <iframe>, <meta>, <param>, <script>, <style>, <title>```
 는 적용이 불가능 하다.
 
-### 1.3.1 코드
+### 1.3.1 예제
 
 ```
 <input id="target" type="name" />
@@ -151,3 +148,163 @@ load 이벤트는 문서내의 모든 리소스(이미지, 스크립트)의 다�
 ```
 DOMContentLoaded는 문서에서 스크립트 작업을 할 수 있을 때 실행되기 때문에 이미지 다운로드를 기다릴 필요가 없다.  
 즉 일반적인 DOM 데이터만 로딩이 완료되면 실행 한다.
+
+***
+# 3. 마우스
+## 3.1. 이벤트 타입
+```
+click               클릭했을 때 발생하는 이벤트. 
+dblclick            더블클릭을 했을 때 발생하는 이벤트
+mousedown           마우스를 누를 때 발생 (누르고 있는)
+mouseup             마우스버튼을 땔 때 발생
+mousemove           마우스를 움직일 때
+mouseover           마우스가 엘리먼트에 진입할 때 발생
+mouseout            마우스가 엘리먼트에서 빠져나갈 때 발생
+contextmenu         컨텍스트 메뉴가 실행될 때 발생
+```
+## 3.2. 키보드 조합
+```
+event.shiftKey          shit키 누르고 있을때 
+event.altKey             alt키 누르고 있을때
+event.ctrlKey           crtl키 누르고 있을때
+
+event 프로퍼티이므로 이미 어떠한 이벤트 동작했을 때 같이 조합되는 형태이다.
+```
+## 3.3. 마우스 포인터 위치
+```
+clientX             마우스의 x 좌표
+clientY             마우스의 y 좌표
+```
+## 3.4. 예제
+```
+<html>
+    <head>
+        <style>
+            body{
+                background-color: black;
+                color:white;
+            }
+            #target{
+                width:200px;
+                height:200px;
+                background-color: green;
+                margin:10px;
+            }
+            table{
+                border-collapse: collapse;
+                margin:10px;
+                float: left;
+                width:200px;
+            }
+            td, th{
+                padding:10px;
+                border:1px solid gray;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="target">
+ 
+        </div>
+        <table>
+            <tr>
+                <th>event type</th>
+                <th>info</th>
+            </tr>
+            <tr>
+                <td>click</td>
+                <td id="elmclick"></td>
+            </tr> 
+            <tr>
+                <td>dblclick</td>
+                <td id="elmdblclick"></td>
+            </tr>
+            <tr>
+                <td>mousedown</td>
+                <td id="elmmousedown"></td>
+            </tr>         
+            <tr>
+                <td>mouseup</td>
+                <td id="elmmouseup"></td>
+            </tr>         
+            <tr>
+                <td>mousemove</td>
+                <td id="elmmousemove"></td>
+            </tr>         
+            <tr>
+                <td>mouseover</td>
+                <td id="elmmouseover"></td>
+            </tr>         
+            <tr>
+                <td>mouseout</td>
+                <td id="elmmouseout"></td>
+            </tr>
+            <tr>
+                <td>contextmenu</td>
+                <td id="elmcontextmenu"></td>
+            </tr>         
+        </table>
+        <table>
+            <tr>
+                <th>key</th>
+                <th>info</th>
+            </tr>
+            <tr>
+                <td>event.altKey</td>
+                <td id="elmaltkey"></td>
+            </tr>
+            <tr>
+                <td>event.ctrlKey</td>
+                <td id="elmctrlkey"></td>
+            </tr>
+            <tr>
+                <td>event.shiftKey</td>
+                <td id="elmshiftKey"></td>
+            </tr>
+        </table>
+        <table>
+            <tr>
+                <th>position</th>
+                <th>info</th>
+            </tr>
+            <tr>
+                <td>event.clientX</td>
+                <td id="elemclientx"></td>
+            </tr>
+            <tr>
+                <td>event.clientY</td>
+                <td id="elemclienty"></td>
+            </tr>
+        </table>
+        <script>
+        var t = document.getElementById('target');
+        function handler(event){
+            var info = document.getElementById('elm'+event.type);
+            var time = new Date();
+            var timestr = time.getMilliseconds();
+            info.innerHTML = (timestr);
+            if(event.altKey){
+                document.getElementById('elmaltkey').innerHTML = timestr;
+            }
+            if(event.ctrlKey){
+                document.getElementById('elmctrlkey').innerHTML = timestr;
+            }
+            if(event.shiftKey){
+                document.getElementById('elmshiftKey').innerHTML = timestr;
+            }
+            document.getElementById('elemclientx').innerHTML = event.clientX;
+            document.getElementById('elemclienty').innerHTML = event.clientY;
+        }
+        t.addEventListener('click', handler);
+        t.addEventListener('dblclick', handler);
+        t.addEventListener('mousedown', handler);
+        t.addEventListener('mouseup', handler);
+        t.addEventListener('mousemove', handler);
+        t.addEventListener('mouseover', handler);
+        t.addEventListener('mouseout', handler);
+        t.addEventListener('contextmenu', handler);
+        </script>
+    </body>
+</html>
+```
+
