@@ -45,9 +45,9 @@ this 객체는 원래는 자기 자신을 호출한 대상을 의미하는데(�
 <script>
     let t = document.getElementById('target');
     t.onclick = function(event){
-//대상 //종류       //동작
+   대상 종류       동작
           alert('Hello world');
-    }         //동작 내용
+    }         동작 내용
 </script>
 ```
 
