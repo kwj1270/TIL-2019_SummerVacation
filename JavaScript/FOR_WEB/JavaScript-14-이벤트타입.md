@@ -1,6 +1,5 @@
 Event Type
 =======================
-> 인용
 
 # 1. 폼
 > 'submit'은 폼의 정보를 서버로 전송하는 명령인 submit 동작시에 일어난다.
@@ -26,7 +25,6 @@ submit 명령이 실행 되면 function을 실행한다.
 해당 예제는 텍스트필드의 값이 0일 경우 경고창을 띄우고  
 기본 동작인 전송(submit)을 취소한다.  
 
-***
 ## 1.2 change
 ### 1.2.1 코드
 
@@ -45,7 +43,6 @@ t.addEventListener('change', function(event){
 </script>
 ```
 name 즉 텍스트 필드의 값이 바뀌면 ```<p id="result"></p>```에 값을 넣어준다.(innerHTML)  
-
 
 ## 1.3 blur , focus
 ### 1.3.1 코드
