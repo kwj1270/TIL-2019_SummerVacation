@@ -4,8 +4,7 @@ DOM(Document OBject Model)
 > Document 객체의 프로퍼티는 문서내의 주요 엘리먼트에 접근 할 수 있는 객체를 제공
 
 # 1. 제어대상 찾기
-> 문서를 제어하기 위한 필수 행위이다.
-## 1.1 getElementByTagName()
+## 1.1. getElementByTagName()
 ```
 getElementByTagName('태그');
 getElementByTagName('body');
@@ -152,7 +151,7 @@ Dom은 HTML 뿐만 아니라 XML,SVG,XUL과 같은
 Element는 마크업 언어의 일반적인 규격에 대한 속성을 정의하고 있고  
 각각의 구체적인 언어를 위한 기능은 각각의 ~Element 객체를 통해서 추가해서 사용하고 있다.
 ## 4.1. 식별자 API
-### 4.1.1. .tagName
+### 4.1.1. tagName
 ```
 <ul>
     <li>html</li>
@@ -164,7 +163,7 @@ console.log(document.getElementById('active').tagName)
 </script>
 ```
 태그의 이름을 얻을 수 있다. 단, 변경은 불가능하다.
-### 4.1.1. .id
+### 4.1.1. id
 ```
 <ul>
     <li>html</li>
@@ -179,7 +178,7 @@ console.log(active.id);
 </script>
 ```
 id의 값을 얻을 수 있고 변경 또한 가능하다.
-### 4.1.1. .className
+### 4.1.1. className
 ```
 <ul>
     <li>html</li>
@@ -197,7 +196,7 @@ active.className += " readed"
 ```
 class의 값을 얻을 수 있고 변경 또한 가능하다.
 단 className보다 classList를 추천한다.
-### 4.1.1. .classList
+### 4.1.1. classList
 ```
 <ul>
     <li>html</li>
