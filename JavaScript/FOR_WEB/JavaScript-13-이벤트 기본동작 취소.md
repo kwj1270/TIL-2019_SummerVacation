@@ -94,4 +94,4 @@ event 객체의 **preventDefault()** 를 실행하는 것이다.
       if(document.getElementById('prevent').checked) event.preventDefault();
 }
 ```            
-
+또한 IE9 이하 버전에서는 ```event.returnValue = false```로 해야 한다. 
