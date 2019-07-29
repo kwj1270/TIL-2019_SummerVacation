@@ -85,7 +85,7 @@ INPUT HTML bubbling
 ```
 
 ***
-# 3. 이벤트 중단 stopPropagation()
+# 3. 이벤트 전파 중단 stopPropagation()
 ## 3.1. 코드
 ```
 function handler(event){
@@ -103,11 +103,17 @@ document.querySelector('body').addEventListener('click', stophandler, false);
 document.querySelector('html').addEventListener('click', handler, false);
 
 ```
+
+```event.stopPropagation()``` 메소드는 버블링 및 캡쳐링을 중단시킨다.
+```stophandler()``` 메소드는 이 메소드를 포함하였고  
+```document.querySelector('body').addEventListener('click', stophandler, false);```
+를 통해서 실제로 body 까지만 전파가 되었고 html 부터는 전파가 되지 않는다.
+
+
 ## 3.2. 결과
 ```
 INPUT INPUT target
 INPUT FIELDSET bubbling
 INPUT BODY bubbling
 ```
-event.stopPropagation() : 버블링, 캡쳐링 중단.
 
