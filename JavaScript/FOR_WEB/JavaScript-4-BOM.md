@@ -42,11 +42,15 @@ target 값은 HTML의 target 속성의 값을 의미한다.
 * ```'_top'```    : 최상위 프레임에서 열기 즉 가장 선조프레임 에서 연다  
 ```
 브라우저 창 속성 값은 가로 , 세로 등을 나타낸다  
+```
+window.open('demo2.html', '_blank', 'width=200, height=200, resizable=no');
+```
 ### 1.2.2. close()메소드
 ```
 let win = window.open('demo.html' , 'ot' , 'width = 300px , height = 500px');
 win.close(); 
 ```
+해당하는 객체의 브라우저 창을 닫는다.  
 
 ## 1.3. 새로운 window와 커뮤니케이션
 새창에 대한 객체 win을 통하여  
