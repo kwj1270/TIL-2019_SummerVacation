@@ -22,7 +22,7 @@ HTML에서 JavaScript 로드하기
 > <script>태그 안에 JavaScript를 기술하는 방식  
 ## 2.1. 장점
 ```
-HTML 태그와 JS코드를 분리하여 INLINE의 단점을 어느정도 해소화
+HTML 태그와 JS코드를 분리하여 INLINE의 단점을 어느정도 해소
 ```
 ## 2.2. 예제
 ```
