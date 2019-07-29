@@ -1,8 +1,8 @@
 HTML에서 JavaScript 로드하기
 =======================
-> INLINE
-> SCRIPT
-> 외부파일 호출
+> INLINE  
+> SCRIPT  
+> 외부파일 호출  
 
 
 # 1. INLINE
