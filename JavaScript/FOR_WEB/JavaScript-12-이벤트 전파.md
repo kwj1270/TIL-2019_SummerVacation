@@ -76,18 +76,38 @@ document.querySelector('html').addEventListener('click', handler, false);
 addEventListener의 3번째 인자가 true 에서 false로 바뀌었다.
 3번째 인자는 생략하면 fasle 가 된다.
 ```
-### 2.1.1. 내용1
+### 2.2. 결과
 ```
-내용1
-```   
+INPUT INPUT target
+INPUT FIELDSET bubbling
+INPUT BODY bubbling
+INPUT HTML bubbling
+```
 
 ***
-# 3. 대주제
-> 인용
-## 3.1. 소 주제
-### 3.1.1. 내용1
+# 3. 이벤트 중단 stopPropagation()
+## 3.1. 코드
 ```
-내용1
+function handler(event){
+    var phases = ['capturing', 'target', 'bubbling']
+    console.log(event.target.nodeName, this.nodeName, phases[event.eventPhase-1]);
+}
+function stophandler(event){
+    var phases = ['capturing', 'target', 'bubbling']
+    console.log(event.target.nodeName, this.nodeName, phases[event.eventPhase-1]);
+    event.stopPropagation();
+}
+document.getElementById('target').addEventListener('click', handler, false);
+document.querySelector('fieldset').addEventListener('click', handler, false);
+document.querySelector('body').addEventListener('click', stophandler, false);
+document.querySelector('html').addEventListener('click', handler, false);
+
+```
+## 3.2. 결과
+```
+INPUT INPUT target
+INPUT FIELDSET bubbling
+INPUT BODY bubbling
 ```
 event.stopPropagation() : 버블링, 캡쳐링 중단.
 
