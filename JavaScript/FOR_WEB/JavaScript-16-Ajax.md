@@ -48,7 +48,7 @@ var xhr = new XMLHttpRequest();
 xhr.open('GET', './time.php');
 //    'POST/GET' , '파일 경로'
 ```
-```./time.php```경로에 있는 파일을 ```GET```방식으로 연다.
+```./time.php```경로에 있는 파일을 ```GET```방식으로 연결시킨다.(전송X)
 ```
  xhr.onreadystatechange = function(){
         if(xhr.readyState === 4 && xhr.status === 200){
@@ -57,6 +57,9 @@ xhr.open('GET', './time.php');
     }
 ```
 onreadystatechange 이벤트는 서버와의 통신이 끝났을 때 호출되는 이벤트이다.   
+그런데 사실 우리는 서버에 요청을 전송을 하지 않았다.  
+하지만 서버와의 통신이 끝났을 때 호출되므로 코드 에러가 나지 않는 것이다. 
+  
 xhr이 서버와의 통신이 끝났을 때    
 ```xhr.readyState === 4``` 인지 그리고  
 ```xhr.status === 200```인지 확인한다.  
@@ -70,9 +73,7 @@ xhr이 서버와의 통신이 끝났을 때
 ```
 xhr.send(); // 요청 전송
 ```
-이제 서버에 요청을 보내는 것이다.  
-여기서 중요한 점은 '비동기 방식' 이라는 것이다.
-분명 앞에서 
+이제 서버에 요청을 전송한다.
 
 ***
 # 2. 대주제
