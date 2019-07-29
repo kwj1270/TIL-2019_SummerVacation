@@ -88,7 +88,7 @@ property 방식은 Inline 방식과 다르게 function을 사용하는데
         </script>
 ```
 addEventListener 방식은 기존 false를 리턴하는 것과 달리  
-이벤트 객체의 **preventDefault()** 를 실행하는 것이다.
+event 객체의 **preventDefault()** 를 실행하는 것이다.
 ```
 ('click', function(event){
       if(document.getElementById('prevent').checked) event.preventDefault();
