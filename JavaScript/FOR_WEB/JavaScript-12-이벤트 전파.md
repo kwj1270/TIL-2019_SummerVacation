@@ -104,7 +104,7 @@ document.querySelector('html').addEventListener('click', handler, false);
 
 ```
 
-```event.stopPropagation()``` 메소드는 버블링 및 캡쳐링을 중단시킨다.
+```event.stopPropagation()``` 메소드는 버블링 및 캡쳐링을 중단시킨다.  
 ```stophandler()``` 메소드는 이 메소드를 포함하였고  
 ```document.querySelector('body').addEventListener('click', stophandler, false);```
 를 통해서 실제로 body 까지만 전파가 되었고 html 부터는 전파가 되지 않는다.
