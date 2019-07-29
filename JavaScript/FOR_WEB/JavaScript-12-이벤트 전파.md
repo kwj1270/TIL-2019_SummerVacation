@@ -7,7 +7,8 @@
 
 1. 캡처링 : 부모요소부터 자식요소 순으로 이벤트가 발생하는 것
 2. 버블링 : 자식요소부터 부모요소 순으로 이벤트가 발생하는 것  
-** HTML 코드 **
+  
+**HTML 코드**
 ```
 <html>
     <head>
@@ -23,7 +24,16 @@
             <legend>event propagation</legend>
             <input type="button" id="target" value="target">          
         </fieldset>
-        <script>
+    </body>
+</html>
+```
+
+# 1. 캡처링
+> 부모요소부터 자식 요소 순으로 이벤트가 발생하는 것
+
+## 1.1 코드
+ ```
+ <script>
         function handler(event){
             var phases = ['capturing', 'target', 'bubbling'] //0 , 1 , 2
             console.log(event.target.nodeName, this.nodeName, phases[event.eventPhase-1]); // 1 , 2 , 3 이므로 -1
@@ -32,15 +42,23 @@
         document.querySelector('fieldset').addEventListener('click', handler, true);
         document.querySelector('body').addEventListener('click', handler, true);
         document.querySelector('html').addEventListener('click', handler, true);
-        </script>
-    </body>
-</html>
+ </script>
+ ```
+이벤트가 발생하면      
+event.target.nodeName : 실제 이벤트가 일어난 node의 name.  
+this.nodeName : 현재 이벤트가 실행 되는 node의 name (버블링, 캡처링시에는 마지막까지 가니까 마지막 node의 name)  
+phases[event.eventPhase-1] : 이벤트 전파 종류 출력 'capturing', 'target', 'bubbling'  
+
+event.eventPhase-1을 사용한 이유는  
+event.eventPhase 는 아래와 같이 구성 되어있다.
 ```
+Event.CAPTURING_PHASE(캡쳐링)	1
+Event.AT_TARGET(타겟)	2
+Event.BUBBLING_PHASE(버블링)	3
+```
+이는 인덱스 값 0-2 까지 1 만큼 차이가 나므로 -1을 사용한 것이다.
 
-# 1. 캡처링
-> 부모요소부터 자식 요소 순으로 이벤트가 발생하는 것
-
-## 1.1 소 주제
+event.stopPropagation() : 버블링, 캡쳐링 중단.
 ### 1.1.1. 내용1
 ```
 내용1
