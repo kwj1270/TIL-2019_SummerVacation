@@ -50,7 +50,18 @@ this 객체는 원래는 자기 자신을 호출한 대상을 의미하는데(�
     }         동작 내용
 </script>
 ```
+이벤트 대상 : t (document.getElementById('target'))
+이벤트 종류 : onclick  
+이벤트 동작 : function(event){alert('Hello world')}이다.  
 
+이벤트 헨들러(동작)인 function(event){alert('Hello world')}은  
+Event 객체 자체를 받을 수 있고 이를 활용 할 수 있다.  
+```
+console.log(event.target.value);
+이벤트 대상의 value값을 출력한다.
+```
+
+  
 
 ***
 # 2. 대주제
