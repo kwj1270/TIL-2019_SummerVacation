@@ -7,8 +7,7 @@
 이 관계를 그림으로 나타내면 아래와 같다. (출처 : http://learn.javascript.ru/browser-environment)
 ![JavaScript-Objectmodel](https://user-images.githubusercontent.com/50267433/62001610-39a1e000-b12f-11e9-99b6-8b2c611b97bd.png)
 
-웹브라우저는 HTML 문서를 쉽게 읽어 웹페이지를 만드는 동시에  
-HTML의 각 태그들을 객체로 만들어 놓는다.  
+웹브라우저는 HTML 문서를 쉽게 읽어 웹페이지를 만드는 동시에 HTML의 각 태그들을 객체로 만들어 놓는다.  
 JavaScript는 이러한 객체들을 통해 웹 페이지를 조작,제어할 수 있다.
 
 # 1. Window 객체
