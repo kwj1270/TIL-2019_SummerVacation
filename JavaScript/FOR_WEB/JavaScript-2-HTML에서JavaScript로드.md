@@ -2,7 +2,7 @@ HTML에서 JavaScript 로드하기
 =======================
 # 1. INLINE
 > HTML태그에 직접 JavaScript를 기술하는 방식이다.
-## 1.1 장 단점
+## 1.1. 장 단점
 ### 1.1.1. 장점
 ```
 태그에 연관된 스크립트가 분명하게 드러난다
@@ -15,17 +15,16 @@ HTML에서 JavaScript 로드하기
 ```
 <input type="button" onclick="alert('Hello world')" value="Hello world" />
 ```   
-간략히 해석하자면 버튼 클릭시 Hello world 라는 경고창을 띄운다.
+간략히 해석하자면 버튼 클릭시 Hello world 라는 경고창을 띄운다.  
+
 ***
 # 2. SCRIPT
-> <script>태그 안에 JavaScript를 기술하는 방식
-## 2.1. 장 단점
-### 2.1.1. 장점
+> <script>태그 안에 JavaScript를 기술하는 방식  
+## 2.1. 장점
 ```
 HTML 태그와 JS코드를 분리하여 INLINE의 단점을 어느정도 해소화
 ```
 ## 2.2. 예제
-### 2.2.1. 코드
 ```
 <body>
     <input type="button" id="hw" value="Hello world" />
@@ -40,9 +39,8 @@ HTML 태그와 JS코드를 분리하여 INLINE의 단점을 어느정도 해소�
 
 ***
 # 3. 외부파일 호출
-> HTML과 JS를 별도의 파일로 분리할 수 있다.
-## 3.1. 장 단점
-### 3.1.1. 장점
+> HTML과 JS를 별도의 파일로 분리할 수 있다.  
+## 3.1. 장점
 ```
 1. 보다 엄격히 정보(HTML)와 제어(JS)를 분리
 2. 하나의 JS파일을 사용하여 여러 HTML에 적용 가능
