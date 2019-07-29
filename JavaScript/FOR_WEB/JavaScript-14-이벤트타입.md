@@ -67,8 +67,12 @@ t.addEventListener('focus', function(event){
 });
 </script>
 ```
+input 요소에 focus(커서)가 잡히면 focus 이벤트 실행이고 (```alert('focus');```) 
+focus가 벗어나면 즉 blur가 되면 blur 이벤트 실행이다.(```alert('blur');```)  
+
+
 ***
-# 3. 마우스
+# 2. 문서 로딩
 > 인용
 ## 3.1. 소 주제
 ### 3.1.1. 내용1
