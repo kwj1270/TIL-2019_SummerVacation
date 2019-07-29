@@ -71,8 +71,6 @@ selector 와 data는 생략이 가능하다
 ```
 ## 2.3. late binding
 > jQuery는 존재하지 않는 엘리먼트에도 이벤트를 등록할 수 있는 놀라운 기능을 제공한다.
-> 이를 last binding이라 한다.
-
 ```
 <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
 <script>
@@ -86,6 +84,10 @@ selector 와 data는 생략이 가능하다
     <li><a href="#">JavaScript</a></li>
 </ul>
 ```
+late binding은 선택자가 존재하면 [, selector]가 나중에 정의되어도 이벤트를 적용할 수 있다.  
+단 몇가지 주의점이 있다.  
+1. 선택자가 먼저 정의되어 있지 않으면 안된다.  
+2. [, selector]가 나중에라도 정의되어 있지 않다면 안된다.  
 ## 2.4. 다중 바인딩
 ```
 <input type="text" id="target" />
