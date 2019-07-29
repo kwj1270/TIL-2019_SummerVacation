@@ -21,6 +21,8 @@ JQuery 이벤트
     }
 </script>
 ```
+순수 JavaScript 코드는 addEventListener 같이  
+호환이 안 되는 브라우저에도 맞춰서 코드를 작성 해주어야 한다.  
 ## 1.2 JQuery
 ```
 <input type="button" id="pure" value="pure" />
@@ -32,7 +34,9 @@ JQuery 이벤트
     })
 </script>
 ```
-
+JQuery는 CrossBrowsing 에 상관없이 제이쿼리 코드로 작성하면 알아서 맞추어 준다.
+이러한 이유로 많은 사람들이 라이브러리를 이용한다.
+단, 라이브러리가 꼭 옳다 는 관점은 아니다. 프로그래머라면 편식은 옳지 않다.
 # 2. on API
 > 인용
 ## 2.1. 소 주제
