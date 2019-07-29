@@ -45,12 +45,14 @@
  </script>
  ```
 이벤트가 발생하면      
+```
 event.target.nodeName : 실제 이벤트가 일어난 node의 name.  
-this.nodeName : 현재 이벤트가 실행 되는 node의 name (버블링, 캡처링시에는 마지막까지 가니까 마지막 node의 name)  
+this.nodeName : 현재 이벤트가 실행 되는 node의 name 
+                (버블링, 캡처링시에는 마지막까지 가니까 마지막 node의 name)  
 phases[event.eventPhase-1] : 이벤트 전파 종류 출력 'capturing', 'target', 'bubbling'  
-
-event.eventPhase-1을 사용한 이유는  
-event.eventPhase 는 아래와 같이 구성 되어있다.
+```
+```event.eventPhase-1```을 사용한 이유는  
+```event.eventPhase``` 는 아래와 같이 구성 되어있다.
 ```
 Event.CAPTURING_PHASE(캡쳐링)	1
 Event.AT_TARGET(타겟)	2
