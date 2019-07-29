@@ -53,8 +53,6 @@ win.close();
 해당하는 객체의 브라우저 창을 닫는다.  
 
 ## 1.3. 새로운 window와 커뮤니케이션
-새창에 대한 객체 win을 통하여  
-onkeypress이벤트 발생시 새창에 text가 입력된다.
 ### 1.3.1. demo1.html
 ```
 <!DOCTYPE html>
@@ -88,6 +86,9 @@ onkeypress이벤트 발생시 새창에 text가 입력된다.
 ```
 ### 1.3.3. 실행 결과
 ![newWindowComunication](https://user-images.githubusercontent.com/50267433/62002459-770e6980-b13f-11e9-867e-5930128cbcae.gif)  
+
+새창에 대한 객체 win을 통하여  
+onkeypress이벤트 발생시 새창에 text가 입력된다.
 
 ## 1.4 팝업차단
 ### 1.4.1. demo3.html
