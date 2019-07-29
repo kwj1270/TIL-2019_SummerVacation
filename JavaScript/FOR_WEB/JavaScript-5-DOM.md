@@ -17,7 +17,6 @@ getElementByTagName('body');
 var ul = document.getElementsByTagName('ul');
 var lis = ul.getElementsByTagName('li');
 ```
-
 ## 1.2. getElementByClassName()
 ```
 getElementByClassName('클래스명');
@@ -26,7 +25,6 @@ getElementByClassName('glass');
 클래스를 기준으로 해당 요소의 객체를 얻는다.  
 모든 요소를 유사배열에 담는다. (1개라도 예외x) 
 선택자가 아니므로 .을 붙이지는 않는다.
-
 ## 1.3. getElementById()
 ```
 getElementById('아이디명');
@@ -35,7 +33,6 @@ getElementById('yd');
 아이디를 기준으로 해당 요소의 객체를 얻는다.  
 id 는 1회성으로 사용되므로 배열에 담지 않은 객체를 얻는다. 
 선택자가 아니므로 #을 붙이지는 않는다.
-
 ## 1.4. querySelector()
 ```
 querySelector('선택자');
@@ -75,14 +72,12 @@ li.style.color = "blue";
 # 2. HTML Element
 > 유사 배열이 아닌 하나의 요소가 담긴 객체
 ## 2.1. HTMLLIElement
-```<li>```로부터 얻는 객체
+```<li>```로부터 얻는 객체  
 
 ```
 <li id = 'list'>~ </li>
-
 var target = document.getById('list');
 console.log(target.constructor.name);
-
 ```
 ## 2.2. HTMLAnchorElement
 ```<a>```로부터 얻는 객체
@@ -93,7 +88,6 @@ console.log(target.constructor.name);
 var target = document.getById('anchor');
 console.log(target.constructor.name);
 ```
-
 ## 2.3. HTMLInputElement
 ```<input>```로부터 얻는 객체
 
