@@ -47,7 +47,7 @@ console.log(7, ul.parentNode);              // body
 </script>
 </body>
 ```
-Node는 Node 객체 내에 속하는 객체를 말한다 했다.
+Node는 Node 객체 내에 속하는 객체를 말한다.  
 ```console.log(3, ul.nextSibling);```를 보면           
 ```
 <ul>
