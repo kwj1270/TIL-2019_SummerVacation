@@ -2,8 +2,9 @@ Event Type
 =======================
 
 # 1. 폼
-> 'submit'은 폼의 정보를 서버로 전송하는 명령인 submit 동작시에 일어난다.
 ## 1.1 submit
+> 'submit'은 폼의 정보를 서버로 전송하는 명령인 submit 동작시에 일어난다.
+
 ### 1.1.1 코드
 
 ```
@@ -26,11 +27,12 @@ submit 명령이 실행 되면 function을 실행한다.
 기본 동작인 전송(submit)을 취소한다.  
 
 ## 1.2 change
-### 1.2.1 코드
-
 > form 컨트롤의 value 값이 변경 되었을 때 발생하는 이벤트이다.  
 > input(text,radio,checkbox), textarea, select 태그에 적용된다.  
 > 즉 form의 하위요소인 특정 input과 textarea, select 태그에 적용된다.  
+
+### 1.2.1 코드
+
 
 ```
 <p id="result"></p>
@@ -45,10 +47,11 @@ t.addEventListener('change', function(event){
 name 즉 텍스트 필드의 값이 바뀌면 ```<p id="result"></p>```에 값을 넣어준다.(innerHTML)  
 
 ## 1.3 blur , focus
-### 1.3.1 코드
 > focus : 엘리먼트에 포커스가 생겼을 때 발생하는 이벤트   
 > blur  : 포커스가 사라졌을 때 발생하는 이벤트   
 > <base>, <bdo>, <br>, <head>, <html>, <iframe>, <meta>, <param>, <script>, <style>, <title> 예외
+
+### 1.3.1 코드
 
 ```
 <input id="target" type="name" />
