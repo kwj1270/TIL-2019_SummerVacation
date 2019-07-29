@@ -49,8 +49,23 @@ xhr.open('GET', './time.php');
 //    'POST/GET' , '파일 경로'
 ```
 ```./time.php```경로에 있는 파일을 ```GET```방식으로 연다.
-
-
+```
+ xhr.onreadystatechange = function(){
+        if(xhr.readyState === 4 && xhr.status === 200){
+            document.querySelector('#time').innerHTML = xhr.responseText;
+        }
+    }
+```
+onreadystatechange 이벤트는 서버와의 통신이 끝났을 때 호출되는 이벤트이다.  
+xhr이 서버와의 통신이 끝났을 때  
+```xhr.readyState === 4``` 인지 그리고
+```xhr.status === 200```인지 확인한다.
+```xhr.readyState === 4``` 는 통신이 완료 되었다는 의미이고  
+```xhr.status === 200``` 은 통신이 성공 했음을 의미한다.  
+두 조건을 만족한다면 ```id=time```의 하위요소에 값을 추가하는데  
+```xhr.responseText```을 innerHTML 형식으로 넣는다(태그 포함)
+```xhr.responseText```는 응답 객체(xhr)의 Text를 의미한다.  
+즉 ```id=time```의 하위요소에 time.php의 Text값이 들어간다.
 
 
 
