@@ -99,7 +99,7 @@ late binding은 선택자가 존재하면 [, selector]가 나중에 정의되어
     })
 </script>
 ```
-
+Event type을 여러개 지정 할 수 있다. 
 ```
 <input type="text" id="target" />
 <p id="status"></p>
@@ -107,15 +107,20 @@ late binding은 선택자가 존재하면 [, selector]가 나중에 정의되어
 <script>
     $('#target').on({
         'focus' : function(e){
- 
+            console.log(1);
         }, 
         'blur' : function(e){
-             
+             console.log(2);
         }
     })
 </script>
 ```
+Event type 각가에 event handler를 정의해 줄 수 있다.  
+단 이때는 '객체'로 사용해야 한다.
 ## 2.5. 이벤트 제거
+> on() 이벤트를 제거할 때는 off()를 사용한다.
+
+**기본**
 ```
 <input type="text" id="target"></textarea>
 <input id="remove"  type="button" value="remove" />
@@ -131,4 +136,39 @@ late binding은 선택자가 존재하면 [, selector]가 나중에 정의되어
     console.log(32);
   })
 </script>
+
+결과 : $('#remove').on('click' , function(e) 만 존재하게 된다.
+```
+**심화 1**
+```
+ $('#target').on('focus blur', handler)
+  $('#remove').on('click' , function(e){
+    $('#target').off('focus blur', handler);
+    console.log(32);
+    
+    대신에 
+    
+ $('#target').on('focus blur', handler)
+  $('#remove').on('click' , function(e){
+    $('#target').off('blur', handler);
+    console.log(32);
+    
+결과 :    $('#target').on('focus', handler)
+         $('#remove').on('click' , function(e)
+         
+즉 blur 부분만 사라졌다.
+```
+**심화 2**
+```
+ $('#target').on('focus blur', handler)
+ $('#target').on('focus blur', handler2)
+  $('#remove').on('click' , function(e){
+    $('#target').off('blur', handler);
+    console.log(32);
+    
+결과 :      $('#target').on('focus', handler)
+           $('#target').on('focus blur', handler2)
+             $('#remove').on('click' , function(e)
+즉 'blur'에 handler인 이벤트를 삭제한 것 이므로
+$('#target').on('focus blur', handler2)는 영향이 없다.
 ```
