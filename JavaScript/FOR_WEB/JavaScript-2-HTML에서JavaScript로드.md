@@ -18,7 +18,6 @@ HTML에서 JavaScript 로드하기
 ```      
 
 ## 1.2. 예제
-### 1.1.1. 코드
 ```
 <input type="button" onclick="alert('Hello world')" value="Hello world" />
 ```   
