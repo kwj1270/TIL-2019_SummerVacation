@@ -284,6 +284,20 @@ p id="target">
     target.className = 'important';                      // property 방식
 </script>
 ```
+모든 엘리먼트들은 속성과 프로퍼티로 제어가 가능하다.  
+```
+<a id="target" href="./demo1.html">ot</a>
+<script>
+//현재 웹페이지가 http://localhost/webjs/Element/attribute_api/demo3.html 일 때 
+var target = document.getElementById('target');
+console.log('target.getAttribute("href")', target.getAttribute("href"));  //상대 경로 출력
+console.log('target.href', target.href);                                  //절대 경로 출력
+</script>
+```
+속성 방식 : 상대경로를 출력한다.  
+프로퍼티 방식 : 절대 경로를 출력한다.   
+
+**속성/프로퍼티 비교표**
 ```
 속성            프로퍼티
 class          className
@@ -294,18 +308,3 @@ frameborder    frameBorder
 for            htmlFor
 maxlentgh      maxLength
 ```
-모든 엘리먼트들은 속성과 프로퍼티로 제어가 가능하다.  
-
-```
-<a id="target" href="./demo1.html">ot</a>
-<script>
-//현재 웹페이지가 http://localhost/webjs/Element/attribute_api/demo3.html 일 때 
-var target = document.getElementById('target');
-console.log('target.getAttribute("href")', target.getAttribute("href"));  //상대 경로 출력
-console.log('target.href', target.href);                                  //절대 경로 출력
-</script>
-```
-
-속성 방식 : 상대경로를 출력한다.  
-프로퍼티 방식 : 절대 경로를 출력한다.   
-
