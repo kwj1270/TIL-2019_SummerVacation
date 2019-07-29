@@ -1,10 +1,5 @@
 HTML에서 JavaScript 로드하기
 =======================
-> INLINE  
-> SCRIPT  
-> 외부파일 호출  
-
-
 # 1. INLINE
 > HTML태그에 직접 JavaScript를 기술하는 방식이다.
 ## 1.1 장 단점
