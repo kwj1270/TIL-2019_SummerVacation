@@ -41,7 +41,7 @@ var ul = s.firstChild.nextSibling
 console.log(2, ul); // ul
 console.log(3, ul.nextSibling);             // #text
 console.log(4, ul.nextSibling.nextSibling); // script
-console.log(5, ul.childNodes);              //text, li, text, li, text, li, text
+console.log(5, ul.childNodes);              // text, li, text, li, text, li, text
 console.log(6, ul.childNodes[1]);           // li(html)
 console.log(7, ul.parentNode);              // body
 </script>
@@ -204,7 +204,7 @@ ELEMENT_NODE: 1 인 것들만 실행시키겠다.
 ## 3.2. 삭제 
 ### 3.2.1. 삭제 메소드
 ```
-.removeChild(childNode);        //특정 자식 노드를 삭제한다.
+.removeChild(childNode);        // 특정 자식 노드를 삭제한다.
 ```
 ### 3.2.2. 예제
 ```
@@ -255,10 +255,10 @@ target이 자기 자신을 삭제하기 위해 부모노드로 이동 후 자기
 ## 4.1. 추가
 ### 4.1.1. 추가 메소드
 ```
-.before(node)           //맨 앞 prepend보다 우선 순위로 앞이다.
-.prepend(node)          //맨 앞 
-.append(node)           //맨 뒤
-.after(node)            //맨 뒤 prepend보다 우선 순위로 앞이다.
+.before(node)           // 맨 앞 prepend보다 우선 순위로 앞이다.
+.prepend(node)          // 맨 앞 
+.append(node)           // 맨 뒤
+.after(node)            // 맨 뒤 prepend보다 우선 순위로 앞이다.
 ```
 ![JQuery addMethod](https://user-images.githubusercontent.com/50267433/62006525-734d0800-b17c-11e9-81c2-feab57c9f3c5.png)
 간단한 예제
