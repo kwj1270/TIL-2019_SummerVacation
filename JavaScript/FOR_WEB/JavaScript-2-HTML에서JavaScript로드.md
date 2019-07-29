@@ -16,12 +16,11 @@ HTML에서 JavaScript 로드하기
 ```
 정보와 제어가 섞여있기에 정보로서 가치가 떨어진다.(유지보수 및 검색엔진기능 저하)
 ```      
-
 ## 1.2. 예제
 ```
 <input type="button" onclick="alert('Hello world')" value="Hello world" />
 ```   
-
+간략히 해석하자면 버튼 클릭시 Hello world 라는 경고창을 띄운다.
 ***
 # 2. SCRIPT
 > <script>태그 안에 JavaScript를 기술하는 방식
