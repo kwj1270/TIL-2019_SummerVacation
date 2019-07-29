@@ -6,8 +6,8 @@ Node 객체
 ![Node](https://user-images.githubusercontent.com/50267433/62005180-4db70300-b16a-11e9-8450-4ac7ebb0460e.png)
 
 # 1. Node 관계 API
-> Node 객체는 Node 간의 관계 정보를 담고 있는 일련의 API를 가지고 있다.
-## 1.1 관계 프로퍼티
+> Node 객체는 Node 간의 관계 정보를 담고 있는 일련의 API를 가지고 있다.  
+## 1.1. 관계 프로퍼티
 ```
 노드는 Node 객체에 속한 요소를 뜻하며 
 자주 사용하는 요소 객체들도 있지만 
@@ -64,7 +64,7 @@ Node 관계 API를 사용한다면 주의하자.
 
 ***
 # 2. Node 종류 API
-> Node 종류 API는 현재 선택된 노드가 어떤 타입인지 판단할 때 사용한다.
+> Node 종류 API는 현재 선택된 노드가 어떤 타입인지 판단할 때 사용한다.  
 ## 2.1. 종류 프로퍼티
 ```
 1.  .nodeType               // node의 type을 의미 (상수로 이루어진 타입들)
@@ -137,12 +137,12 @@ traverse(document.getElementById('start'), function(elem){
 ```
     if(target.nodeType === 1){ 
 ```
-ELEMENT_NODE: 1 인 것들만 실행시키겠다.
-즉 태그 요소 이외에 것 들은 무시하겠다.
+ELEMENT_NODE: 1 인 것들만 실행시키겠다.  
+즉 태그 요소 이외에 것 들은 무시하겠다.  
 ```
     var c = target.childNodes;   
 ```
-는 모든 자식 노드들을 c에 담겠다. (태그들만 존재)
+는 모든 자식 노드들을 c에 담겠다. (태그들만 존재)  
 ```
     for(var i=0; i<c.length; i++){
         traverse(c[i], callback);       
@@ -157,14 +157,14 @@ ELEMENT_NODE: 1 인 것들만 실행시키겠다.
 
 ***
 # 3. Node 변경 API
-> 노드를 추가, 제거, 변경 할 수 있다.
+> 노드를 추가, 제거, 변경 할 수 있다.  
 ## 3.1. 추가
-### 3.1.1 엘리멘트 생성 메소드
+### 3.1.1. 엘리멘트 생성 메소드
 ```
 1.  document.createElement(tagname);        // 엘리멘트 생성(태그)
 2.  document.createTextNode(data);          // text 생성
 ```
-### 3.1.2 추가 메소드
+### 3.1.2. 추가 메소드
 ```
 1. .appendChild(node)                               // 노드의 마지막 자식으로 주어진 엘리먼트 추가
 2. insertBefore(new Element , referenceElement)     // 두번째 인자 엘리먼트 앞쪽에 엘리먼트 추가
@@ -198,8 +198,8 @@ ELEMENT_NODE: 1 인 것들만 실행시키겠다.
     // <li>Jquey</li>를 <ul>의 첫번째 자식 앞으로 놓겠다. 즉 첫번째로 놓겠다.
 </script>
 ```
-1. ```<li>JavaScript</li>```를 ```<ul>```의 마지막 자식으로 놓겠다. 
-2. ```<li>Jquey</li>```를 ```<ul>```의 첫번째 자식 앞으로 놓겠다. 즉 첫번째로 놓겠다.
+1. ```<li>JavaScript</li>```를 ```<ul>```의 마지막 자식으로 놓겠다.   
+2. ```<li>Jquey</li>```를 ```<ul>```의 첫번째 자식 앞으로 놓겠다. 즉 첫번째로 놓겠다.  
 
 ## 3.2. 삭제 
 ### 3.2.1. 삭제 메소드
@@ -221,7 +221,7 @@ ELEMENT_NODE: 1 인 것들만 실행시키겠다.
     }
 </script>
 ```
-target이 자기 자신을 삭제하기 위해 부모노드로 이동 후 자기 자신을 삭제하는 메소드 호출
+target이 자기 자신을 삭제하기 위해 부모노드로 이동 후 자기 자신을 삭제하는 메소드 호출  
 ## 3.3. 변경 
 ### 3.3.1. 변경 메소드
 ```
@@ -246,13 +246,12 @@ target이 자기 자신을 삭제하기 위해 부모노드로 이동 후 자기
     }
 </script>
 ```
-```<li id="target">JavaScript</li>```의 첫번째 자식노드는 JavaScript이다.  
+```<li id="target">JavaScript</li>```의 첫번째 자식노드는 JavaScript이다.   
 이것을 ```<a href='https://github.com/kwj1270'>Web browser JavaScript</a>```로 바꾼다는 뜻이다. 
-
 
 ***
 # 4. JQuery 노드변경 API
-> JQuery에서 노드를 제어하는 기능은 manipulation 카테고리에 속해있다.
+> JQuery에서 노드를 제어하는 기능은 manipulation 카테고리에 속해있다.  
 ## 4.1. 추가
 ### 4.1.1. 추가 메소드
 ```
@@ -363,7 +362,7 @@ $(새로운 내용).replaceAll(바뀌는 대상)
 ```
 **이동**
 append()같은 추가 메소드를 이용해서 기존에 존재하던 요소를   
-특정 요소의 자식요소로 이동 시키는 것 같은 효과를 줄 수 있다.
+특정 요소의 자식요소로 이동 시키는 것 같은 효과를 줄 수 있다.  
 ```
 <div class="target" id="target1">
     target 1
@@ -382,8 +381,8 @@ append()같은 추가 메소드를 이용해서 기존에 존재하던 요소를
 
 ***
 # 5. 문자열로 노드 제어
-## 5.1 프로퍼티와 메소드
-> 노드변경 API를 사용하는 방식은 복잡하고 장황하다.
+## 5.1. 프로퍼티와 메소드
+> 노드변경 API를 사용하는 방식은 복잡하고 장황하다.  
 ```
 프로퍼티
 innerHTML;                  // 자식 노드에 있는 하위 노드들을 문자열 형태로 반환 한다.
@@ -401,7 +400,7 @@ outerText = "새로운 값";     // innerText("값")와 동작은 같지만 해�
 메소드
 insertAdjacentHTML()        // 좀 더 정교한 문자열을 이용해서 노드를 변경하고 싶을 때 사용 
 ```
-## 5.1.1 innerHTML예제
+## 5.1.1. innerHTML예제
 ```
 <ul id="target">
     <li>HTML</li>
@@ -421,7 +420,7 @@ insertAdjacentHTML()        // 좀 더 정교한 문자열을 이용해서 노�
 </script>
 
 ```
-## 5.1.2 outerHTML예제
+## 5.1.2. outerHTML예제
 ```
 <ul id="target">
     <li>HTML</li>
@@ -441,7 +440,7 @@ insertAdjacentHTML()        // 좀 더 정교한 문자열을 이용해서 노�
 </script>
 ```
 
-## 5.1.3 innerText, outerText 예제
+## 5.1.3. innerText, outerText 예제
 ```
 <ul id="target">
     <li>HTML</li>
@@ -457,25 +456,6 @@ insertAdjacentHTML()        // 좀 더 정교한 문자열을 이용해서 노�
     function set(){
         var target = document.getElementById('target');
         target.outerHTML = "<ol><li>JavaScript Core</li><li>BOM</li><li>DOM</li></ol>";
-    }
-</script>
-```
-## 5.1.3 innerText, outerText 예제
-```
-<ul id="target">
-    <li>HTML</li>
-    <li>CSS</li>
-</ul>
-<input type="button" onclick="get();" value="get" />
-<input type="button" onclick="set();" value="set" />
-<script>
-    function get(){
-        var target = document.getElementById('target');
-        alert(target.innerText);
-    }
-    function set(){
-        var target = document.getElementById('target');
-        target.innerText = "<li>JavaScript Core</li><li>BOM</li><li>DOM</li>";
     }
 </script>
 ```
@@ -508,5 +488,5 @@ insertAdjacentHTML()        // 좀 더 정교한 문자열을 이용해서 노�
 </script>
 ```
 위 예제 같은 경우는 뒤로 해석하는 것이 좋다.  
-```beforeend``` 가정시 ```end```의 ```before```이므로 끝나기 전에
-객체를 사용하는 경우 '객체가 끝나기 전에' 로 해석하는 것이 좋다.
+```beforeend``` 가정시 ```end```의 ```before```이므로 끝나기 전에  
+객체를 사용하는 경우 '객체가 끝나기 전에' 로 해석하는 것이 좋다.  
