@@ -90,7 +90,7 @@ win.close();
 새창에 대한 객체 win을 통하여  
 onkeypress이벤트 발생시 새창에 text가 입력된다.
 
-## 1.4 팝업차단
+## 1.4. 팝업차단
 ### 1.4.1. demo3.html
 ```
 <!DOCTYPE html>
