@@ -49,7 +49,9 @@ name 즉 텍스트 필드의 값이 바뀌면 ```<p id="result"></p>```에 값�
 ## 1.3 blur , focus
 > focus : 엘리먼트에 포커스가 생겼을 때 발생하는 이벤트   
 > blur  : 포커스가 사라졌을 때 발생하는 이벤트   
-> <base>, <bdo>, <br>, <head>, <html>, <iframe>, <meta>, <param>, <script>, <style>, <title> 예외
+
+```<base>, <bdo>, <br>, <head>, <html>, <iframe>, <meta>, <param>, <script>, <style>, <title>```
+는 적용이 불가능 하다.
 
 ### 1.3.1 코드
 
