@@ -3,18 +3,18 @@ DOM_JQuery
 > JQuery는 DOM을 내부에 감추고 보다 쉽게 웹페이지를 조작 할 수 있도록 돕는 도구 (라이브러리)  
   
 ### 사용법  
-구조
+**구조**
 ```
 $('선택자').메소드('속성', '값');
 $('선택자').메소드({'프로퍼티' : '값'});
 ```
-기본
+**기본**
 ```
     JQuery(document).ready(function($){
       $('선택자').메소드();
 })
 ```
-요약(간략)   
+**요약(간략)**   
 ```
    $function(){
       $('선택자').메소드();
@@ -27,7 +27,7 @@ JQuery 함수는 인자를 전달하면 **JQery객체**를 리턴한다.
 이객체는 선택자에 해당하는 엘리먼트를 제어하는 다양한 메소드를 가지고 있다.
 HTMLCollection과 마찬가지로 여러 요소가 존재 할 때는 유사 배열에 담아서 반환한다.
 
-## 1.1 DOM 과 JQuery 비교
+## 1.1. DOM 과 JQuery 비교
 ### DOM
 ```
 var lis = document.getElementsByTagName('li');
@@ -40,7 +40,8 @@ $function(){
   $('.active').css('color', 'red');
 }
 ```
-코드에서 느껴지 듯이 JQuery가 단순 JS보다 더 간략하다.
+코드에서 느껴지 듯이 JQuery가 단순 JS보다 더 간략하다.  
+
 ***
 # 2. JQuery 객체
 > JQuery 함수의 리턴값으로 JQuery 함수를 이용해서  
@@ -54,10 +55,8 @@ var list = $('li').css("color", "red").css("background-color" , "blue");
 모든 <li>의 color가 red가 되었다.
 ```
 JQuery가 아닌 일반 JS 경우 반복문을 사용해야 된다.
-
 ## 2.2. 체이닝
 JQuery 함수의 반환값이 JQuery객체이기 때문에 연속으로 메소드를 작성 할 수 있다.
-
 ```
 $('li').css("color", "red").css("background-color" , "blue");
 ```
@@ -77,7 +76,6 @@ JQuery는 가져온 대상을 유사배열 형태로 저장한다.
 li[0].css('color':'red');     -> X
 $(li[0]).css('color':'red');  -> O
 ```
-
 ## 2.4. 쿼리문과 제이쿼리 객체
 $()는 제이쿼리 객체를 반환 해주는 메소드이다.
 앞서 2.3 유사 배열에 나온 예제를 다시 설명해 보면 아래와 같다.
@@ -88,7 +86,6 @@ $(li[0]).css('color':'red');  -> 일반 객체를 제이쿼리화             ->
 즉 제이쿼리 객체만 제이쿼리 메소드를 이용 할 수 있는 것 이다.  
 this 와 $(this)도 마찬가지이다.  
 제이쿼리에서 this를 제어하기 위해서는 $(this)로 사용하는 것이다.  
-
 ## 2.5. Map
 map은 JQuery 객체의 엘리먼트를 하나씩 순회한다.  
 이 때 첫번째 인자로 전달된 함수가 호출되는데  
@@ -170,7 +167,7 @@ $('#t2').prop('class', 'current');            -> 프로퍼티는 원래 classNam
     $( "#active .marked").css( "background-color", "red" );
 </script>
 ```
-## 4.2. .find()
+## 4.2. find()
  .find()는 JQuery 객체 하위객체 내에서 조회하는 기능을 제공한다.
  ```
  $( "#active").find('.marked').css( "background-color", "red" );
