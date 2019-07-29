@@ -59,6 +59,14 @@
 </body>
 </html>
   ```
+```
+  <style type="text/css">
+      #selected{
+          color:red;
+      }
+  </style>
+```
+이쪽이 CSS 코드이다.
 # 3. JavaScript
 > HTML을 프로그래밍적으로 제어한다
   ## 3.1 JavaScript 코드
@@ -89,6 +97,10 @@
   </body>
   </html>
   ```
-  
+  ```
+   <input type="button" onclick="document.body.className='dark'" value="dark" />
+   에서 "document.body.className='dark'"
+  ```
+  이쪽이 JavaScript 코드이다.
 
 
