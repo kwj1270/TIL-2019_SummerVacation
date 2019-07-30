@@ -154,7 +154,7 @@ console.log(document.getElementById('active').tagName)
 </script>
 ```
 태그의 이름을 얻을 수 있다. 단, 변경은 불가능하다.  
-### 4.1.1. id
+### 4.1.2. id
 ```
 <ul>
     <li>html</li>
@@ -169,7 +169,7 @@ console.log(active.id);
 </script>
 ```
 id의 값을 얻을 수 있고 변경 또한 가능하다.  
-### 4.1.1. className
+### 4.1.3. className
 ```
 <ul>
     <li>html</li>
@@ -187,7 +187,7 @@ active.className += " readed"
 ```
 class의 값을 얻을 수 있고 변경 또한 가능하다.  
 단 className보다 classList를 추천한다.  
-### 4.1.1. classList
+### 4.1.4. classList
 ```
 <ul>
     <li>html</li>
@@ -273,7 +273,7 @@ t.removeAttribute('title');                         // title 속성을 제거한
 console.log(t.hasAttribute('title'));               // false, title 속성의 존재여부를 확인한다.
 </script>
 ```
-### 4.3.1. 속성 방식과 프로퍼티 방식 비교
+### 4.3.2. 속성 방식과 프로퍼티 방식 비교
 ```
 p id="target">
     Hello world
