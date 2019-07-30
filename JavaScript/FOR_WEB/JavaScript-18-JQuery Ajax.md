@@ -19,22 +19,41 @@ success  :  성공했을 때 호출할 콜백을 지정한다.
 
 type     :  데이터를 전송하는 방법을 지정한다. get, post를 사용할 수 있다.
 ```
-# 1. $.GET 방식
+# 1. GET 방식
 ## 1.1. time.php
 ```
-
+<?php
+$d1 = new DateTime;
+$d1->setTimezone(new DateTimezone("asia/seoul"));
+echo $d1->format('H:i:s');
+?>
 ```
 ## 1.2. demo.html
-### 1.2.1. 내용1
 ```
-내용1
+<p>time : <span id="time"></span></p>
+<input type="button" id="execute" value="execute" />
+<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+<script>
+    $('#execute').click(function(){
+        $.ajax({
+            url:'./time.php',
+            success:function(data){
+                $('#time').append(data);
+            }
+        })
+    })
+</script>
 ```
+XMLHttpRequest에 비해서 코드가 훨씬 간결해졌다. 
 
 ***
 # 2. POST 방식
-> 인용
-## 2.1. 소 주제
-### 2.1.1. 내용1
+## 2.1. time2.php
+```
+내용1
+```   
+
+## 2.2. demo2.html
 ```
 내용1
 ```   
