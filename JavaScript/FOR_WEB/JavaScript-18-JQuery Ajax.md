@@ -1,24 +1,26 @@
 JQuery Ajax
 =======================
-라이브러리는 여러가지 편리한 기능들을 제공해준다. 
-JQuery도 마찬가지이다. 예를 들면 크로스브라우징의 문제를 해결해주기도 한다.
+라이브러리는 여러가지 편리한 기능들을 제공해준다.   
+JQuery도 마찬가지이다.   
+예를 들면 크로스브라우징의 문제를 해결해주기도 한다.
 
-JQuery는 Ajax와 관련해서 많은 API를 제공한다.
-그 중 가장 중요한 API는 ```$.ajax()```메소드이다.    
+JQuery는 Ajax와 관련해서 많은 API를 제공한다.  
+그 중 가장 중요한 API는 ```$.ajax()```메소드이다.      
   
 **문법**  
 ```jQuery.ajax( [settings ] )```
 ```
-data     :  서버로 데이터를 전송할 때 이 옵션을 사용한다.  
-
-dataType :  서버측에서 전송한 데이터를 어떤 형식의 데이터로 해석할 것인가를 지정한다.   
-            값으로 올 수 있는 것은 xml, json, script, html이다. 형식을 지정하지 않으면 jQuery가 알아서 판단한다.
-
-success  :  성공했을 때 호출할 콜백을 지정한다.
-            Function( PlainObject data, String textStatus, jqXHR jqXHR )
-
-type     :  데이터를 전송하는 방법을 지정한다. get, post를 사용할 수 있다.
+$.ajax({
+        url       :   연결할 파일의 경로를 입력한다.
+        type      :   데이터를 전송하는 방법을 지정한다. get, post를 사용할 수 있다.
+        data      :   서버로 데이터를 전송할 때 이 옵션을 사용한다. 
+        datatype  :   서버측에서 전송한 데이터를 어떤 형식의 데이터로 해석할 것인가를 지정한다.   
+                      값으로 올 수 있는 것은 xml, json, script, html이다. 형식을 지정하지 않으면 jQuery가 알아서 판단한다.
+        success   :   성공했을 때 호출할 콜백을 지정한다.
+                      Function( PlainObject data, String textStatus, jqXHR jqXHR )
 ```
+
+
 # 1. GET 방식
 ## 1.1. time.php
 ```
@@ -44,12 +46,9 @@ echo $d1->format('H:i:s');
     })
 </script>
 ```
-JQuery는 크로스 브라우징 문제를 알아서 해결해주기에 코드가 일관성이 있으며 
-```
-var xhr = new XMLHttpRequest()
-xhr.open()
-```
-XMLHttpRequest에 비해서 코드가 훨씬 간결해졌다. 
+JQuery는 크로스브라우징 문제를 알아서 해결해주기에   
+브라우저에 맞는 추가적인 코드를 작성 안해도 된다.
+또한 개개인 마다 다르지만 코드가 줄고 객체의 프로퍼티 활용을 통해 가독성이 좋아졌다 .
 
 ***
 # 2. POST 방식
