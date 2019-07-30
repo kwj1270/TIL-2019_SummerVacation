@@ -44,25 +44,81 @@ echo $d1->format('H:i:s');
     })
 </script>
 ```
+JQuery는 크로스 브라우징 문제를 알아서 해결해주기에 코드가 일관성이 있으며 
+```
+var xhr = new XMLHttpRequest()
+xhr.open()
+```
 XMLHttpRequest에 비해서 코드가 훨씬 간결해졌다. 
 
 ***
 # 2. POST 방식
 ## 2.1. time2.php
 ```
-내용1
+<?php
+$d1 = new DateTime;
+$d1->setTimezone(new DateTimezone($_POST['timezone']));
+echo $d1->format($_POST['format']);
+?>
 ```   
 
 ## 2.2. demo2.html
 ```
-내용1
+<p>time : <span id="time"></span></p>
+<form>
+    <select name="timezone">
+        <option value="Asia/Seoul">asia/seoul</option>
+        <option value="America/New_York">America/New_York</option>
+    </select>
+    <select name="format">
+        <option value="Y-m-d H:i:s">Y-m-d H:i:s</option>
+        <option value="Y-m-d">Y-m-d</option>
+    </select>
+</form>
+<input type="button" id="execute" value="execute" />
+<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+<script>
+    $('#execute').click(function(){
+        $.ajax({
+            url:'./time2.php',
+            type:'post',
+            data:$('form').serialize(),
+            success:function(data){
+                $('#time').text(data);
+            }
+        })
+    })
+</script>
 ```   
 
 ***
 # 3. JSON 처리
 > 인용
 ## 3.1. 소 주제
-### 3.1.1. 내용1
 ```
-내용1
+<?php
+$timezones = ["Asia/Seoul", "America/New_York"];
+echo json_encode($timezones);
+?>
+```
+## 3.1. 소 주제
+```
+<p id="timezones"></p>
+<input type="button" id="execute" value="execute" />
+<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+<script>
+    $('#execute').click(function(){
+        $.ajax({
+            url:'./time3.php',
+            dataType:'json',
+            success:function(data){
+                var str = '';
+                for(var name in data){
+                    str += '<li>'+data[name]+'</li>';
+                }
+                $('#timezones').html('<ul>'+str+'</ul>');
+            }
+        })
+    })
+</script>
 ```
