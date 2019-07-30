@@ -48,14 +48,49 @@ Ajax 호출을 비롯한 네트워크 요청
 
 ***
 # 2. 콜백(callback method)
-> JavaSCript에서 가장 오래된 비동기적 메커니즘  
+> JavaSCript에서 가장 오래된 비동기적 메커니즘 
+  
 **간단한 정의** : 나중에 호출할 함수  
 **사용 구역** : 다른 함수의 매개변수, 객체의 프로퍼티, 배열에 사용 
-## 2.1. 소 주제
-### 2.1.1. 내용1
+그리고 주로 익명 함수로 사용된다.
+## 2.1. 예제 
+### 2.1.1. setTimeout()
+setTimeout()의 기본구조는 마지막에 살펴본다  
 ```
-내용1
-```   
+console.log("Before timeout: " + new Date());
+function f(){
+  console.log("Before timeout: " + new Date());
+}
+setTimeout(f , 60*1000); //1분
+console.log("I happen after setTimeout!");
+console.log("Me too!");
+```
+**결과**
+```
+Before timeout: Tue Jul 30 2019 20:03:32 GMT+0900 (한국 표준시)
+I happen after setTimeout!
+Me too!
+After timeout: Tue Jul 30 2019 20:04:32 GMT+0900 (한국 표준시)
+
+1분뒤에 callback함수 f 가 실행되니 기다리자
+```
+JavaScript는 싱글 스레드를 사용하기에 동기적으로 이루어진다면  
+```setTimeout(f, 60*1000)```메소드에서 1분을 기다려야 다음 코드가 실행된다.(끔찍하다)  
+  
+결과를 통해 알 수 있는점은 callback 함수는 어떤 것도 차단하지 않는다는 점이다.  
+즉 프로그램의 흐름이 부드럽게 동작하게끔 만든다.(달리 말하면 다른 작업을 할 수 있다)  
+  
+**비동기적 테크닉은 프로그램이 이런 식으로 멈추는 일을 막아준다**
+
+
+
+
+
+
+
+
+
+
 
 ***
 # 3. 대주제
