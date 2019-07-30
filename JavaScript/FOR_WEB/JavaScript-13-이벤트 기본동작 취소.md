@@ -11,7 +11,7 @@ Event 기본 동작의 취소
 ***
 # 1. INLINE 
 > 이벤트의 리턴값이 false이면 기본 동작이 취소된다.
-## 1.1 코드
+## 1.1. 코드
 ```
 <p>
     <label>prevent event on</label><input id="prevent" type="checkbox" name="eventprevent" value="on" />
