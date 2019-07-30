@@ -107,7 +107,7 @@ setInterval(function(){
     console.log('getBoundingClientRect : ', t.getBoundingClientRect().top, 'pageYOffset:', window.pageYOffset, 'document y:', t.getBoundingClientRect().top+window.pageYOffset);
 }, 1000)
 ```
-### 2.1.1. 프로퍼티 및 메소드 정리
+### 2.1.2. 프로퍼티 및 메소드 정리
 ```
 getBoundingClientRect();                        // 뷰 포트 기준 좌표 출력
 setInterval(function , time_seconds);           // function을 x초(1초에 1회) 만큼 실행
