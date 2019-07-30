@@ -56,6 +56,7 @@ Ajax 호출을 비롯한 네트워크 요청
 ## 2.1. 예제 
 ### 2.1.1. setTimeout()  
 setTimeout()의 기본구조는 마지막에 살펴본다.  
+  
 **예제 코드**
 ```
 console.log("Before timeout: " + new Date());
@@ -98,8 +99,76 @@ setTimeout(function(){
 ```,60*1000)``` 시간 매개변수를 찾기 어렵거나 익명함수의 이부분처럼 보이니 주의하자.  
 자연 매개변수는 마지막 행에 쓴다는 원칙을 세운다면 이런 혼란은 피할 수 있다.
 
-
-
+### 2.1.2. setInerval 과 clearInterval
+> setTimeout은 1회만 실행되지만  
+> setInterval은 정해진 주기마다 콜백함수를 실행한다.  
+> setInterval을 끝내려면 (보통 조건절에)clearInterval을 사용한다.  
+   
+**예제코드**
+```
+const start = new Date();
+let i = 0;
+const IntervalId = setInterval(function(){
+  let now = new Date();
+  if(now.getMinutes() !== start.getMinutes() || ++i>10)
+    return clearInterval(IntervalId);
+  console.log(`${i}: ${now}`);  
+}, 5*1000)
+```
+실제로 시간이 걸리기에 필자도 정리를 위해 현재 문서를 작성하고 있다.
+**결과**
+```
+Tue Jul 30 2019 20:32:43 GMT+0900 (한국 표준시)
+Tue Jul 30 2019 20:32:48 GMT+0900 (한국 표준시)
+Tue Jul 30 2019 20:32:53 GMT+0900 (한국 표준시)
+Tue Jul 30 2019 20:32:58 GMT+0900 (한국 표준시)
+```
+코드에 대한 간단한 해석은
+현재 분 과 함수가 실행될때의 분이 다르거나 또는 i가 10을 초과하면 멈추는 것이다.
+**요점**
+```
+const IntervalId = setInterval(function(){
+```
+위 코드를 보면 setInteval이 ID를 반환한다는 사실을 알 수 있다.
+이 ID를 써서 ```clearInterval(ID명)```을 사용하여 ```setInterval```을 멈출 수 있다.
+### 2.1.3 스코프와 비동기적 실행
+비동기적 실행에서 혼란스럽고 에러도 자주 일어나는 부분은   
+**스코프**와 **클로저**가 비동기적 실행에 영향을 미치는 부분이다.  
+  
+**예제코드(실패)**
+```
+function countdown(){
+  let i;
+  console.log("Countdown:");
+  for(i = 5 ; i >= 0 ; i-- ){
+    setTimeout(function(){
+      console.log(i === 0 ? "GO" : i);
+    }, (5-i)*1000);
+  }
+}
+```
+위의 코드는 let i 는 블록스코프이지만 그 스코프가 함수이기 때문에
+for()가 끝나도 i는 존재하는 것이다. 그러므로 콜백함수가 적용이 되어서 
+```
+-1
+-1
+-1
+-1
+-1
+```
+위와 같은 결과가 나타난다.
+**예제코드(성공)**
+```
+function countdown(){
+  let i;
+  console.log("Countdown:");
+  for(i = 5 ; i >= 0 ; i-- ){
+    setTimeout(function(){
+      console.log(i === 0 ? "GO" : i);
+    }, (5-i)*1000);
+  }
+}
+```
 
 
 
