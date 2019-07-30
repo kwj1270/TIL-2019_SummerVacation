@@ -26,7 +26,7 @@ var infostr = JSON.stringify(infoObj);
 > JSON의 진가는 서버와 통신을 할 때 드러난다.
 
 ## 2.1. JSON 미사용 코드
-### 2.1.1 time.php
+### 2.1.1. time.php
 ```
 <?php
 $timezones = ["Asia/Seoul", "America/New_York"];
@@ -34,12 +34,12 @@ echo implode(',', $timezones);
 ?>
 ``` 
 서버 쪽에서는 타임라인의 리스트를 콤마로 구분해서 전달한다.  
-### 2.1.2 time.php 결과
+### 2.1.2. time.php 결과
 ```
 Asia/Seoul,America/New_York
 ```
 클라이언트 측에서는 이를 받아서 처리한다.
-### 2.1.3 demo.html
+### 2.1.3. demo.html
 ```
 <p id="timezones"></p>
 <input type="button" id="execute" value="execute" />
@@ -64,7 +64,7 @@ document.querySelector('input').addEventListener('click', function(event){
 </script>
 ```
 ## 2.2. JSON 사용 코드
-### 2.2.1 time2.php
+### 2.2.1. time2.php
 ```
 <?php
 $timezones = ["Asia/Seoul", "America/New_York"];
@@ -72,11 +72,11 @@ header('Content-Type: application/json');
 echo json_encode($timezones);
 ?>
 ```
-### 2.2.1 time2.php 결과
+### 2.2.2. time2.php 결과
 ```
 ["Asia\/Seoul","America\/New_York"]
 ```
-### 2.2.1 demo2.html
+### 2.2.3. demo2.html
 ```
 <p id="timezones"></p>
 <input type="button" id="execute" value="execute" />
