@@ -128,4 +128,4 @@ echo json_encode($timezones);
 ```
 ```dataType:'json'``` 을 통해서 응답받는 데이터 타입을 JSON으로 해석하고   
 ```success:function(data){ ``` 의 data는 응답 데이터를 의미한다.   
-이를 for...in 구문을 이용하여 <ul><li> 코드를 만들고 이를 id = timezones 에 넣었다.  
+이를 for...in 구문을 이용하여 ```<ul><li>``` 코드를 만들고 이를 id = timezones 에 넣었다.  
