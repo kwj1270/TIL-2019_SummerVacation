@@ -2,8 +2,8 @@ JQuery Ajax
 =======================
 라이브러리는 여러가지 편리한 기능들을 제공해준다.   
 JQuery도 마찬가지이다.   
-예를 들면 크로스브라우징의 문제를 해결해주기도 한다.
-
+예를 들면 크로스브라우징의 문제를 해결해주기도 한다.  
+  
 JQuery는 Ajax와 관련해서 많은 API를 제공한다.  
 그 중 가장 중요한 API는 ```$.ajax()```메소드이다.      
   
@@ -89,11 +89,11 @@ echo $d1->format($_POST['format']);
     })
 </script>
 ```  
-post type은 서버에 데이터를 전송시 URL에 데이터를 붙이지 않고 
-BODY에 데이터를 넣어서 보낸다. 
-즉 URL 데이터를 붙여서 보내는 GET보다는 보안이 높다.   
+post type은 서버에 데이터를 전송시 URL에 데이터를 붙이지 않고   
+BODY에 데이터를 넣어서 보낸다.   
+즉 URL 데이터를 붙여서 보내는 GET보다는 보안이 높다.     
    
- ``` data:$('form').serialize(),``` 는 form 태그의 정보를 값의이름=값의내용&값 의 형식으로 바꿔준다.  
+ ``` data:$('form').serialize(),``` 는 form 태그의 정보를 값의이름=값의내용&값 의 형식으로 바꿔준다.    
 
 
 ***
@@ -126,6 +126,6 @@ echo json_encode($timezones);
     })
 </script>
 ```
-```dataType:'json'``` 을 통해서 응답받는 데이터 타입을 JSON으로 해석하고 
-```success:function(data){ ``` 의 data는 응답 데이터를 의미한다. 
-이를 for...in 구문을 이용하여 <ul><li> 코드를 만들고 이를 id = timezones 에 넣었다.
+```dataType:'json'``` 을 통해서 응답받는 데이터 타입을 JSON으로 해석하고   
+```success:function(data){ ``` 의 data는 응답 데이터를 의미한다.   
+이를 for...in 구문을 이용하여 <ul><li> 코드를 만들고 이를 id = timezones 에 넣었다.  
