@@ -382,4 +382,92 @@ p.catch(
 	function(err){console.log(`countdown experienced an error:${err.message}`);}
 );
 ```
+**부록**
+```
+function countdown(seconds){
+	return new Promise(function(resolve,reject){
+		for(let i =seconds; i>=0;i--){
+			setTimeout(function(){
+				if(i===13) return reject(new Error("Oh my god"));
+				if(i>0) console.log(i + '...');
+				else resolve(console.log("GO!"));
+			}, (seconds-i)*1000);
+		}
+	});
+}
+
+countdown(15);
+```
+**결과**
+```
+15...
+14...
+Uncaught (in promise) Error: Oh my god
+    at <anonymous>:5:30
+12...
+11...
+10...
+9...
+8...
+7...
+6...
+5...
+4...
+3...
+2...
+1...
+GO!
+```
+실행 결과를 보면 알 수 있듯이 함수를 멈추지는 않는다.  
+resolve와 reject는 그저 프라미스의 상태를 관리 할 뿐이기 때문이다.  
+앞선 예제들을 보면 두 변수를 위해 return을 사용했기에 멈추지 않는 것이다.  
+
+### 3.1.3. 이벤트
+노드에는 이벤트를 지원하는 모듈 ```EventEmitter```가 내장되어 있다.
+이 모듈을 사용하여 countdown 함수를 개선해보자
+```
+const EventEmitter = require('events').EventEmitter;
+
+class Countdown extends EventEmitter{
+	constructor(seconds, superstitious){
+		super();
+		this.seconds = seconds;
+		this.superstitious = !!superstitious;
+	}	
+	go(){
+		const countdown = this;
+		return new Promise(function(resolve,reject){
+			for(let i =countdown.seconds; i>=0;i--){
+				setTimeout(function(){
+					if(countdown.superstitious &&i===13) 
+						return reject(new Error("Oh my god"));
+					countdown.emit('tick',i);
+					if(i===0)resolve();
+				}, (countdown.seconds-i)*1000);
+			}
+		});
+	}
+}			
+```
+EventEmitter를 상속하는 클래스는 이벤트를 발생시킬 수 있다.  
+실제 countdownd을 동작하는 메소드 go()에서는 this를 가장 먼저 할당하였다.  
+this를 할당해줌으로써 이 객체(인스턴스), 즉 현재 객체의 seconds를 통해 동작을 취할 수 있기 때문이다.  
+여기서 this를 그냥 사용해도 되지않냐 생각할 수 있는데 this는 콜백함수 안에 들어가면 값이 바뀐다.(window) 
+그래서 this의 현재값을 저장하는 변수 countdown을 사용한 것이다.  
+**countdown 사용 코드**
+```
+const c = new Countdown(5)
+
+c.on('tick', function(i){
+	if(i > 0) console.log(i+'...');
+
+});
+c.go()
+	.then(function(){
+		console.log("GO!");
+	});
+	.catch(function(err){
+		console.err("err.message");
+	});
+```
 
