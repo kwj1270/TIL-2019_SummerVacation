@@ -254,10 +254,62 @@ JavaScript에서는 콜백이 우연히 두번 호출되거나, 아에 호출되
 **프라미스**가 등장하였다.
 
 ***
-# 3. 대주제
-> 인용
-## 3.1. 소 주제
-### 3.1.1. 내용1
+# 3. 프라미스
+## 3.1. 개요
 ```
-내용1
+1. 콜백함수의 값을 이용하여 코드를 실행하려 하는데 
+   콜백이 실행 되었는지 안 되었는지는 명확히 알수가 없다.
+   그래서 콜백의 상태에 따라 코드를 동작시키게끔 만들었다.
+   
+2. 콜백헬과 같이 여러 중첩된 콜백함수가 있을 때 순서를 파악하기 위하여 사용
 ```
+프라미스는 성공하거나 실패하거나 단 두가지뿐이다.  
+또한 성공이든 실패든 단 한번만 일어나기 때문에 성공한 프라미스가 나중에 실패하는 일은 없다.  
+게다가 프라미스는 객체이므로 어디든 전달할 수 있다.  
+### 3.1.1. 프라미스 만들기 와 상태
+```
+function countdown(seconds){
+ return new Promise(function (resolve , reject){
+    for(let i = seconds; i >=0; i--){
+      setTimeout(function(){
+        if(i>0) console.log(i + '...');
+        else resolve (console.log("GO!");
+      },(seconds-i)*1000)
+    }
+  });
+});
+```
+프라미스에는 상태가 있다.
+```
+pending   : 아직 약속을 수행 중인 상태
+
+fuflilled : 약속이 지켜진 상태
+
+rejected  : 약속이 어떤 이유에서 못 지켜진 상태
+
+settled   : 약속이 일단 결론이 난 상태
+
+```
+코드를 분석해서 비교해보면  
+**pending**
+```
+ return new Promise(function (resolve , reject){
+```
+Promise 객체의 상태가 ```pending``` 되었다.  
+이 ```pending``` 상태는 Promise 객체가  
+```resolve()```나 ```rejected()```를 만나기전의 상태를 의미한다.   
+  
+**fulfilled**
+```
+ for(let i = seconds; i >=0; i--){
+      setTimeout(function(){
+        if(i>0) console.log(i + '...');
+        else resolve (console.log("GO!");
+```
+```resolve()```를 만난다면 Promise 상태의 객체가 fulfilled가 된다.  
+```resolve()``` 와 ```rejected```는 콜백함수에 사용해야 하며 이를 return 해주어야 한다.  
+```resolve()```의 인자로 들어간 값은 나중에
+```
+변수.then(function(abc){})
+```
+에서 abc의 값으로 들어간다.
