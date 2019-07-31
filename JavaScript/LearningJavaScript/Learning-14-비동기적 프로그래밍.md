@@ -267,6 +267,7 @@ JavaScript에서는 콜백이 우연히 두번 호출되거나, 아에 호출되
 또한 성공이든 실패든 단 한번만 일어나기 때문에 성공한 프라미스가 나중에 실패하는 일은 없다.  
 게다가 프라미스는 객체이므로 어디든 전달할 수 있다.  
 ### 3.1.1. 프라미스 만들기 와 상태
+**프로미스 생성**
 ```
 function countdown(seconds){
  return new Promise(function (resolve , reject){
@@ -279,25 +280,28 @@ function countdown(seconds){
   });
 });
 ```
-프라미스에는 상태가 있다.
+**프라미스 상태**
 ```
 pending   : 아직 약속을 수행 중인 상태
 
 fuflilled : 약속이 지켜진 상태
-
-rejected  : 약속이 어떤 이유에서 못 지켜진 상태
-
+            resolve()를 만난 상태
+            
+rejected  : 약속이 어떤 이유에서 못 지켜진 상태 
+            reject()를 만난 상태
+            
 settled   : 약속이 일단 결론이 난 상태
 
 ```
-코드를 분석해서 비교해보면  
+코드를 분석하면서 설명을 하겠다.  
+  
 **pending**
 ```
  return new Promise(function (resolve , reject){
 ```
 Promise 객체의 상태가 ```pending``` 되었다.  
-이 ```pending``` 상태는 Promise 객체가  
-```resolve()```나 ```rejected()```를 만나기전의 상태를 의미한다.   
+```pending``` 상태는 Promise 객체가  
+```resolve()```나 ```reject()```를 만나기전의 상태를 의미한다.   
   
 **fulfilled**
 ```
@@ -306,10 +310,40 @@ Promise 객체의 상태가 ```pending``` 되었다.
         if(i>0) console.log(i + '...');
         else resolve (console.log("GO!");
 ```
-```resolve()```를 만난다면 Promise 상태의 객체가 fulfilled가 된다.  
-```resolve()``` 와 ```rejected```는 콜백함수에 사용해야 하며 이를 return 해주어야 한다.  
-```resolve()```의 인자로 들어간 값은 나중에
+```resolve()```를 만난다면 Promise 객체의 상태가 fulfilled가 된다.  
+물론 이는 콜백함수 안에서 정의 되었으니 콜백함수가 끝나고 나서 상태가 변화된다.  
+  
+이렇듯 ```resolve()``` 와 ```reject()```는 콜백함수에 사용해야 하며  
+이를 return 해주어야 Promise 객체의 상태를 변화 시킬수 있다.  
+  
+```resolve()```의 인자로 들어간 값은 조금 뒤에 다루겠다.
+**rejected**
+위에 예제에서는 ```reject()```가 없는 예제이다.  
+특수한 조건을 만들어서 콜백함수 안에 ```reject()```를 만들어 사용해도 된다.  
+그러면 앞서 말한 것처럼 Promise 객체의 상태가 ```rejected``` 로 바뀐다.  
+    
+하지만 위 예제처럼 작성하지 않아도 된다.   
+왜냐하면 콜백함수가 끝나면 ```resolve()```로 인해 ```fulfilled```가 되고  
+그 나머지 상태는 콜백함수가 아직 시작되지 않거나 끝나지 않았다는 뜻으로 해석되니  
+이를 활용하면 되기 때문이다.
+(코드의 로직에 따라 즉, 목적에 따라 다르니 꼭 그렇다는 말은 아니다.)  
+
+그래도 이해가 안 될 수 있으니 다른 예제를 한번 보자  
+  
+**reject에러**
 ```
-변수.then(function(abc){})
+let _promise = function (value) {
+	return new Promise(function (resolve, reject) { 
+		window.setTimeout(function () {
+			if (value) {
+				resolve("성공");
+			}
+			else {
+				reject(Error("실패"));
+			}
+		}, 1000);
+	});
+};
 ```
-에서 abc의 값으로 들어간다.
+위 예제를 보면 ```reject(Error("실패"));```를 사용했다.  
+Error객체를 넘겨서 후에 에러 처리까지 할 수 있게한다.
