@@ -227,9 +227,9 @@ fs.readFile('a.txt' , function(err, dataA){
   });  
 });
 ```
-프로그래머들은 이러한 코드를 콜백 헬이라 부른다.(중괄호로 둘러싸여 끝없이 중첩된 콜백 코드)
-일단 위 예제는 에러를 기록한다.
-그러나 더욱 골치 아픈 문제는 **예외**를 일으키는 것이다.
+프로그래머들은 이러한 코드를 콜백 헬이라 부른다.(중괄호로 둘러싸여 끝없이 중첩된 콜백 코드)  
+일단 위 예제는 에러를 기록한다.  
+그러나 더욱 골치 아픈 문제는 **예외**를 일으키는 것이다.  
 
 ```
 const fs = require('fs');
@@ -244,7 +244,7 @@ function readSketchFile(){
 }
 readSketchy();
 ```
-위 예제는 얼핏 문제가 없는 것 같지만  
+위 예제는 얼핏 문제가 없는 것 같지만   
 사실 **실행 되지 않는다.**  
 그 이유는 try...catch 블록은 같은 함수 안에서만 동작하기 때문이다.    
    
@@ -332,7 +332,7 @@ Promise 객체의 상태가 ```pending``` 되었다.
 
 그래도 이해가 안 될 수 있으니 다른 예제를 한번 보자  
   
-**reject에러**
+**reject()**
 ```
 let _promise = function (value) {
 	return new Promise(function (resolve, reject) { 
@@ -348,4 +348,38 @@ let _promise = function (value) {
 };
 ```
 위 예제를 보면 ```reject(Error("실패"));```를 사용했다.  
-Error객체를 넘겨서 후에 에러 처리까지 할 수 있게한다.
+Error객체를 넘겨서 후에 에러 처리까지 할 수 있게한다.  
+
+### 3.1.2. 프라미스 사용
+Promis객체를 생성하여 countdown에 넣었다.  
+그렇다면 사용방법은 달라지는 것인가? 정답은 아니다.  
+기존 우리가 사용하는 대로 편하게 사용할 수 있다.
+다만 추가적으로 사용할 수 있는 기능이 늘어났다고 생각하는 것이 좋다.
+  
+**프라미스 사용예제 1**
+```
+countdown(5).then(
+	function(){console.log(`countdown completed successfully`);},
+	function(err){console.log(`countdown experienced an error:${err.message}`);}
+);
+```
+위 코드를 해석하기 전에 알아둘 메소드가 있다.
+```
+.then()	  :  Promise객체의 상태가 fulfilled일때 동작한다.
+.catch()  :  Promise객체의 상태가 rejected 이거나 fulfilled이 아닐 때 동작한다.
+```
+즉 상태에 따라서 실행되는 메소드가 다르니 프라미스는 이를 이용하는 것이다.  
+첫번째 코드를 보면 ```function(err)```가 있는데 이는 Error상황이 발생했으면 이를 실행토록 하는 코드이다.  
+.```then()```안에 두가지 상태처리 메소드를 사용하는 것 대신에 ```.catch()```를 이용할 수 있다.  
+  
+**.catch()예제**  
+```
+const p = countdown(5);
+p.then(
+	function(){console.log(`countdown completed successfully`);},
+);
+p.catch(
+	function(err){console.log(`countdown experienced an error:${err.message}`);}
+);
+```
+
