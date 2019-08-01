@@ -9,6 +9,7 @@ LIMIT 제한
 # 1. 행 수 제한   
 일단 ```LIMIT```은 SQL 표준이 아니다.    
 그래서 각 RDBMS 마다 사용하는 언어가 다르다. 이점을 참고하자  
+  
 **구조**
 ```
 SELECT 열 FROM 테이블 WHERE 조건식 ORDER BY 열 LIMIT 행수 ;
