@@ -465,12 +465,13 @@ c.on('tick', function(i){
 c.go()
 	.then(function(){
 		console.log("GO!");
-	});
+	})
 	.catch(function(err){
 		console.err("err.message");
 	});
+	// 체이닝 기법
 ```
-여기서 중요한 거은 ```tick```이벤트이다.  
+여기서 중요한 것은 ```tick```이벤트이다.  
 node.js를 배우지 않은 나는 여기를 이해하는데 꽤나 많은 시간을 투자했다.  
 첫번째 예제의 ```countdown.emit('tick',i);```은
 이벤트를 발생시키는 것이라 보면 되는데  
@@ -490,4 +491,56 @@ on()메소드는 이벤트가 일어날때 까지 기다리고 있다가 이벤�
 GO!
 ```
 하지만 위 코드는 이전 코드에 이벤트를 더하기 위해서 클래스를 만든 것 뿐이지  
-아직 13이 되어도 카운트다운을 멈추지 않는 문제점은 해결하지 못했다.
+아직 13이 되어도 카운트다운을 멈추지 않는 문제점은 해결하지 못했다.  
+이 문제를 해결하려면 더 진행할 수 없다는 사실을 아는 즉시 대기중인 타임아웃을 모두 취소하면 된다.  
+**해결**
+```
+const EventEmitter = require('events').EventEmitter;
+
+class Countdown extends EventEmitter{
+	constructor(seconds, superstitious){
+		super();
+		this.seconds = seconds;
+		this.superstitious = !!superstitious;
+	}	
+	go(){
+		const countdown = this;
+		const timeoutIds = [];
+		return new Promise(function(resolve,reject){
+			for(let i =countdown.seconds; i>=0;i--){
+				timeoutIds.push(setTimeout(function(){
+					if(countdown.superstitious &&i===13) 
+						return reject(new Error("Oh my god"));
+					countdown.emit('tick',i);
+					if(i===0)resolve();
+				}, (countdown.seconds-i)*1000);
+			});
+		});
+	}
+}			
+```
+이전 코드와 달라진 점은 아래와 같다.
+```
+const timeoutIds = [];
+```
+```
+timeoutIds.push(setTimeout(function(){
+```
+이제 여태까지 궁금했던 코드를 해석해보자  
+**해석**
+```
+const EventEmitter = require('events').EventEmitter;
+```
+node.js의 이벤트 모듈인 'events'를 통해 EventEmitter를 받았다.  
+우리는 이로써 다양한 이벤트 관련 기능들을 사용할 수 있게 된것이다.
+```
+class Countdown extends EventEmitter{
+```
+기존 function이었던 countdown을 EventEmitter를 상속받기 위해 클래스화 시켰다.
+```	constructor(seconds, superstitious){
+		super();
+		this.seconds = seconds;
+		this.superstitious = !!superstitious;
+	}
+
+```
