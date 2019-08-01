@@ -11,3 +11,12 @@ SELECT 열1 AS 열하나 FROM 테이블명 WHERE 조건절
 /*
 블록 주석
 */
+
+SELECT 열 FROM 테이블명 WHERE a >= 1 AND a <= 13
+SELECT 열 FROM 테이블명 WHERE a BETWEEN 1 AND13
+ 
+SELECT 열 FROM 테이블명 WHERE a = 1 OR  a = 13 OR a = 55
+SELECT 열 FROM 테이블명 WHERE a IN(1,13,55);
+
+SELECT 열 FROM 테이블명 WHERE name LIKE '%kim%';
+
