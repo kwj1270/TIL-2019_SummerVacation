@@ -1,0 +1,13 @@
+SELECT 열 FROM 테이블명 WHERE 조건절
+USE 데이터베이스명
+SHOW DATABASES
+SHOW TABLE
+SHOW TABLE STATUS
+
+DESC 테이블명
+SELECT 열1 AS 열하나 FROM 테이블명 WHERE 조건절
+
+-- 주석 
+/*
+블록 주석
+*/
