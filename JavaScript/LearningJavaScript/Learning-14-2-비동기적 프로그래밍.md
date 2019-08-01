@@ -324,3 +324,101 @@ for 구문을 돌린다. 여기서
 이를 forEach를 통해서 13초일 경우 기존 저장된 내용물을 삭제하는 식이다.  
 아직 초보자인 나는 이 코드를 보고 정말 놀라웠다.    
 그래서 결론은 13초가 되면 대기중인 타임아웃을 모두 취소시켜서 코드를 완성하였다.  
+
+### 3.1.4. 프라미스 체인
+Promise에는 체인으로 연결할 수 있다는 장점이 있다.  
+즉, Promise가 완료되면 다른 프라미스를 반환하는 함수를 즉시 호출할 수 있다.   
+**예제**
+```
+function launch(){
+	return new Promise(function(resolve,reject){
+		console.log("Lift off!");
+		setTimeout(function(){
+			resolve("In orbit!");
+		}, 2*1000);
+	});
+}
+```
+**실행**
+```
+const c = new Countdown(5)
+		.on('tick', i => console.log(i + '...'));
+c.go()
+		.then(launch)
+		.then(function(msg){
+			console.log(msg);		// "In orbit!"
+		})
+		.catch(function(err){
+			console.log("Houston, we have a problem....");
+		})		
+```
+**해석**
+처음에는 ```go()``` 메소드를 통해서 Promise 객체를 받는다.  
+콜백이 성공 하였으면 ```launch()```를 실행하는데  
+```launch```또한 Promise 객체를 이용하니 
+```.then(function(msg){```처럼 이를 체이닝으로 또 연결 가능하다.
+```msg```는 ```launch()```의 ```resolve("In orbit!");```의 In orbit!을 나타내므로 이를 출력한다.  
+```.catch(function(err){``` 같은 경우는 이렇게 사용되는중 어디서든 에러가 발생하던가 아니면 콜백이 실행되지 않았을 경우  
+실행 되는데 이것도 마찬가지로 체이닝 기법을 사용할 수 있다. 사실 이게 핵심이다. 
+에러가 생기면 체인 전체가 멈추고 .catch() 체인이 실행되기에  
+만약 15초를 넣고 돌리면 launch는 실행이 되지 않을 것이다.
+
+### 3.1.5. 결정되지 않은 프라미스 방지하기
+Promise를 사용할 때 우리는 ```resolve``` 와 ```reject```를 통해  
+코드를 단순화 하고 콜백이 두번 이상 실행되는 문제를 방지한다.  
+하지만 정작 ```resolve``` 와 ```reject```를 사용하는 것을 까먹는 경우 이를 해결하기는 쉽지않다.  
+그래서 이를 예방하는 방법이 있는데 바로 ```setTimeout()```을 거는 것이다.
+기존에 ```setTimeout()```을 많이 사용했기에 헷갈릴 수 있겠지만  
+이전에는 countdown을 위한 콜백함수 였다면  
+지금은 시간이 지나면 resolve로 예약을하는 ```setTimeout()```이라 생각하길 바란다.  
+**예제 1**
+```
+function launch(){
+	return new Promise(function(resolve, reject){
+		if(Math.random() < 0.5) return;		// 아... 여기서 정의를 안했다.
+		console.log("Lift off!");
+		setTimeout(function(){
+			resolve("In orbit!");
+		}, 2*1000);
+	});
+}
+```
+이 lauch는 reject를 호출하지 않는데다가,  
+심지어 콘솔에 기록하지도 않았다.  
+즉, 10번 시도중 5번은 영문도 모른채 실패하는 셈이다.  
+이제 이코드를 담을 ```addTimeout()```메소드를 작성해보자
+**예제 2**
+```
+function addTimeout(fn,timeout){
+	if(timeout === undefined) timeout = 1000;
+	return function(...args){
+		return new Promise(function(resolve,reject){
+			const tid = setTimeout(reject,timeout,newError("promise TImed out"));
+			fn(...args)	
+				.then(function(...args){
+					clearTimeout(tid);
+					resolve(...args);
+				})
+				.catch(function(...args){
+					clearTimeout(tid);
+					reject(...args);
+				})
+		})
+
+	}
+}
+```
+이 코드는 해석하기 정말 까다롭다...... 나중에 다시 봐야겠다.
+**사용**
+```
+c.go()
+	.then(addTimeout(launch, 11*1000))
+	.then(function(msg){
+		console.log(msg);
+	})
+	.catch(function(err){
+		console.log("Houston, we have a problem: " + err.message);
+	})
+```
+사용하는 코드는 예제코드에 비하면 아주 쉽다.
+이제 launh 함수에 문제가 있더라도 프라미스 체인은 항상 결정된다.
