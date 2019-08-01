@@ -258,7 +258,7 @@ class Countdown extends EventEmitter{
 					countdown.emit('tick',i);
 					if(i===0)resolve();
 				}, (countdown.seconds-i)*1000);
-			});
+			}
 		});
 	}
 }			
@@ -287,6 +287,40 @@ constructor(seconds, superstitious){
 		this.seconds = seconds;
 		this.superstitious = !!superstitious;
 	}
-```  
-
 ```
+클래스화가 되었으니 생성자를 사용한다.  
+일단 클래스의 기본 문법인 상위클래스의 생성자를 호출하고,  
+```seconds```라는 시간을 입력받아서 사용자 임의로 시간을 정할 수 있고  
+```superstious``` boolean 타입을 받아서 13은 불길한 숫자이니   
+믿으면 멈추고 안믿으면 안 멈추고를 정할 수 있다. 우리는 멈춰야 하니 true 값을 준다.  
+```
+go(){
+		const countdown = this;
+		const timeoutIds = [];	
+```
+앞서 말했듯이 ```this```를 콜백함수 안에서 사용해야 하는데 순수 ```this```를 사용하면 특성에 의해 값이 변한다.  
+그래서 이를 대신하는 countdown이라는 변수를 생성하고  
+이전에 없던 timeoutIds 배열(객체)를 만든다. 이는 차후에 설명하겠다.
+```
+return new Promise(function(resolve,reject){
+```
+Promise 객체를 만들고
+```
+for(let i =countdown.seconds; i>=0;i--){
+				timeoutIds.push(setTimeout(function(){
+					if(countdown.superstitious &&i===13) {
+						timeoutIds.forEach(clearTimeout);
+						return reject(new Error("Oh my god"));
+					}
+					countdown.emit('tick',i);
+					if(i===0)resolve();
+				}, (countdown.seconds-i)*1000);
+			}
+```
+for 구문을 돌린다. 여기서  
+이전에는 일반적인 방식으로 콜백 함수인 setTimeout()을 사용했지만  
+지금은 배열 timeoutIds 에 차곡차곡 넣고 있다.  
+이유는 간단하다 배열에 각 setTimeout()을 저장시켜 순서를 만들었는데,  
+이를 forEach를 통해서 13초일 경우 기존 저장된 내용물을 삭제하는 식이다.  
+아직 초보자인 나는 이 코드를 보고 정말 놀라웠다.    
+그래서 결론은 13초가 되면 대기중인 타임아웃을 모두 취소시켜서 코드를 완성하였다.  
