@@ -49,19 +49,53 @@ SELECT * FROM mytable WHERE id >= 10;
 ```
 id가 10 이상인 데이터(행) 조회
 
-### 1.2.1 WHERE 와 관계연산자 
+### 1.2.1. WHERE 와 관계연산자 
 ```
 AND   : &&와 같은 의미 양쪽 피연산자의 값이 TRUE 이어야 한다.
 OR    : ||와 같은 의미 양쪽 피연산자 중에 하나라도 값이 TRUE 이면 된다.
 NOT   : !와 같은 의미 TRUE -> FALSE / FALSE -> TRUE
-
 ```
+```
+SELECT name FROM mytable WHERE birthYear >= 1970 AND height >= 182;
+SELECT name FROM mytable WHERE birthYear >= 1970 OR height >= 182;
+SELECT name FROM mytable WHERE NOT(birthYear >= 1970 AND height >= 182);
+```
+```AND``` 와 ```OR``` 는 양쪽에 피연산자가 있지만  
+```NOT```은 한개의 피연산자만 있다고 생각을 하면 된다.
 
-
-
-
-
-
+### 1.2.2. BETWEEN...AND 와 IN() 그리고 LIKE
+**BETWEEN...AND**
+```
+SELECT name FROM mytable WHERE height >= 170 AND height <= 182;
+```
+위 예제와 같이 동일한 필드를 기준으로   
+숫자로 구성되어 연속적인 값을 사용하는 경우는 ```BETWEEN...AND```을 사용할 수 있다. 
+```
+SELECT name FROM mytable WHERE height BETWEEN 170 AND 182;
+```
+**IN()**
+```
+SELECT name FROM mytable WHERE addr='경남' OR addr=전남'' OR addr='충남';
+```
+위 예제와 같이 동일한 필드를 기준으로   
+문자로 구성되어 이산적인 값을 사용하는 경우는 ```IN()```을 사용할 수 있다. 
+```
+SELECT name FROM mytable WHERE addr IN('경남','전남','충남');
+```
+**LIKE**
+문자열의 내용을 검색하기 위해서는 LIKE 연산자를 사용할 수 있다.
+```
+SELECT name FROM mytable WHERE name LIKE '홍%';
+```
+```%```는 무엇이든 허용한다는 의미이다.(문자열)
+```%길동``` 이렇게 앞에 사용한다던가  
+```%길%``` 이렇게 양쪽에 사용 가능하다.
+```
+SELECT name FROM mytable WHERE name LIKE '_길동';
+```
+```_```는 한개의 글자를 허용한다는 의미이다.(문자)
+```_길동``` 이렇게 앞에 사용한다던가  
+```_길_``` 이렇게 양쪽에 사용 가능하다.
 
 ***
 # 2. 대주제
