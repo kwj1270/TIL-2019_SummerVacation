@@ -84,4 +84,6 @@ Oracle은 이렇듯 동시에 동작한다고 가정을 하기 때문에 값이 
 ```
 UPDATE mytable SET name = NULL WHERE id = 1 ;
 ```
-이를 NULL 초기화라고 한다.
+이를 NULL 초기화라고 한다.  
+단, ```NOT NULL```로 제약이 걸린 필드(열)는 NULL 값을 넣을 수 없다.
+
