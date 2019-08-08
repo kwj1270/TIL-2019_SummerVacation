@@ -34,7 +34,8 @@ __________
 |________|
 
 SELECT a,
-       CASE WHEN a IS NULL THEN 0 
+CASE
+       WHEN a IS NULL THEN 0 
        ELSE a 
 END AS "a(null=0)" FROM mytable;   
 ```
@@ -65,18 +66,67 @@ SELECT a, COALESCE(a,0) FROM mytable;
 
 ***
 # 2. 또 하나의 CASE 문 (디코드 인코드)
-CASE를 사용하는 이유는 많지만 디코드를 사용하기 위해서 많이 사용 된다.
-## 2.1. 소 주제
-### 2.1.1. 내용1
+* 디코드 : 문자화
+* 인코드 : 수치화
+  
+```CASE```는 이러한 디코드와 인코드를 사용하기 위해 많이 사용된다.  
+  
+**예시**
 ```
-내용1
-```   
+mytable
+__________
+|a       |
+|________|
+|1       |
+|________|
+|2       |
+|________|
+|NULL    |
+|________|
+
+SELECT a AS "코드",
+CASE 
+       WHEN a=1 THEN '남자' 
+       WHEN a=2 THEN '여자' 
+       ELSE '미지정'
+END AS "성별" FROM mytable;   
+```
 
 ***
-# 3. 대주제
-> 인용
-## 3.1. 소 주제
-### 3.1.1. 내용1
+# 3. CASE를 사용할 경우 주의사항
+## 3.1. ELSE 생략
+```ELSE```를 생략할경우 자동적으로 
 ```
-내용1
+ELSE NULL
 ```
+이 된다.
+NULL은 DB에서는 어떠한 연산도 할 수 없으므로 이를 주의해야하고   
+되도록 ELSE를 생략하지 말고 지정하는 편이 좋다.
+
+## 3.2. WHEN에서 NULL 지정하기
+**예시**
+```
+SELECT a,
+CASE a
+       WHEN 1 THEN '남자' 
+       WHEN 2 THEN '여자' 
+       WHEN NULL THEN '데이터 없음'   
+       ELSE '미지정'
+END AS "성별" FROM mytable;   
+```
+```WHEN NULL```은 단순히 문법적으로는 문제가 없지만 정상적으로 처리되지 않는다. 
+사실은 ```WHEN``` 구문이 ```WHEN a = NULL```로 조건식을 처리하기 때문이다.  
+***NULL***은 어떠한 연산도 불가능 하므로 판정이 불가능하다.  
+  
+DB에서 NULL을 판정하기 위해서는 ```IS NULL```을 사용한다.  
+**해결**
+```
+SELECT a,
+CASE 
+       WHEN a=1 THEN '남자' 
+       WHEN a=2 THEN '여자' 
+       WHEN a IS NULL THEN '데이터 없음'   
+       ELSE '미지정'
+END AS "성별" FROM mytable;   
+```
+
