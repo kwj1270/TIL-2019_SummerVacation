@@ -73,3 +73,68 @@ WHERE절은 생략이 가능하지만 생략할 경우 테이블의 전체 행�
 DELETE FROM testTbl
   WHERE Fname = 'Aamer' LIMIT 5;
 ```  
+또한 LIMIT과 도 같이 쓰일 수 있다
+
+# 3.1. 기타 삭제 구문들과 함께 보기
+```
+DELETE FROM bigTbl1;                DML
+DROP TABLE bigTbl2;                 DDL
+TURNCATE TABLE bigTbl3;             DDL
+```
+DELETE는 DML로 트랜잭션 로그를 기록하는 작업 때문에 삭제하는데 오래 걸린다.
+반면에 DROP 과 TURNCATE는 DDL로 트랜잭션을 사용하지 않기에 시간소모가 적다.   
+  
+결론은 테이블 트랜잭션의 장점을 이용하지 않는다는 가정하에   
+테이블 자체를 삭제하고 싶으면 ```DROP```을 사용하고  
+테이블 구조를 남기고 데이터를 삭제하고 싶으면 ```TURNCATE```를 사용하자  
+
+***
+# 4. 조건부 데이터 입력, 변경
+## 4.1. IGNORE
+**예시**
+```
+기존 memberTBL에 'BBK'가 있다고 가정하에
+
+INSERT INTO memberTBL VALUES('BBK','비비코','미국');    ->    입력 X 여기서 멈춤
+INSERT INTO memberTBL VALUES('SJH','서장훈','서울');    ->    동작 X
+INSERT INTO memberTBL VALUES('BBK','현주엽','경기');    ->    동작 X
+
+SELECT * FROM memberTBL;      ->       확인
+```
+
+INSERT시에 기본 키에 중복된 데이터를 입력하면 어떻게 될까? 당연히 동작을 안한다.   
+하지만 우리는 수많은 기본 키 중에서 무엇이 중복 되었는지, 안 되었는지 확인할 수 없는 경우도 있다.   
+그러면 다수의 데이터를 입력할때 중복된 키로 인해서 나머지 중복되지 않은 키들도 동작하지 말아야 되는가? 그건 아니다  
+그래서 SQL에서는 ```IGNORE```라는 키워드를 제공해준다.   
+  
+**예시**
+```
+기존 memberTBL에 'BBK'가 있다고 가정하에
+
+INSERT IGNORE INTO memberTBL VALUES('BBK','비비코','미국');    ->    입력 X
+INSERT IGNORE INTO memberTBL VALUES('SJH','서장훈','서울');    ->    동작 O
+INSERT IGNORE INTO memberTBL VALUES('BBK','현주엽','경기');    ->    동작 O
+
+SELECT * FROM memberTBL;      ->       확인
+```
+이제 PK가 중복되더라도 오류를 발생시키지 않고 무사히 넘어간다.  
+
+## 4.2. ON DUPLCATE KEY UPDATE
+이번에는 중복시 넘어가는 것이 아니라 새로운 값으로 덮어쓰기를 해본다.  
+  
+**예시**
+```
+기존 memberTBL에 'BBK'가 있다고 가정하에
+
+INSERT INTO memberTBL VALUES('BBK','비비코','미국')
+  ON DUPLCATE KEY UPDATE name= '비비코', addr='미국';
+
+INSERT INTO memberTBL VALUES('DJM','동짜몽','일본')
+  ON DUPLCATE KEY UPDATE name= '동짜몽', addr='일본';
+
+SELECT * FROM memberTBL;      ->       확인
+```
+ON DUPLCATE KEY UPDATE 는  
+기본 키가 중복되지 않으면 그대로 사용을 하고   
+기본 키가 중복이라면 값을 UPDATE 하겠다는 의미로  
+기존 값을 새로운 값으로 수정한다. (일종의 덮어쓰기라고 본다.)
