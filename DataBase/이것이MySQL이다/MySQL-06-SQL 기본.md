@@ -97,6 +97,108 @@ SELECT name FROM mytable WHERE name LIKE '_길동';
 ```_길동``` 이렇게 앞에 사용한다던가  
 ```_길_``` 이렇게 양쪽에 사용 가능하다.
 
+### 1.2.3. ANY/ALL/SOME 그리고 서브쿼리(하위쿼리)
+```
+SELECT Name, height FROM userTbl
+  WHERE hegiht > (SELECT height FROM userTbl WHERE Name = '김경호')
+```
+위의 코드를 보면 김경호의 키보다 큰 사람의 ```Name```과 ```height```를 출력하는 것을 알 수 있다.   
+위의 코드가 정상작동을 하기 위한 조건은 김경호는 1명일 경우를 가정한 것이다.  
+그렇다면 만약 김경호가 2명 이상이라면 그 조건은 어떻게 되는가?  
+일단 DB에서 이러한 상황에 맞딱드릴 경우 ERROR를 발생시킨다.   
+바로 이럴 때 사용하는 것이 **ANY/ALL/SOME**이다.  
+  
+**ANY 또는 SOME**
+```
+김경호(1)이 170 
+김경호(2)가 173이라 가정
+
+SELECT Name, height FROM userTbl
+  WHERE hegiht > ANY(SELECT height FROM userTbl WHERE Name = '김경호')
+
+SELECT Name, height FROM userTbl
+  WHERE hegiht > SOME(SELECT height FROM userTbl WHERE Name = '김경호')
+```
+```
+SELECT Name, height FROM userTbl
+  WHERE hegiht > 170
+```
+```ANY/SOME```은 2가지 중 ```( > 170)/( > 173)```
+하나라도 만족하면 되기에 작은수 170이 기준이 된다.  
+
+**ALL**
+```
+김경호(1)이 170 
+김경호(2)가 173이라 가정
+
+SELECT Name, height FROM userTbl
+  WHERE hegiht > ALL(SELECT height FROM userTbl WHERE Name = '김경호')
+```
+```
+SELECT Name, height FROM userTbl
+  WHERE hegiht > 173
+```
+```ALL```은 2가지 중 ```( > 170)/( > 173)```
+모든 조건을 만족해야 되기에 작은수 173이 기준이 된다.  
+
+이렇듯 여러 값이 반환될때 사용하는 것이 **ANY/ALL/SOME**이다
+
+## 1.3. 원하는 순서대로 정렬하기 OREDER BY
+```ORDER BY``` 절은 데이터에 직접적인 영향을 미치지는 않지만   
+결과가 출력되는 순서를 조절해주는 구문이다. 즉 실제 데이터 순서에는 영향을 미치지 않는다.  
+  
+**예시**
+```
+SELECT Name, mDate FROM userTbl OREDER BY mDate ASC;
+SELECT Name, mDate FROM userTbl OREDER BY mDate DESC;
+```
+```ORDER BY 열``` 의 열을 기준으로
+```ASC```는 오름차순
+```DESC```는 내림차순으로 정렬을 한다.
+
+## 1.4. 중복된 것은 하나만 남기는 DISTINCT
+```DISTINCT```는 주로 ```SELECT```구문에 쓰이며 중복된 값중 한개만 보여준다.
+  
+**예시**
+```
+SELECT DISTINCT addr FROM userTbl;
+```
+
+## 1.5. 출력의 개수를 제한하는 LIMIT
+```LIMIT```은 행 개수를 제한해주는 명령어이다.  
+```
+1. 
+
+SELECT emp_no, hire_date FROM employees
+  ORDER BY hire_date ASC
+  LIMIT 5;
+  
+=========================================  
+2.
+
+SELECT emp_no, hire_date FROM employees
+  ORDER BY hire_date ASC
+  LIMIT 0,5;
+
+=========================================  
+3.
+
+SELECT emp_no, hire_date FROM employees
+  ORDER BY hire_date ASC
+  LIMIT 5 OFFSET 0;
+```
+```1.```은 단순한 LIMIT 사용이며 5개로 제한을 의미한다.  
+```2.```는 두개의 값을 사용한 LIMIT 사용이며 0개 부터 시작하여 5개로 제한을 의미한다.  
+```3.```도 LIMIT 사용하여 0개 부터 시작하여 5개로 제한을 의미한다.  
+```2.```와 ```3.```은 같은 표현이다.   
+이렇게 사용하는 이유는 엄청나게 많은 데이터를 페이지를 이용하여 편리하게 사용할 수 있기 위해서이다.  
+
+## 1.6. 테이블을 복사하는 CREATE TABLE ...SELECT
+
+
+
+
+
 ***
 # 2. 대주제
 > 인용
