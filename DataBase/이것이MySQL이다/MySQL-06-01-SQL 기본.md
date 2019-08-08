@@ -194,25 +194,21 @@ SELECT emp_no, hire_date FROM employees
 이렇게 사용하는 이유는 엄청나게 많은 데이터를 페이지를 이용하여 편리하게 사용할 수 있기 위해서이다.  
 
 ## 1.6. 테이블을 복사하는 CREATE TABLE ...SELECT
-
-
-
-
-
-***
-# 2. 대주제
-> 인용
-## 2.1. 소 주제
-### 2.1.1. 내용1
+``` CREATE TABLE ...SELECT```는 주로 복사할 경우 주로 사용된다.  
+  
+**구조**
 ```
-내용1
-```   
-
-***
-# 3. 대주제
-> 인용
-## 3.1. 소 주제
-### 3.1.1. 내용1
+CREATE TABLE 새로운 테이블 (SLECT 복사할 필드 FROM 기존 테이블 WHERE 조건식)
 ```
-내용1
+**예시**
+```
+CREATE TABLE newtable (SLECT * FROM mytable);
+```
+물론 열을 지정할 수 있고
+```
+CREATE TABLE newtable (SLECT id, name , age FROM mytable);
+```
+WHERE 조건식 을 지정할수도 있다.
+```
+CREATE TABLE newtable (SLECT id, name , age FROM mytable WHERE id = 1);
 ```
