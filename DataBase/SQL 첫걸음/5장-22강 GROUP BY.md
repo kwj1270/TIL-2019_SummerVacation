@@ -32,7 +32,7 @@ ________
 | name |                                                    
 |______|                                                            
 |'A'   |                                                          
-|______|                                                                                                                                                                             
+|______|                                                                                      
 |'B'   |                                                         
 |______|                                                       
 |'C'   |                                                     
@@ -142,12 +142,38 @@ __________________________
 | C        |      1      |
 |__________|_____________|
 ```
+이처럼 ```HAVING```을 이용해서 집계함수를 제한 했다.  
+```
+WHERE 구  -> GROUP BY구 -> HAVING구 -> SELECT 구  -> ORDER BY 구
+```
+참고로 ```HAVING```의 내부처리 순서는 다음과 같다.
 
 ***
-# 3. 대주제
-> 인용
-## 3.1. 소 주제
-### 3.1.1. 내용1
+# 3. 복수열의 그룹화 (SELECT 열 입력시 주의사항)
+우선 GOURP BY로 특정한 열이 묶여있다면  
+다른 열들은 묶인 상태가 아니다 그러므로 ```SELECT```에 기술하면 어느값을 반환할지 몰라서 ERROR 가 발생한다.
 ```
-내용1
+SELECT id,name,quantity FROM mytable GROUP BY name;
+```
+```name```은 그룹화 되었기에 ```SELECT```에 사용해도 되지만 ```id```와 ```quantity```은 그렇지 않다.  
+그래서 만약 그룹화 되지 않은 열을 사용하고 싶으면   
+```id```와 ```name```에 집계함수를 사용하던가    
+GROUP BY 시에 같이 그룹화를 시켜준다.  
+ 
+**집계 함수** 
+```
+SELECT MIN(id),name,SUM(quantity) FROM mytable GROUP BY name;
+```
+**GROUP BY** 
+```
+SELECT name,quantity FROM mytable GROUP BY name, quantity;
+```
+  
+참고로 그룹화를 통해서 얻은 결과도 ```OREDER BY```로 정렬할 수 있으며    
+```ORDER BY``` 마지막에 처리가 되니 집계 함수를 사용할 수 있다.  
+```
+SELECT name,COUNT(name),SUM(quantity) 
+    FROM mytable GROUP BY name
+    ORDER BY SUM(quantity) DESC;
+
 ```
