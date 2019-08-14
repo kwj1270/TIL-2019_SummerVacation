@@ -1,4 +1,3 @@
-     
 # 1. IF..ELSE   
 스토어드 프로시저는 프로그래밍 기능이기에    
 C언어 JAVA와 같은 응용프로그래밍 언어에서 사용하는 조건문,반복문 구조를 비슷하게 구현해 놓았다.    
@@ -173,3 +172,73 @@ END $$
 DELIMITER ;
 CALL whileProc2();
 ```
+
+***
+# 4. 오류 처리
+MySQL은 오류가 발생할 경우 직접 오류를 처리하는 방법을 제공한다.
+  
+**구조**  
+```
+DECLARE 액션 HANDLER FOR 오류조건 처리할_문장;
+```
+**액션**
+```
+오류 발생 시에 행동을 정의하는데 CONTINUE와 EXIT 둘 중 하나를 사용한다.
+CONTINUE 가 나오면 제일 뒤의 '처리할_문장' 부분이 처리된다.
+```
+**오류조건**
+```
+어떤 오류를 처리할 것인지를 지정한다. 
+여기에는 MySQL의 오류 코드 숫자가 오거나 
+SQLSTATE '상태코드', SQLEXCEPTION, SQLWARNING, NOT FOUND 등이 올 수 있다.
+SQLSTATE에서 상태코드는 5자리 문자열로 되어 있다.
+SQLEXCEPTION 은 대부분의 오류를,
+SQL WARNING 은 경고메시지를,
+NOT FOUND는 커서나 SELECT...INTO 에서 발생되는 오류를 의미한다.
+```
+**처리할 문장**
+```
+처리할 문장이 하나라면 한 문장이 나오면 되며, 처리할 문장이 여러 개일 경우에는 BEGIN...END로 묶어줄 수 있다.
+```
+  
+**예시 1**
+```
+DROP PROCEDURE IF EXISTS errorProc;
+DELIMITER $$
+CREATE PROCEDURE errorProc()
+BEGIN
+     DECLARE CONTINUE HANDLER FOR 1146 SELECT '테이블이 없어요ㅠㅠ' AS '메시지';  --1146 대신에 SQLSTATE '42S02'도 가능
+     SELECT * FROM noTable;
+END $$
+DELIMITER ;
+CALL errorProc();
+```
+위 예제는 테이블이 없을 경우에 오류를 직접 처리하는 코드이다.  
+```DECLARE``` 부분이 있어서 사용자가 지정한 메시지가 출력된다.    
+만약 저부분이 없으면 MySQL이 직접 오류 메시지를 발생시킨다.    
+  
+**예시 2**
+```
+DROP PROCEDURE IF EXISTS errorProc2;
+DELIMITER $$
+CREATE PROCEDURE errorProc2()
+BEGIN
+     DECLARE CONTINUE HANDLER FOR SQLEXCEPTION,
+     BEGIN
+          SHOW ERRORS;
+          SELECT '오류가 발생했네요. 작업은 취소시켰습니다.' AS '메시지';
+          ROLLBACK;
+     END;
+     INSERT INTO userTbl VALUES('LSG', '이상구' , 1988, '서울', NULL,
+          NULL, 170, CURRENT_DATE());
+END $$
+DELIMITER ;
+CALL errorProc2();
+```
+위 예제는 기본키에 이미 저장된 값을 한번더 입력시 오류를 발생시키는 코드이다.  
+  
+**SHOW ERRORS** : 오류에 대한 코드와 메시지를 출력    
+**ROLLBACK** : 진행중인 작업을 취소시며 COMMIT은 작업을 완전히 확정시키는 구문이다.       
+    
+또한 ```SHOW COUNT(*)ERRORS 문```은 발생된 오류의 개수를 출력해주며,  
+```SHOW WARNINS 문```은 경고에 대한 코드와 메시지를 출력한다.   
