@@ -1,0 +1,161 @@
+스토어드 프로그램
+=======================
+# 1. 스토어드 프로시저 (STORED PROCEDURE)  
+**STORED PROCEDURE**란 MySQL에서 제공되는 프로그래밍 기능    
+MySQL 내부에서 사용하기 위한 적절한 방식을 제공해준다.   
+  
+## 1.1. 스토어드 프로시저 
+STORED PROCEDURE는 한마디로 **쿼리문의 집합**으로  
+어떠한 동작을 일괄 처리하기 위한 용도로 사용된다.  
+즉 자주 사용되는 쿼리를 모듈화 시켜서 필요할 때마다 호출하여 사용한다.   
+  
+기존 프로그래밍 언어의 함수 같지만 여기서는 의미가 조금 다르다.  
+DB에서 함수는 어떠한 결과값을 반환 하는 것을 의미하므로   
+스토어드 프로시저는 단순하게 값을 반환하지 않는 쿼리의 집합이라 보자  
+다른말로 return 없는 함수라고 생각해도 좋을 것 같다.
+  
+### 1.1.1. 스토어드 프로시저 생성
+**구조**
+```
+DELIMITER $$
+CREATE PROCEDURE 프로시저명(IN 또는 OUT 매개변수)
+BEGIN
+    코드 내용  
+END $$
+DELIMITER ;
+CALL 프로시저(인자);
+```  
+앞서 말했듯이 return 없는 함수라고 생각하면 된다.    
+```DELIMITER```는 종료 문자를 바꿔주는 명령어라 생각하면 된다.    
+```DELIMITER $$ ~~~ END $$``` 까지가 스토어드 프로시저를 묶어주는 부분이고  
+스토어드 프로시저가 끝났으니 ```DELIMITER ;```로 종료 문구는 다시 ```;```로 바꿔주는 것이다.     
+  
+```IN``` 과 ```OUT```에 대해서는 예제를 통해 알아 봐야하므로 아래 코드를 준비했다.    
+  
+**예시**
+```
+DROP PROCEDURE IF EXIST userProc;
+DELIMITER $$
+CREATE PROCEDURE userProc(  
+    IN txtValue CHAR(10)
+    OUT outValue INT  
+)
+BEGIN
+      INSERT INTO testTBL VALUES(NULL,txtValue);
+      SELECT MAX(id) INTO outvalue FROM testTBL;   
+END $$
+DELIMITER ;
+
+CREATE TABLE IF NOT EXITS testTBL(
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  txt CHAR(10)
+);
+
+CALL userProc('테스트 값' , @myValue);
+SELECT CONCAT('현재 입력된 ID 값 ==>', @myValue);
+```
+```
+현재 입력된 ID 값 ==> 1
+```
+매개변수는 하나의 자료형이라 생각하고 ```이름 자료형 제약 ``` 작성을 하는 것이다.    
+      
+**IN 매개변수**는 외부로부터 직접 값을 입력받아    
+스토어드 프로시저 내부에서 사용하는 매개변수를 의미하고    
+      
+**OUT 매개변수**는 외부와 연결된 변수를 받는 것으로      
+주로 ``` SELECT 주는값 INTO 받는값``` 구문에 많이 사용된다.      
+스토어드 프로시저 내부에서 값을 입력받아 외부에서도 사용 가능한 것이다.      
+어찌보면 ```C 언어의 포인터``` 같은 개념으로 생각하면 쉽다.    
+실제로 OUT 매개변수는 여러 값을 사용(반환)하고 싶을때 사용한다.     
+  
+**IN 매개변수는 주의사항이 있는데 아래 코드를 보자**
+  
+**예시**
+```
+DROP PROCEDURE IF EXIST userProc;
+DELIMITER $$
+CREATE PROCEDURE userProc(  
+    IN tblNmae VARCHAR(20)
+)
+BEGIN
+    SELECT * FROM tblName;
+END $$
+DELIMITER ;
+
+CALL userProc('userTBL');
+```
+위 코드는 정상 동작을 할 것 같지만 테이블을 알 수 없다는 에러를 발생한다.  
+MySQL에서는 매개변수를 **테이블의 이름으로 사용할 수 없다.**   
+그래서 이를 해결하기 위해 ```동적 SQL```을 활용한다.
+  
+**예시**
+```
+DROP PROCEDURE IF EXIST userProc;
+DELIMITER $$
+CREATE PROCEDURE userProc(  
+    IN tblNmae VARCHAR(20)
+)
+BEGIN
+    SET @sqlQuery = CONCAT('SELECT * FROM ',tblName);
+    PREPARE myQuery FROM @sqlQuery;
+    EXECUTE myQuery;
+    DEALLOCATE PREPARE statement;
+END $$
+DELIMITER ;
+
+CALL userProc('userTBL');
+```  
+```동적 SQL```은 ```PREPARE 쿼리이름 FROM 쿼리문;``` 으로 구성 되어있으며    
+```FROM```은 테이블이 아닌 쿼리문을 저장하기 위한 명령어이다.       
+    
+매개변수는 테이블의 이름으로 사용할 수 없으니    
+```SELCT * FROM 테이블명```을 애초에 ```CONCAT()```으로 생성한 후 이를 변수에 저장하여 사용하였다.   
+이렇듯 매개변수를 테이블이름으로 사용하고자 한다면 **동적 SQL**을 통해서 사용하자.   
+  
+### 1.1.2. 스토어드 프로시저의 수정과 삭제
+**구조**
+```
+수정   :   ALTER PROCEDURE 스토어드_프로시저_명;
+삭제   :   DROP PROCEDURE 스토어드_프로시저_명;
+```
+```ALTER PROCEDURE```로 스토어드_프로시저 또는 스토어드_함수의 **내용을 수정할 수는 없다.**  
+만약 내용을 수정을 하고자 한다면 ```DROP```후 새로 ```CREATE```해야한다.  
+글쓴이도 개념이 안잡혀서 '수정 예시'는 일단 생략하고 추후에 다시 기술하겠다.   
+  
+**삭제 예시**
+```
+DROP PROCEDURE 스토어드_프로시저_명;
+```
+
+### 1.1.3. 오류 처리
+스토어드 프로시저 내부에서 오루가 발생했을 경우에는 아래와 같은 구문을 사용한다.
+**구조**
+```
+DECLARE 액션 HANDLER FOR 오류조건_처리할_문장
+```
+**예시**
+```
+DECLARE COTINUE HANDLER FOR 1146 SELECT '테이블이 없어요' AS '메시지';
+```
+7장에 오류 처리에 대한 자세한 설명이 있으니 참고 바란다.
+  
+## 1.2. 스토어드 프로시저의 특징
+### 1.2.1. MySQL의 성능을 향상시킬 수 있다.
+긴 코드의 쿼리를 서버에 스토어드 프로시저로 생성해 놓았다면  
+단지 스토어드 프로시저 이름 및 매개 변수 등 몇 글자의 텍스트만 전송하면 되므로  
+네트워크의 부하를 어느정도 줄일 수 있으며, 결과적으로 MySQL의 성능을 향상시킨다.
+  
+### 1.2.2. 유지관리가 간편하다.
+클라이언트 응용프로그램에서 직접 SQL문을 작성하지 않고 스토어드 프로시저 이름만 호출하도록 설정함으로써,  
+데이터베이스에서 관련된 스토어드 프로시저의 내용을 일관되게 수정/유지보수 등의 작업을 할 수 있다.
+  
+### 1.2.3. 모듈식 프로그래밍이 가능하다.
+한번 스토어드 프로시저를 생성해 놓으면 언제든지 실행이 가능하다.    
+또한, 스토어드 프로시저로 저장해 놓은 쿼리의 수정,삭제 등의 관리가 수월해진다.  
+더불어 다른 모듈식 프로그래밍 언어와 동일한 장점을 갖는다.  
+  
+### 1.2.4. 보안을 강화할 수 있다.
+사용자별로 테이블에 접근 권한을 주지 않고  
+스토어드 프로시저에만 접근 권한을 줌으로써 좀 더 보안을 강화할 수 있다. 
+예로 개인정보를 택배 배송에서 택배기사에게 모든 개인정보를 노출 시키면 안되니  
+스토어드 프로시저만 사용 가능케 하도록 할 수 있다.
