@@ -34,7 +34,7 @@ CALL 프로시저(인자);
   
 **예시**
 ```
-DROP PROCEDURE IF EXIST userProc;
+DROP PROCEDURE IF EXISTS userProc;
 DELIMITER $$
 CREATE PROCEDURE userProc(  
     IN txtValue CHAR(10)
@@ -46,7 +46,7 @@ BEGIN
 END $$
 DELIMITER ;
 
-CREATE TABLE IF NOT EXITS testTBL(
+CREATE TABLE IF NOT EXISTS testTBL(
   id INT AUTO_INCREMENT PRIMARY KEY,
   txt CHAR(10)
 );
@@ -72,7 +72,7 @@ SELECT CONCAT('현재 입력된 ID 값 ==>', @myValue);
   
 **예시**
 ```
-DROP PROCEDURE IF EXIST userProc;
+DROP PROCEDURE IF EXISTS userProc;
 DELIMITER $$
 CREATE PROCEDURE userProc(  
     IN tblNmae VARCHAR(20)
@@ -90,7 +90,7 @@ MySQL에서는 매개변수를 **테이블의 이름으로 사용할 수 없다.
   
 **예시**
 ```
-DROP PROCEDURE IF EXIST userProc;
+DROP PROCEDURE IF EXISTS userProc;
 DELIMITER $$
 CREATE PROCEDURE userProc(  
     IN tblNmae VARCHAR(20)
@@ -159,3 +159,100 @@ DECLARE COTINUE HANDLER FOR 1146 SELECT '테이블이 없어요' AS '메시지';
 스토어드 프로시저에만 접근 권한을 줌으로써 좀 더 보안을 강화할 수 있다. 
 예로 개인정보를 택배 배송에서 택배기사에게 모든 개인정보를 노출 시키면 안되니  
 스토어드 프로시저만 사용 가능케 하도록 할 수 있다.
+   
+***
+# 2. IF..ELSE
+스토어드 프로시저는 프로그래밍 기능이기에  
+C언어 JAVA와 같은 응용프로그래밍 언어에서 사용하는 조건문,반복문 구조를 비슷하게 구현해 놓았다.  
+   
+**구조**
+```
+IF <조건식 BOOLEAN> THEN  
+       SQL문장식들 1
+ELSE IF <조건식 BOOLEAN> THEN 
+       SQL문장식들 2
+ELSE
+       SQL문장식들 3
+END IF;       
+```
+
+**예시**
+```
+DROP PROCEDEURE IF EXISTS ifProc;
+DELIMITER $$
+CREATE PROCEDURE ifProc()
+BEGIN
+  DECLARE var1 INT;
+  SET var1 = 100;
+
+  IF <var1 > 100> THEN  
+       SELECT '100 초과 입니다.';
+  ELSE IF <var1 == 100> THEN 
+       SELECT '100 입니다.';
+  ELSE
+       SELECT '100 미만 입니다.';
+  END IF;  
+END $$
+DELIMITER ;
+CALL ifProc();
+```
+응용프로그래밍 언어에서의 ```IF...ELSE``` 와 다른점은  
+```IF```와 ```ELSE IF```를 사용할 경우 **THEN**을 붙여야 된다.  
+반대로 ELSE는 붙이지 않아도 된다.  
+그리고 마지막에는 ```END IF;``` 구문으로 끝을 나타내주어야 한다.
+
+***
+# 3. CASE
+```IF...ELSE``` 구문은 '2중 분기'라는 용어를 종종 사용한다.  
+즉, 참 아니면 거짓 두 가지만 있기 때문이다.  
+```CASE```는 ```IF...ELSE```와 다르게 **'다중 분기'** 를 사용하는 제어문이다.  
+   
+**구조**
+```
+CASE [조건 대상]
+  WHEN [조건식] THEN
+       SQL문장식들 1
+  WHEN [조건식] THEN
+       SQL문장식들 2
+  WHEN [조건식] THEN
+       SQL문장식들 3       
+  WHEN [조건식] THEN
+       SQL문장식들 4
+  ELSE
+       SQL문장식들 5
+END CASE;
+```
+```CASE```에 ```[조건 대상]```이 있는데 간단히 설명하자면    
+```조건 대상을```을 설정시 ```WHEN```에서 조건 대상을 생략할 수 있다.    
+그러나 조건 대상을 설정하지 않는 것이 조금더 자유로운 코드를 작성할 수 있다.  
+  
+**예시**
+```
+DROP PROCEDEURE IF EXISTS caseProc;
+DELIMITER $$
+CREATE PROCEDURE caseProc()
+BEGIN
+  DECLARE point INT;
+  DECLARE credit CHAR(1);
+  SET point = 77;
+  
+  CASE 
+    WHEN point >= 90 THEN
+         SET credit = 'A';
+    WHEN point >= 80 THEN
+         SET credit = 'B';
+    WHEN point >= 70 THEN
+         SET credit = 'C';
+    WHEN point >= 60 THEN
+         SET credit = 'D';
+    ELSE
+         SET credit = 'F';
+  END CASE;
+  SELECT CONCAT('취득 점수 ==>', point), CONCAT('학점 ==>', credit);
+END $$
+DELIMITER ;
+CALL caseProc();
+```  
+```CASE 문```은 조건식이 TRUE 이면 해당 영역에 기술된 SQL문이 실행된다.    
+만약 조건에 맞는 ```WHEN```이 여러 개이더라도 먼저 조건이 만족하는 ```WHEN```이 처리된다.  
+```CASE 문```은 주로 ```SELECT```에서 사용하기도 한다. (스토어드 프로시저가 아닌 그 상태에서 기술함)    
