@@ -308,3 +308,30 @@ END $$
 DELIMITER ;
 CALL whileProc();
 ```
+```
+DROP PROCEDURE IF EXISTS whileProc2();
+DELIMITER $$
+CREATE PROCEDURE whileProc2()
+BEGIN
+  DECLARE i INT;
+  DECLARE hap INT;
+  SET i = 1;
+  SET hap = 0;
+  
+  myWhile: WHILE (i <= 100) DO
+    IF(i%7 = 0) THEN
+      SET i = i + 1;
+      ITERATE myWhile;
+    END IF;
+    
+    SET hap = hap + i;
+    IF (hap > 1000) THEN
+      LEAE myWhile;
+    END IF;
+    SET i = i + 1;
+ END WHILE;  
+ SELECT hap;
+END $$
+DELIMITER ;
+CALL whileProc2();
+```
