@@ -66,6 +66,10 @@ ON 테이블 (열이름);
   
 **구조**
 ```
+DROP INDEX 인덱스명 ON 테이블명;
+
+또는
+
 ALTER TABLE 테이블 이름 
   DROP INDEX FULLTEX (열이름);
 ```
@@ -78,7 +82,58 @@ ALTER TABLE 테이블 이름
 예를 들면 ```이번``` ```아주``` ```모두``` ```꼭```등과 같은 단어로는 검색할 이유가 없다.   
 이런 것이 중지 단어이다.    
   
-추후에 수정  
+**순서 1**  
+우선 중지 단어를 지정하려면 인덱스 내에 어떤 단어가 있는지 파악해야 한다.  
+```
+ SET GLOBAL innodb_ft_aux_table = 'DB(스키마)명/테이블명'
+ 
+ SELECT word, doc_count, doc_id, position
+   FROM INFORMATION_SCHEMA.INNODB_FT_INDEX_TABLE;
+```
+결과로 FULLTEXT INDEX로 생성된 인덱스 테이블과 값이 나온다.       
+이후 삭제하고자 하는 단어들을 찾아 따로 메모지에 기록을 해둔다.    
+  
+**순서 2**
+이제 새로운 인덱스를 생성해야 되므로 기존 FULLTEXT INDEX 는 삭제해주자
+```
+DROP INDEX 기존 인덱스명 ON 테이블명;
+```
+  
+**순서 3**
+사용자가 추가할 중지 단어를 저장할 테이블을 만든다.  
+단, 주의할 점은 테이블 이름은 아무거나 상관 없으나  
+열 이름은 **value** 와 **VARCHAR** 형태로 지정해야 한다. 
+```
+CREATE TABLE 테이블명 (value VARCHAR(30));
+```
+  
+**순서 4**
+중지 단어를 입력한다.
+```
+INSERT INTO 테이블명 VALUES ('중지단어1'), ('중지단어2'), ..... ;
+```
+  
+**순서 5**
+중지 단어를 입력한 테이블을  
+시스템 변수 ```innodb_ft_server_stopword_table```에 설정하자.  
+주의할 점은 홀따옴표 안의 DB 이름과 테이블 이름은 모두 **소문자**로 써야 한다.      
+```
+SET GLOBAL innodb_ft_server_stopword_table = 'db명/테이블명';  -- 여기 소문자
+SHOW GLOBAL VARIABLES LIKE 'innodb_ft_server_stopword_table'; -- 여기도 소문자
+```
+  
+**순서 6**
+이제 다시 ```FULLTEXT INDEX```를 생성한다.
+```
+CREATE FULLTEXT INDEX 인덱스명 ON 테이블(열);
+```
+  
+**순서 7**
+마지막 확인을 위해 생성된 ```FULLTEXT INDEX```를 살펴보자
+```
+ SELECT word, doc_count, doc_id, position
+   FROM INFORMATION_SCHEMA.INNODB_FT_INDEX_TABLE;
+```
   
 ### 1.1.4. 전체 텍스트 검색을 위한 쿼리
 전체 텍스트 인덱스를 이용하기 위한 쿼리는    
@@ -104,7 +159,6 @@ search_modifier:
        | IN NATURAL LANGUAGE MODE WITH QUERY EXPANSION
        | IN BOOLEAN MODE
        | WITH QUERY MODE   
-   
    }
 ```
 복잡해 보이지만 우리가 기억할 것은 **WHERE 절** 에서 ```MATCH() AGAINST()```를 사용한다는 것이다.  
@@ -163,9 +217,54 @@ SELECT * FROM newspaper
 이제 '영화~' 하는 단어가 있는 기사중에서 '배우'단어가 있는 기사를 빠르게 찾는다.     
     
 그리고 만약 아무것도 지정을 안하면 어떻게 되나?    
-```IN BOOLEAN MODE```가 없으면 ```AGAINST('영화 배우');```는 **영화 또는 배우**가 있는 기사를 찾지만   
-```IN BOOLEAN MODE```가 있으면 ```AGAINST('영화 배우');```는 정확히 **영화 배우**가 있는 기사를 찾는다.  
+```IN BOOLEAN MODE```가 없으면 ```AGAINST('영화 배우');```는 **영화 또는 배우**가 있는 기사를 찾지만     
+```IN BOOLEAN MODE```가 있으면 ```AGAINST('영화 배우' IN BOOLEAN MODE);```는 정확히 **영화 배우**가 있는 기사를 찾는다.    
+```AGAINST('영화 배우 -남자' IN BOOLEAN MODE);```는 정확히 **영화 배우**가 있는 기사 중 '남자' 단어가 빠진 기사를 찾는다.      
+      
+**중요**    
+```AGAINST('남자* 여자*' IN BOOLEAN MODE);```는 '남자~' 또는 '여자~' 단어가 있는 기사를 찾는다.   
+만약 '남자~' 또는 '여자~'만 있다면 내부적으로 정확도를 저장하는데 약 48%를 나타내며 검색을 할 수 있게 해준다.  
+또한 위 상태에서 동일한 단어가 여러번 나와도 한번만 나왔다고 처리를 한다.   
+
+만약 점수를 확인하고 싶다면      
+```SELECT 이부분 FROM```에  ```MATCH(열) *, AGAINST('단어* 단어* ' IN BOOlEAN MODE) AS 점수``` 기술한다.    
+  
+'남자~' 와 '여자~'가 무조건 있는 단어를 찾아야 하면 
+```AGAINST('+남자* +여자*' IN BOOLEAN MODE);```이렇게 필수```+```를 붙여 기술하자.    
+   
 이부분은 헷갈리니 외워두자   
+
+## 1.2. 기타
+MySQL은 기본적으로 3글자 이상만 전체 텍스트 인덱스로 생성한다.  
+이러한 설정을 2글자 까지 전체 텍스트 인덱스가 생성되도록 시스템 변숫값을 변경하자 
+```
+SHOW VARIABLES LIKE 'innnodb_ft_min_token_size';
+```
+```
+innodb_ft_min_token_size = 2;
+```
+이로써 2글자 단어도 전체 텍스트 인덱스로 생성될 수 있다.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 ***
