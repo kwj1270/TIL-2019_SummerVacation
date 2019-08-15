@@ -89,7 +89,12 @@ ALTER TABLE 테이블 이름
 SELECT 열 FROM 테이블 
    WHERE MATCH(FULLIDX열) AGAINST(찾는 대상)
 ```
-**구조**
+**예시**
+```
+SELECT * FROM newspaper
+   WHERE MATCH(article) AGAINST('영화');
+```
+**MySQL **
 ```
 MATCH(col1, col2,...) AGAINST(expr [search_modifier])
 
