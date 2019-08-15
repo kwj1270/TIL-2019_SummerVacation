@@ -81,20 +81,86 @@ ALTER TABLE 테이블 이름
 추후에 수정  
   
 ### 1.1.4. 전체 텍스트 검색을 위한 쿼리
-전체 텍스트 인덱스를 이용하기 위한 쿼리는  
-일반 ```SELECT 문```의 ```WHERE 절```에 **MATCH() AGAINST()**를 사용하면 된다.
+전체 텍스트 인덱스를 이용하기 위한 쿼리는    
+일반 ```SELECT 문```의 ```WHERE 절```에 **MATCH() AGAINST()** 를 사용하면 된다.   
+  
+**간단한 구조**
 ```
-MATCH(열) AGAINST()
+SELECT 열 FROM 테이블 
+   WHERE MATCH(FULLIDX열) AGAINST(찾는 대상)
 ```
+**구조**
+```
+MATCH(col1, col2,...) AGAINST(expr [search_modifier])
 
+search_modifier:
+   {
+         IN NATURAL LANGUAGE MODE
+       | IN NATURAL LANGUAGE MODE WITH QUERY EXPANSION
+       | IN BOOLEAN MODE
+       | WITH QUERY MODE   
+   
+   }
+```
+복잡해 보이지만 우리가 기억할 것은 **WHERE 절** 에서 ```MATCH() AGAINST()```를 사용한다는 것이다.  
+  
+**자연어 검색**  
+특별히 옵션을 지정하지 않거나 IN NATURAL LANGUAGE MODE를 붙이면 자연어 검색을 하게된다.   
+자연어 검색은 **단어가 정확한 것**을 검색해준다.    
+예를 들어 ```'영화'```를 검색하면 ```'영화관'```은 검색이 되지 않는다.  
+```
+SELECT * FROM newspaper
+   WHERE MATCH(article) AGAINST('영화');
+```
+만약 두 단어중 하나가 포함된 기사를 찾고 싶으면 다음과 같이 하면 된다.
+```
+SELECT * FROM newspaper
+   WHERE MATCH(article) AGAINST('영화 배우');
+```
+'영화 배우'는 물론 영화 **OR** 배우를 찾게 된다.  
+  
+**불린 모드 검색**  
+불린 모드 검색 : 단어나 문장이 정확히 일치하지 않는 것도 검색하게끔 해준다.      
+사용 법은 ```IN BOOLEAN MODE``` 옵션을 붙여주면 된다.     
+  
+**구조**
+```
+SELECT 열 FROM 테이블
+   WHERE MATCH(FULLIDX열) AGAINST(찾는 대상 IN BOOLEAN MODE)
+```
+또한 ```IN BOOLEAN MODE```는 찾는 대상에 메타문자를 붙여주어야 하는데     
+   
+```+```는 해당 단어가 필수로 들어가야 하는 것이고     
+```-```는 해당 단어를 제외하는 것이고     
+```*```는 해당 단어에 다른 문자가 들어간 단어도 가능하다는 뜻이다.      
+  
+단순하게만 보면 굳이 필요할까 생각이 들 수 있는데    
+주로 2개 이상의 찾는 대상을 지정했을때 사용한다.    
+  
+**예시**
+```
+SELECT * FROM newspaper
+   WHERE MATCH(article) AGAINST('영화 +배우');
 
+SELECT * FROM newspaper
+   WHERE MATCH(article) AGAINST('영화 -성별');
 
-
-
-
-
-
-
+SELECT * FROM newspaper
+   WHERE MATCH(article) AGAINST('영화*');
+```
+1. '영화' 단어가 있는 기사중에서 배우가 있는 기사   
+2. '영화' 단어가 있는 기사중에서 '성별'단어가 없는 기사  
+3. '영화~' 단어가 있는 기사 예를 들면 '영화관'       
+    
+```+```와 ```*``` 헷갈릴 수 있는데    
+```+```는 찾는 단어만 가능하다 즉 '영화관'이런 단어는 ```*```에서 해야한다.     
+아니면 둘을 합쳐도 된다.```AGAINST('영화* +배우');```     
+이제 '영화~' 하는 단어가 있는 기사중에서 '배우'단어가 있는 기사를 빠르게 찾는다.     
+    
+그리고 만약 아무것도 지정을 안하면 어떻게 되나?    
+```IN BOOLEAN MODE```가 없으면 ```AGAINST('영화 배우');```는 **영화 또는 배우**가 있는 기사를 찾지만   
+```IN BOOLEAN MODE```가 있으면 ```AGAINST('영화 배우');```는 정확히 **영화 배우**가 있는 기사를 찾는다.  
+이부분은 헷갈리니 외워두자   
 
 
 ***
