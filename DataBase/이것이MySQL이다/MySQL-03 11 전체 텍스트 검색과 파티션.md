@@ -93,8 +93,8 @@ SELECT 열 FROM 테이블
 ```
 SELECT * FROM newspaper
    WHERE MATCH(article) AGAINST('영화');
-```
-**MySQL **
+```  
+**MySQL**  
 ```
 MATCH(col1, col2,...) AGAINST(expr [search_modifier])
 
