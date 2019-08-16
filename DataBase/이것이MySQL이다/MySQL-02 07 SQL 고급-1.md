@@ -135,7 +135,9 @@ SELECT @변수이름 + @변수이름2;
 PREPARE 쿼리이름 FROM '실행할 쿼리문';          --> 쿼리문을 쿼리이름으로 저장한다고 보면 된다.
 
 EXECUTE 쿼리이름 USING 값;                     --> 저장된 쿼리문을 쿼리이름으로 호출      
-                                                   만일 쿼리문에 ? 가 있을시 ?에 값을 넣을 수 있다.                 
+                                                   만일 쿼리문에 ? 가 있을시 ?에 값을 넣을 수 있다.
+                                                   
+DELLOCATE PREPARE 쿼리이름;                    --> 더이상 사용할 필요가 없으면 동적할당을 해제한다.     
 ```
 동적할당은 말 그대로 동적으로 할당 할 수 있다는 뜻이다.   
 쿼리문을 저장을 하면 언제든지 사용을 할 수 있으며 재사용도 가능하다.   
@@ -149,7 +151,9 @@ SET @myVar = 3;
 PREPARE myQuery
     FROM 'SELECT Name, height FROM userTbl ORDER BY height LIMIT ?';
 
-EXECUTE myQuery USING @myVar1;    
+EXECUTE myQuery USING @myVar1;   
+
+DELLOCATE PREPARE myQuery;
 ```
 앞서 말했듯이 변수를 이용해서 ```LIMIT 값```에  접근 할 수 있다.
   
