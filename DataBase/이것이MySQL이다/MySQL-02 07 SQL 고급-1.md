@@ -284,3 +284,20 @@ SELECT JSON_INSERT(@json, '$.userTBL[0].mDate', '2009-09-09');       =>     새�
 SELECT JSON_REPLACE(@json, '$.userTBL[0].name', '홍길동');           =>      name을 홍길동으로 바꿈
 SELECT JSON_REMOVE(@json, '$.useTBL[0]');                            =>     해당 프로퍼티 삭제                    
 ```
+  
+***
+# 4. NOT IN() 과 IN()
+```NOT IN()```은 첫번째 쿼리의 결과 중에서 두 번째 쿼리에 해당하는 것을 제외하기 위한 구문이다.    
+간략히 말해서 첫번째 쿼리의 결과에서 ()을 제외하라는 말이다.  
+```
+SELECT name, CONCAT(mobile1, mobile2) AS '전화번호' FROM userTBL
+    WHERE name NOT IN ( SELECT name FROM userTBL WHERE mobile1 IS NULL);
+```   
+위 코드를 해석하자면    
+```userTBL```에서 ```mobile1```이 ```NULL``` 인 사람을 제외하고 출력하라는 말이다.   
+    
+반대로 IN()은 첫번째 쿼리의 결과중에서 두번째 쿼리에 행당되는 것만 조회하기 위한 구문이다.
+```
+SELECT name, CONCAT(mobile1, mobile2) AS '전화번호' FROM userTBL
+    WHERE name IN ( SELECT name FROM userTBL WHERE mobile1 IS NULL);
+```
