@@ -199,14 +199,88 @@ SELECT CONVERT(AVG(amount), SIGNED INT AS '평균 구매 개수' FROM buyTbl);
 6.  5 > '2문자형'                           =>     5번과 마찬가지로 문자형의 시작값이 2이므로 수치형 2로 간주, TRUE
 7.  0 = '문자형2'                           =>     시작이 문자형이므로 0으로 간주, TRUE                   
 ```
-어떤 DBMS는 ```SELECT '100'+'200'```의 결과가 '100200'문자열로 처리되기도 한다.   
-  
-
+어떤 DBMS는 ```SELECT '100'+'200'```의 결과가 '100200'문자열로 처리되기도 한다.     
+    
 ***
-# 3. 대주제
-> 인용
-## 3.1. 소 주제
-### 3.1.1. 내용1
+# 2. 피벗 
+## 2.1. 피버의 구현   
+피벅은 한 열에 포함된 여러값을 출력하고,      
+이를 여러 열로 변환하여 테이블 반환식을 회전하고 필요하면 집계까지 수행하는 일을 한다.    
+만드는 방식은 ```IF()``` 함수와 ```집계함수```를 사용하는 것이다.      
+  
+**예시**  
+``` 
+SELECT uName,
+    SUM(IF(seasson='봄', amount, 0)) AS '봄',
+    SUM(IF(seasson='여름', amount, 0)) AS '여름',
+    SUM(IF(seasson='가을', amount, 0)) AS '가을',
+    SUM(IF(seasson='겨울', amount, 0)) AS '겨울',
+    SUM(amount) AS '합계' FROM pivotTest GROUP BY uName; 
 ```
-내용1
+기존 테이블 구조는 이렇다.      
+```uNmae``` 필드에 사용자의 이름들이 값으로 있고    
+```season``` 필드에 봄, 여름, 가을, 겨울 값이 있고    
+```amount``` 필드에 숫자값이 있다.   
+   
+```SUM()```과  ```GROUP BY uName```을 통해서 ```uName```의 값마다 그룹화 하여 합계 값을 낸다.           
+```IF(season = '값', amount, 0)```을 통해 해당 되는 값이 아니면 0을 반환한다.        
+해당 하는 값이 맞을 경우에는 ```SUM(amount)```가 동작된다고 보면 된다.         
+그리고 이를 AS 로 알맞은 명칭으로 바꿔줘서 사용한 것이다.    
+  
+***
+# 3. JSON
+JSON은 현대의 웹과 모바일 응용프로그램 등과 데이터를 교환하기 위한 개방형 표준 포맷을 말한다.   
+```속성(KEY)``` 과 ```값(VALUE)```으로 쌍을 이루며 구성되어있다.(JS에서는 이를 객체라고 말한다.)  
+   
+**JSON 객체**
+```
+{
+    //키        //값
+    
+    "아이디" : "BBK" ,
+    "이름" : "바비김" ,
+    "생년" : 1973 ,
+    "지역" : "서울" ,
+    "국번" : "010" ,
+    "전화번호" : "00000000" ,
+    "키" : 178 ,
+    "가입일" : "2013.5.5"
+}
+```
+데이터베이스의 결과 집합도 이러한 JSON 객체로 변환 시킬 수 있다.   
+```JSON_OBJECT()```이나 ```JSON_ARRAY()```함수를 이용하면 된다.
+특히 ```JSON_OBJECT()```는 직접 JSON 객체를 생성한다는 의미가 강하다.   
+**구조**
+```
+JSON_OBJECT('열 이름1' , 열이름1 , '열 이름2' , 열 이름2 , .....)
+```
+**예시**
+```
+SELECT JSON_OBJECT('name', name, 'height', height) AS 'JSON 값'
+    FROM userTBL
+     WHERE height >= 180;
+     
+________________________________________________________________
+__________________________________
+|JSON 값                         | 
+|________________________________|
+|{"name" : 바비김 "height" : 186}|
+|________________________________|
+```  
+이 외에도 여러 JSON 관련 함수들이 존재한다.  
+```
+SET @json = '{ "userTBL" :
+    [
+        {"name" : "임재범", "height" : 182 },                  // &.userTBL[0]
+        {"name" : "이승기", "height" : 182 },                  // &.userTBL[1]      
+        {"name" : "성시경", "height" : 186 }                   // &.userTBL[2]
+    ]
+}' ;
+
+SELECT JSON_VALID(@json)                                             =>     JSON 형식을 만족하면 1 아니면 0         
+SELECT JSON_SEARCH(@json , 'one' , '성시경');                         =>     찾기 1개만 성시경을           
+SELECT JSON_EXTRACT(@json, '$.userTBL[2].name');                     =>     name 출력
+SELECT JSON_INSERT(@json, '$.userTBL[0].mDate', '2009-09-09');       =>     새로운 프로퍼티와 값 입력
+SELECT JSON_REPLACE(@json, '$.userTBL[0].name', '홍길동');           =>      name을 홍길동으로 바꿈
+SELECT JSON_REMOVE(@json, '$.useTBL[0]');                            =>     해당 프로퍼티 삭제                    
 ```
