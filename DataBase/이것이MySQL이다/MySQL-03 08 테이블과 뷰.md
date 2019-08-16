@@ -1,0 +1,188 @@
+테이블과 뷰
+=======================
+# 1. 테이블
+## 1.1. 테이블 만들기
+### 1.1.1 SQL로 테이블 생성
+**구조**
+```
+기본)
+
+CREATE TABLE 테이블명(
+  열 정의1,
+  열 정의2,
+  ...
+);
+
+______________________________
+테이블 압축)
+
+CREATE TABLE 테이블명(
+  열 정의1,
+  열 정의2,
+  ... )
+ROW_FORMAT=COMPRESSED;
+```
+완전히 테이블을 새로 만들고자 한다면 단순히 위의 코드를 입력 하는 것 보다는 아래와 같이 하는 것이 좋다.
+```
+DROP TABLE IF EXISTS 테이블명;
+CREATE TABLE 테이블명(
+  열 정의1,
+  열 정의2,
+  ...
+);
+
+또는 
+
+CREATE TABLE IF NOT EXISTS 테이블명(
+  열 정의1,
+  열 정의2,
+  ...
+);
+```
+## 1.2. 제약 조건
+제약 조건은이란 데이터의 무결성을 지키기 위한 제한된 조건을 의미한다.    
+즉, 특정 데이터를 입력할 때 무조건적으로 입력되는 것이 아닌 어떠한 조건을 만족했을 때에 입력되도록 제약할 수 있다.     
+예를 들면 동일한 아이디를 가지고 회원가입을 할 수 없는 것처럼 말이다.       
+    
+**MySQL은 데이터의 무결성을 위해서 5가지의 제약조건을 제공한다**      
+    
+* PRIMARY KEY 제약조건
+* FOREIGN KEY 제약조건
+* UNIQUE 제약조건
+* DEFAULT 정의 
+* NULL 값 허용 여부  
+    
+추가로 다른 DBMS에서는 ```CHECK``` 제약조건을 제공하기도 한다.    
+
+### 1.2.1. 기본키 제약조건(PRIMARY KEY)
+테이블에 존재하는 많은 행의 데이터를 구분할 수 있는 식별자를 **기본 키** 라고 부른다  
+기본 키에 입력되는 값은 중복될 수 없으며 NULL 값이 입력될 수 없다.    
+    
+기본 키는 테이블에서 중요한 의미를 갖는다.    
+우선 기본 키로 생성한 것은 자동으로 클러스터형 인덱스가 생성된다.  
+또한, 테이블에서는 기본 키를 하나 이상의 열에 설정할 수 있다.  
+즉, 하나의 열에만 기본 키를 설정할 수도 있고 두개의 열을 합쳐서 기본 키로 설정할 수도 있다.
+  
+**생성 방법 1**
+```
+구조)
+
+CREATE TABLE 테이블 명 (
+  열 정의 PRIMARY KEY,
+  ...
+);
+
+_____________________________
+예시)
+
+CREATE TABLE mytable(
+  userID CHAR(8) NOT NULL PRIMARY KEY,
+  ....
+);
+```
+이렇듯 기본키로 설정하고 싶은 열에 ```PRIMARY KEY```를 기술하면 된다.     
+기본키는 딱 하나만 존재해야하니 한번 지정하면 다음에는 쓸 수없다.    
+    
+제약조건들에는 한가지 특이사항이 있는데 바로 별도의 **이름**을 가지는 것이다.    
+즉 별칭을 가지고 있는 다는 것인데 위의 코드 구조에서는 별칭을 정의하지도 않았다.    
+위와 같이 열 정의 부분에 ```PRIMARY KEY```를 통해 기본 키를 지정하면 ```MySQL``` 내에서 알아서 설정해준다.   
+  
+만약 제약조건 이름을 같이 정의하고 싶다면 아래와 같은 코드로 작성하면 된다.   
+**생성 방법 2**
+```
+구조)
+
+CREATE TABLE 테이블 명 (
+  열 정의, 
+  ...,
+  CONSTRAINT 별칭 PRIMARY KEY(열1[, 열2...])
+);
+
+또는
+
+CREATE TABLE 테이블 명 (
+  열 정의, 
+  ...,
+  CONSTRAINT PRIMARY KEY 별칭 (열1[, 열2...])
+);
+
+________________________________________________________
+예시)
+
+CREATE TABLE mytable (
+  userID CHAR(8) NOT NULL,
+  ...,
+  CONSTRAINT PRIMARY KEY PK_userTbl_userID (userID)
+);
+```
+이렇게 제약조건의 이름을 만들어 두면 변경이나 삭제가 편리해진다. 
+그리고 만약 PK를 지정하지 않고 테이블을 만들었다면 
+```
+ALTER TABLE 테이블명
+  ADD CONSTRAINT 별칭
+    PRIMARY KEY(열1[, 열2...]);
+```
+이런식으로 추가해줘도 된다.    
+특별한 점은 기존 열에 대해서 바꾸는 것이 아닌 ```ADD```로 추가하는 것이다.         
+   
+### 1.2.2. 외래 키 제약조건(FOREIGN KEY)  
+외래 키 제약 조건은 두 테이블 사이의 관계를 선언함으로써 데이터의 무결성을 보장해주는 역할을 한다.       
+외래 키 관계를 설명하면 하나의 테이블이 다른 테이블에 의존하게 된다.     
+     
+우선 외래 키 테이블에 데이터를 입력할 때는 꼭 기준 테이블을 참조해서 입력하므로    
+기준 테이블에 이미 데이터가 존재해야 한다.    
+또, 외래키 테이블이 참조하는 기준 테이블의 열은 반드시 ```PK```이거나 ```UNIQUE``` 제약조건을 가지고 있어야 한다.    
+  
+**생성 방법**
+```
+구조)
+
+CREATE TABLE 테이블 명 (
+  열 정의, 
+  ...,
+  CONSTRAINT 별칭 FOREIGN KEY(열) REFRENCES 관계테이블명(관계 열)
+);
+
+________________________________________________________________
+예시)
+
+DROP TABLE UF EXISTS userTbl, buyTbl;
+
+CREATE TABLE userTbl(
+  userID char(8) NOT NULL PRIMARY KEY,
+  name nvarchar(10) NOT NULL,
+  ...
+)
+
+CREATE TABLE buyTbl (
+  num INT AUTO_INCREMENT NOT NULL PRIMARY KEY ,
+  userid CAHR(8) NOT NULL,
+  prodName nchar(6) NOT NULL,
+  ...
+  CONSTRAINT FK_userTbl_buyTbl FOREIGN KEY(userid) REFRENCES userTbl(userID)
+);
+```
+```PK```와 마찬가지로 정의를 하지 않고 테이블을 생성했어도 ```ALTER``` 를 통해서 지정 가능하다.
+```
+ALTER TABLE 테이블명
+  ADD CONSTRAINT 별칭
+  FOREIGN KEY(열) 
+  REFERENCES 관계테이블명 (관계 열);
+```
+또한 외래키 옵션 중에서 ```ON DELETE CASCADE``` 또는 ```ON UPDATE CASCADE```가 있는데,    
+이는 기준 테이블의 데이터가 변경되었을 때 외래 키 테이블도 자동으로 적용되도록 설정해준다.    
+(즉 PK로 가지고 있는 테이블 값 변경시 외래키 가지고 있는 테이블 값도 적용)    
+```
+CREATE TABLE 테이블 명 (
+  열 정의, 
+  ...,
+  CONSTRAINT 별칭 FOREIGN KEY(열) REFRENCES 관계테이블명(관계 열) ON UPDATE/DELETE CASCADE
+  
+);
+
+ALTER TABLE 테이블명
+  ADD CONSTRAINT 별칭
+  FOREIGN KEY(열) 
+  REFERENCES 관계테이블명 (관계 열)
+  ON UPDATE/DELETE CASCADE ;
+```
