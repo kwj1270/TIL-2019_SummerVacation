@@ -328,7 +328,7 @@ for 구문을 돌린다. 여기서
 ### 3.1.4. 프라미스 체인
 Promise에는 체인으로 연결할 수 있다는 장점이 있다.  
 즉, Promise가 완료되면 다른 프라미스를 반환하는 함수를 즉시 호출할 수 있다.   
-**예제**
+**예제**  
 ```
 function launch(){
 	return new Promise(function(resolve,reject){
@@ -370,8 +370,9 @@ Promise를 사용할 때 우리는 ```resolve``` 와 ```reject```를 통해
 그래서 이를 예방하는 방법이 있는데 바로 ```setTimeout()```을 거는 것이다.
 기존에 ```setTimeout()```을 많이 사용했기에 헷갈릴 수 있겠지만  
 이전에는 countdown을 위한 콜백함수 였다면  
-지금은 시간이 지나면 resolve로 예약을하는 ```setTimeout()```이라 생각하길 바란다.  
-**예제 1**
+지금은 시간이 지나면 resolve로 예약을하는 ```setTimeout()```이라 생각하길 바란다.    
+  
+**예제 1**  
 ```
 function launch(){
 	return new Promise(function(resolve, reject){
@@ -386,7 +387,8 @@ function launch(){
 이 lauch는 reject를 호출하지 않는데다가,  
 심지어 콘솔에 기록하지도 않았다.  
 즉, 10번 시도중 5번은 영문도 모른채 실패하는 셈이다.  
-이제 이코드를 담을 ```addTimeout()```메소드를 작성해보자
+이제 이코드를 담을 ```addTimeout()```메소드를 작성해보자  
+  
 **예제 2**
 ```
 function addTimeout(fn,timeout){
@@ -408,7 +410,8 @@ function addTimeout(fn,timeout){
 	}
 }
 ```
-이 코드는 해석하기 정말 까다롭다...... 나중에 다시 봐야겠다.
+이 코드는 해석하기 정말 까다롭다...... 나중에 다시 봐야겠다.  
+  
 **사용**
 ```
 c.go()
