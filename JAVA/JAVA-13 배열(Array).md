@@ -179,14 +179,36 @@ Arrays.fill(ar2, 0, 9, 'a');  // [0]~[8] 까지 'a'로 채움
 //현재 ['b']['b']['b']['b']['b']['b']['b']['b']['b']['a']
 ```
 
-### 1.4.2. 배열의 값을 복사하는 arraycopy() 메서드
-
+### 1.4.2. 배열의 값을 복사하는 arraycopy() 메소드
+배열은 일반 변수처럼 ```int[] arr2 = arr1``` '배열 = 배열'로 대입을 할 수가 없다.   
+그렇기에 배열을 복사하고자 한다면 반복문을 통해서 값들을 일일이 넣어주어야 하는데  
+이를 간략하게 메서드로 모듈화한 것이 있는데 그것이 ```arraycopy()```메소드 이다.
+    
+```arraycopy()```메소드는 **```System```클래스의 satic 메소드이다.**
+   
 **arraycopy() 구조**
 ```
-int [] arr = new int[3] {1, 2, 3};
+public static void arraycopy(Object src, int srcPos, Object dest, int destPos, int length){생략}
 ```
-
-
+```srcPos``` 는 배열```src```의 시작 인덱스를 나타낸다.  
+```
+int[] test2 = new int[10];
+		Arrays.fill(test2, 7);
+		
+		int[] test3 = new int[10];
+		Arrays.fill(test3, 0);
+		
+		test2[0] = 1;
+		
+		System.arraycopy(test2, 0, test3, 3, 4);
+		
+		for(int i = 0 ; i < test3.length; i++) {
+			System.out.print(test3[i]+" ");
+		}
+```
+위 코드를 보면 text2는 1,7,7,7,7,7,7,7,7,7의 값을 가진다.  
+```System.arraycopy(test2, 0, test3, 3, 4);```는   
+test2의 [0]번 인덱스부터의 값을 test3 인덱스의 [3]번 인덱스에 넣는데 그 개수는 4개로 제한한다는 의미이다.     
 
 
 
