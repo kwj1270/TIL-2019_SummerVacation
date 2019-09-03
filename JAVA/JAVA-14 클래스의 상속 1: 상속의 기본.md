@@ -64,9 +64,61 @@ man ->  |String name                  |
   
 주로 '상/하위 클래스'와 '부모/자식 클래스'를 많이 사용한다.      
 
-
-
 ## 1.3. 상속과 생성자
+상속 관계에서 주의를 기울여야 하는 부분이 있다. 그것은 바로 **생성자**이다.  
+
+```
+class Man{
+  String name;
+  public void tellYourName(){
+    System.out.println("My name is " + name);
+  }
+}
+
+class BusinessMan extends Man{
+  String company;
+  String position;
+  
+  public BusinessMan(String company, String position){
+     this.company = company;
+     this.position = position;
+  }
+  
+  public void tellYourInfo(){
+    System.out.println("My company is " + company);
+    System.out.println("My position is " + position);
+    tellYourName();
+  }
+}
+```
+위 코드는 앞선 예시에 대해서 생성자를 만들어 주었을 뿐이다.  
+하지만 위 코드를 그대로 사용하면 문제가 하나 있다.    
+바로 ```Man 클래스```의 ```name 인스턴스 변수```에 대해서 초기화를 진행하지 않았기 때문이다.  
+
+```
+         _____________________________
+man ->  |String name                  |
+        |String company               |
+        |String position              |
+        |void tellYoutName            |
+        |void tellYoutInfo            |
+        |_____________________________|
+```
+앞서 ```Man 클래스```를 상속한 ```BusinessMan의 인스턴스```는 위와 같은 구조를 한다.   
+하지만 앞선 코드의 생성자를 사용하면 ```name 변수```에 대한 초기화를 진행하지 않았기에  
+```tellYourInfo()```나 ```tellYourName``` 사용시에 ```name 변수```에 ```null``` 값이 출력 될 것이다.  
+  
+```
+  public BusinessMan(String name, String company, String position){
+     this.name = name;
+     this.company = company;
+     this.position = position;
+  }
+  // 사용 가능하지만 적절한 코드는 아니다.
+```
+
+
+
 ### 1.2.1. 내용1
 ```
 내용1
