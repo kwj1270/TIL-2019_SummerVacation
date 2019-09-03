@@ -104,20 +104,49 @@ man ->  |String name                  |
         |void tellYoutInfo            |
         |_____________________________|
 ```
-앞서 ```Man 클래스```를 상속한 ```BusinessMan의 인스턴스```는 위와 같은 구조를 한다.   
-하지만 앞선 코드의 생성자를 사용하면 ```name 변수```에 대한 초기화를 진행하지 않았기에  
-```tellYourInfo()```나 ```tellYourName``` 사용시에 ```name 변수```에 ```null``` 값이 출력 될 것이다.  
+앞서 ```Man 클래스```를 상속한 ```BusinessMan의 인스턴스```는 위와 같은 구조를 한다.      
+하지만 앞선 코드의 생성자를 사용하면 ```name 변수```에 대한 초기화를 진행하지 않았기에     
+```tellYourInfo()```나 ```tellYourName``` 사용시에 ```name 변수```에 ```null``` 값이 출력 될 것이다.    
   
 ```
-  public BusinessMan(String name, String company, String position){
-     this.name = name;
-     this.company = company;
-     this.position = position;
-  }
+public BusinessMan(String name, String company, String position){
+   this.name = name;
+   this.company = company;
+   this.position = position;
+}
   // 사용 가능하지만 적절한 코드는 아니다.
 ```
+위 코드는 사용이 가능하지만 사실 적절한 코드는 아니다.      
+그 이유는 사실상 ```name 변수```는 ```BusinessMan 인스턴스 변수```가 아니고 ```Man의 인스턴스 변수```이다.    
 
+생성자의 호출은 해당 클래스를 통해 인스턴스를 생성할 때 호출되는 것인데 
+상위 클래스를 상속받는 하위 클래스의 인스턴스를 생성한다고 가정시에
+명시적으로 상위 클래스의 생성자 호출하는 것을 정의하지 않으면  
+자동으로 상위 클래스의 생성자를 먼저 호출하고 하위 클래스의 생성자를 호출하게 된다.  
 
+만약  ```Man 클래스```에 생성자가 존재하고 ```BusinessMan 인스턴스```를 생성한다고 가정을 하면  
+우리 눈에 보이지 않게 ```Man 클래스```의 생성자가 호출되어 사용될 것이다.  
+프로그램에 있어서 눈에 보이지 않는 동작을 일일이 기억하기보다는 명시적으로 이를 나타내 주는 것이 좋다.  
+그렇기에 ```BusinessMan 클래스```에서 ```Man```의 생성자를 호출하여 명시적으로 사용한다는 것을 나타내주자.      
+   
+상위 클래스의 생성자를 호출하는 방법은 **super()** 를 사용하면 된다.  
+```
+public BusinessMan(String name, String company, String position){
+   super(name);
+   this.company = company;
+   this.position = position;
+}
+```
+   
+## 1.4. 단일 상속만을 지원하는 자바
+자바는 프로그램이 과도하게 복잡해지는 것을 막기 위해 단일 상속만을 지원한다.  
+
+```
+class AAA {...}
+class MMM extends AAA {...}
+class ZZZ extends MMM {...}
+```
+자바에서 상속은 한개의 클래스만 상속 받을 수 있다.    
 
 ### 1.2.1. 내용1
 ```
